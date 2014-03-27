@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="640px"
+   height="480px"
+   id="svg2816"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="bg01.svg"
+   inkscape:export-filename="/media/FreeAgent Drive/T3/Projects/Games/tins2010-devil/bin/data/graphics/bg01.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs2818">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 240 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="640 : 240 : 1"
+       inkscape:persp3d-origin="320 : 160 : 1"
+       id="perspective2824" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.77472527"
+     inkscape:cx="320"
+     inkscape:cy="240"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:window-width="988"
+     inkscape:window-height="732"
+     inkscape:window-x="204"
+     inkscape:window-y="85"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata2821">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       style="fill:#5d0c00;fill-opacity:1;stroke:none"
+       id="rect3600"
+       width="668.62415"
+       height="507.27661"
+       x="-9.0354614"
+       y="-7.9148965" />
+    <path
+       style="fill:#6b0e00;fill-opacity:1;stroke:none"
+       d="m -19.361702,362.53901 c 0,0 51.720965,-45.5548 74.865248,-70.99291 22.068762,-24.256 48.617294,-46.94769 60.666664,-77.44681 10.79211,-27.31679 2.81523,-58.81831 7.74468,-87.77305 4.09827,-24.07255 4.43429,-50.736414 18.07093,-70.992909 17.01221,-25.27073 49.73111,-35.251774 73.57447,-54.2127665 12.41904,-9.8760125 36.14184,-30.9787235 36.14184,-30.9787235 l -293.007095,-6.453901 0,9.035461"
+       id="path3627"
+       sodipodi:nodetypes="csssssccc" />
+    <path
+       style="fill:#6b0e00;fill-opacity:1;stroke:none"
+       d="m 111.00709,508.39716 c 0,0 65.72535,-81.70994 96.80851,-123.91489 19.25149,-26.13981 30.39266,-59.45283 55.50355,-80.02837 24.29713,-19.90876 58.64036,-22.8883 86.48227,-37.43262 37.67562,-19.68134 80.9874,-34.65587 108.42553,-67.12057 C 482.51879,171.1587 481.7421,127.78403 500.8227,95.347515 519.28855,63.956056 542.71678,35.12092 569.23405,10.156026 587.66122,-7.1923826 631.19149,-33.7305 631.19149,-33.7305 L 728,11.446806 784.79433,180.53901 c 0,0 -43.38393,136.14513 -95.51773,179.41844 -17.69599,14.68844 -44.48641,12.08751 -65.82979,20.65248 -40.53713,16.26732 -85.19579,28.64293 -117.46099,58.08511 -21.25873,19.39871 -45.17731,73.57446 -45.17731,73.57446"
+       id="path3629"
+       sodipodi:nodetypes="csssssscccsssc" />
+  </g>
+</svg>

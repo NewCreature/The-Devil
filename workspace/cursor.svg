@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32px"
+   height="32px"
+   id="svg2816"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="cursor.svg"
+   inkscape:export-filename="/media/FreeAgent Drive/T3/Projects/Games/tins2010-devil/bin/data/cursor.png"
+   inkscape:export-xdpi="225.00133"
+   inkscape:export-ydpi="225.00133">
+  <defs
+     id="defs2818">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 16 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 16 : 1"
+       inkscape:persp3d-origin="16 : 10.666667 : 1"
+       id="perspective2824" />
+    <inkscape:perspective
+       id="perspective3610"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.598901"
+     inkscape:cx="10.34835"
+     inkscape:cy="12.428258"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="1680"
+     inkscape:window-height="975"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2826"
+       empspacing="4"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2821">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       style="fill:#fff0d5;fill-opacity:1;stroke:none"
+       d="m 16.25319,24.855741 -4.627518,-2.305633 c -1.6920366,-0.843047 -2.4966388,-3.50578 -2.9425185,-5.342873 -0.3581437,-1.475606 0.068564,-4.586038 0.068564,-4.586038 0,0 0.8420699,2.682578 1.6074582,3.840039 0.870837,1.316926 1.470013,2.36472 2.862192,3.109362 l 4.37137,2.338136 c 0,0 0.4212,0.747099 0.446516,1.160942 0.02248,0.36752 -0.514803,1.408951 -0.867805,1.513667 l -0.918259,0.272398 z"
+       id="path2828"
+       sodipodi:nodetypes="csscsscssc" />
+    <path
+       style="fill:#000000;stroke:none;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:0.52888888000000001"
+       d="m 9.287537,17.890088 c 0,0 0.5486062,1.579674 0.96767,2.295728 0.300713,0.513828 0.818211,1.141147 1.309562,1.477334 0,0 1.251553,0.855649 1.986997,1.294897 0.65438,0.390831 1.425902,1.05507 2.18793,1.071639 0,0 0.470052,0.166145 0.803729,0.08931 0.30164,-0.06946 0.637725,-0.178541 0.826055,-0.42419 0,0 0.409283,-0.408467 0.513494,-0.669775 0.05267,-0.132063 0.04465,-0.42419 0.04465,-0.42419 l 0.133955,1.049313 -0.937684,1.071639 -1.361874,0.02233 -1.942346,-0.915358 -2.210255,-1.473504 -1.250245,-1.11629 -1.0269874,-2.299559 -0.066977,-0.893032"
+       id="path3624"
+       sodipodi:nodetypes="csssssssccccccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 16.445092,24.856417 c -1.716857,-0.149628 -4.627518,-2.305633 -4.627518,-2.305633 -1.692037,-0.843047 -2.4966393,-3.50578 -2.942519,-5.342873 -0.3581437,-1.475606 0.068564,-4.586038 0.068564,-4.586038 0,0 0.8420695,2.682578 1.607459,3.840039 0.870837,1.316926 1.470013,2.36472 2.862192,3.109362 l 4.37137,2.338136 c 0.365604,0.195552 0.4212,0.747099 0.446516,1.160942 0.02248,0.36752 -0.514803,1.408951 -0.867805,1.513667 0,0 -0.600195,0.300118 -0.918259,0.272398 z"
+       id="path2828-9"
+       sodipodi:nodetypes="csscssssss" />
+  </g>
+</svg>
