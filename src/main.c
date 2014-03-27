@@ -525,7 +525,7 @@ bool initialize(int argc, char * argv[])
 	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
 	
 	process_arguments(argc, argv);
-	if(!t3f_initialize("The Devil", 640, 480, 60.0, logic, render, T3F_DEFAULT | T3F_USE_MOUSE | T3F_USE_JOYSTICK | T3F_FORCE_ASPECT, NULL))
+	if(!t3f_initialize("The Devil", 640, 480, 60.0, logic, render, T3F_DEFAULT | T3F_USE_MOUSE | T3F_USE_JOYSTICK | T3F_USE_TOUCH | T3F_FORCE_ASPECT, NULL))
 	{
 		return false;
 	}

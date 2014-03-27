@@ -36,7 +36,7 @@ static void menu_fix_controller_type_text(void)
 		}
 		case CONTROLLER_TYPE_TOUCH:
 		{
-			sprintf(menu_text[0], "Dual Analog");
+			sprintf(menu_text[0], "Touch");
 			break;
 		}
 	}
