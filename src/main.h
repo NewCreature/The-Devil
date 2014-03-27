@@ -99,10 +99,11 @@
 #define POWERUP_TYPE_SPIRIT     0
 #define POWERUP_TYPE_UPGRADE    1
 
-#define CONTROLLER_TYPES        3
+#define CONTROLLER_TYPES        4
 #define CONTROLLER_TYPE_NORMAL  0
 #define CONTROLLER_TYPE_MOUSE   1
 #define CONTROLLER_TYPE_ANALOG  2
+#define CONTROLLER_TYPE_TOUCH   3
 
 #define CONTROLLER_UP           0
 #define CONTROLLER_DOWN         1
@@ -112,6 +113,16 @@
 #define CONTROLLER_FIRE_DOWN    5
 #define CONTROLLER_FIRE_LEFT    6
 #define CONTROLLER_FIRE_RIGHT   7
+
+typedef struct
+{
+	
+	int touch_id;
+	float pin_x, pin_y;
+	float pos_x, pos_y;
+	bool active;
+	
+} TOUCH_STICK;
 
 extern int state;
 extern int state_ticks;
@@ -166,6 +177,7 @@ extern char * game_mode_text[16];
 extern int death_time;
 extern int flash_time;
 extern int fade_time;
+extern TOUCH_STICK touch_stick[2]; 
 
 /* network data */
 extern int network_id_pos;

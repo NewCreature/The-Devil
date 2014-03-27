@@ -67,6 +67,7 @@ char * game_mode_text[16] = {"Story", "Story-Easy", "Eternal"};
 int death_time = 0;
 int flash_time = 0;
 int fade_time = 0;
+TOUCH_STICK touch_stick[2]; 
 
 /* network data */
 int network_id_pos = 0;

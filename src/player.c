@@ -265,6 +265,10 @@ void player_control_analog(void)
 	}
 }
 
+void player_control_touch(void)
+{
+}
+
 void player_logic(void)
 {
 	fire = false;
@@ -284,6 +288,11 @@ void player_logic(void)
 				break;
 			}
 			case CONTROLLER_TYPE_ANALOG:
+			{
+				player_control_analog();
+				break;
+			}
+			case CONTROLLER_TYPE_TOUCH:
 			{
 				player_control_analog();
 				break;

@@ -34,6 +34,11 @@ static void menu_fix_controller_type_text(void)
 			sprintf(menu_text[0], "Dual Analog");
 			break;
 		}
+		case CONTROLLER_TYPE_TOUCH:
+		{
+			sprintf(menu_text[0], "Dual Analog");
+			break;
+		}
 	}
 }
 
@@ -286,7 +291,7 @@ int menu_proc_back(int i, void * p)
 
 int menu_proc_controller_type_left(int i, void * p)
 {
-	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
+	char * controller_section[4] = {"Normal Controls", "Mouse Controls", "Analog Controls", "Touch Controls"};
 
 	controller_type--;
 	if(controller_type < 0)
@@ -304,7 +309,7 @@ int menu_proc_controller_type_left(int i, void * p)
 
 int menu_proc_controller_type_right(int i, void * p)
 {
-	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
+	char * controller_section[4] = {"Normal Controls", "Mouse Controls", "Analog Controls", "Touch Controls"};
 
 	controller_type++;
 	if(controller_type >= CONTROLLER_TYPES)

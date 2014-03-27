@@ -309,6 +309,8 @@ bool game_init(int mode)
 	}
 	
 	/* set game up */
+	touch_stick[0].active = false;
+	touch_stick[1].active = false;
 	player.x = 304;
 	player.y = 224;
 	player.z = 0;
