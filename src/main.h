@@ -119,6 +119,7 @@ extern T3F_ANIMATION * animation[MAX_ANIMATIONS];
 extern ALLEGRO_FONT * font[MAX_FONTS];
 extern ALLEGRO_SAMPLE * sample[MAX_SAMPLES];
 extern ALLEGRO_BITMAP * bitmap[MAX_BITMAPS];
+extern T3F_ATLAS * atlas;
 extern CINEMA * cinema;
 extern CINEMA * ending_cinema;
 extern int current_menu;

@@ -163,6 +163,7 @@ int menu_proc_play(int i, void * p)
 
 int menu_proc_story(int i, void * p)
 {
+	cinema = load_cinema("data/cinema/intro.cin", 0);
 	cinema->position = 0;
 	cinema->tick = 0;
 	click = true;
@@ -916,6 +917,36 @@ int menu_proc_analog_done(int i, void * p)
 
 static int title_flicker = 0;
 
+bool title_load_data(void)
+{
+	animation[ANIMATION_TITLE] = t3f_load_animation_from_bitmap("data/graphics/title_logo.png");
+	if(!animation[ANIMATION_TITLE])
+	{
+		return false;
+	}
+	animation[ANIMATION_TITLE_EYES] = t3f_load_animation_from_bitmap("data/graphics/title_logo_eyes.png");
+	if(!animation[ANIMATION_TITLE_EYES])
+	{
+		return false;
+	}
+	bitmap[0] = t3f_load_resource((void **)(&bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg00.png", 0, 0, 0);
+	if(!bitmap[0])
+	{
+		return false;
+	}
+	return true;
+}
+
+void title_free_data(void)
+{
+	t3f_destroy_animation(animation[ANIMATION_TITLE]);
+	animation[ANIMATION_TITLE] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_TITLE_EYES]);
+	animation[ANIMATION_TITLE_EYES] = NULL;
+	t3f_destroy_resource(bitmap[0]);
+	bitmap[0] = NULL;
+}
+
 bool title_init(void)
 {
 	float oy = 0;
@@ -1444,6 +1475,7 @@ void title_game_logic(void)
 		title_bg_logic();
 		if(title_flicker % 512 == 0)
 		{
+			title_free_data();
 			game_init(title_game_mode);
 			break;
 		}

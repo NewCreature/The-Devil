@@ -3,6 +3,8 @@
 
 void menu_fix_leaderboard_text(void);
 void menu_fix_controller_type_config(void);
+bool title_load_data(void);
+void title_free_data(void);
 bool title_init(void);
 void title_exit(void);
 void title_bg_logic(void);

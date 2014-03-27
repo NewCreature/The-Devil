@@ -111,6 +111,7 @@ void logic(void * data)
 			{
 				t3f_play_music("data/music/title.xm");
 				title_init();
+				title_load_data();
 				state = STATE_TITLE_IN;
 				state_ticks = 0;
 				if(mouse_disabled)
@@ -126,6 +127,8 @@ void logic(void * data)
 			cinema_logic(cinema);
 			if(cinema->position >= cinema->frames)
 			{
+				destroy_cinema(cinema);
+				cinema = NULL;
 				state = STATE_TITLE;
 			}
 			break;
@@ -161,6 +164,8 @@ void logic(void * data)
 			cinema_logic(ending_cinema);
 			if(ending_cinema->position >= ending_cinema->frames)
 			{
+				destroy_cinema(ending_cinema);
+				ending_cinema = NULL;
 				if(upload_scores)
 				{
 					download_leaderboard();
@@ -516,8 +521,6 @@ void detect_controller(int type)
 bool initialize(int argc, char * argv[])
 {
 	const char * val;
-	char buffer[256] = {0};
-	int i;
 	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
 	
 	process_arguments(argc, argv);
@@ -531,117 +534,17 @@ bool initialize(int argc, char * argv[])
 	{
 		return false;
 	}
-	animation[ANIMATION_PLAYER] = t3f_load_animation_from_bitmap("data/graphics/player.png");
-	if(!animation[ANIMATION_PLAYER])
-	{
-		return false;
-	}
-	animation[ANIMATION_DEMON] = t3f_load_animation_from_bitmap("data/graphics/demon.png");
-	if(!animation[ANIMATION_DEMON])
-	{
-		return false;
-	}
-	animation[ANIMATION_ARCHDEMON] = t3f_load_animation_from_bitmap("data/graphics/archdemon.png");
-	if(!animation[ANIMATION_ARCHDEMON])
-	{
-		return false;
-	}
-	animation[ANIMATION_PLAYER_SHOT] = t3f_load_animation_from_bitmap("data/graphics/player_shot.png");
-	if(!animation[ANIMATION_PLAYER_SHOT])
-	{
-		return false;
-	}
-	animation[ANIMATION_ENEMY_SHOT] = t3f_load_animation_from_bitmap("data/graphics/enemy_shot.png");
-	if(!animation[ANIMATION_ENEMY_SHOT])
-	{
-		return false;
-	}
-	
-	/* load spirit animation */
-	animation[ANIMATION_SPIRIT] = t3f_create_animation();
-	if(!animation[ANIMATION_SPIRIT])
-	{
-		return false;
-	}
-	animation[ANIMATION_SPIRIT]->bitmap[0] = t3f_load_resource((void **)(&animation[ANIMATION_SPIRIT]->bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/spirit0.png", 0, 0, 0);
-	animation[ANIMATION_SPIRIT]->bitmap[1] = t3f_load_resource((void **)(&animation[ANIMATION_SPIRIT]->bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/spirit1.png", 0, 0, 0);
-	animation[ANIMATION_SPIRIT]->bitmaps = 2;
-	t3f_animation_add_frame(animation[ANIMATION_SPIRIT], 0, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_SPIRIT]->bitmap[0]), al_get_bitmap_height(animation[ANIMATION_SPIRIT]->bitmap[0]), 0, 5);
-	t3f_animation_add_frame(animation[ANIMATION_SPIRIT], 1, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_SPIRIT]->bitmap[1]), al_get_bitmap_height(animation[ANIMATION_SPIRIT]->bitmap[1]), 0, 5);
-	
-	/* load dark orb animation */
-	animation[ANIMATION_DARK_ORB] = t3f_create_animation();
-	if(!animation[ANIMATION_DARK_ORB])
-	{
-		return false;
-	}
-	animation[ANIMATION_DARK_ORB]->bitmap[0] = t3f_load_resource((void **)(&animation[ANIMATION_DARK_ORB]->bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/dark_orb0.png", 0, 0, 0);
-	animation[ANIMATION_DARK_ORB]->bitmap[1] = t3f_load_resource((void **)(&animation[ANIMATION_DARK_ORB]->bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/dark_orb1.png", 0, 0, 0);
-	animation[ANIMATION_DARK_ORB]->bitmaps = 2;
-	t3f_animation_add_frame(animation[ANIMATION_DARK_ORB], 0, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_DARK_ORB]->bitmap[0]), al_get_bitmap_height(animation[ANIMATION_DARK_ORB]->bitmap[0]), 0, 5);
-	t3f_animation_add_frame(animation[ANIMATION_DARK_ORB], 1, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_DARK_ORB]->bitmap[1]), al_get_bitmap_height(animation[ANIMATION_DARK_ORB]->bitmap[1]), 0, 5);
-	
 	animation[ANIMATION_LOGO] = t3f_load_animation_from_bitmap("data/graphics/logo.png");
 	if(!animation[ANIMATION_LOGO])
 	{
 		return false;
 	}
-	animation[ANIMATION_TITLE] = t3f_load_animation_from_bitmap("data/graphics/title_logo.png");
-	if(!animation[ANIMATION_TITLE])
-	{
-		return false;
-	}
-	animation[ANIMATION_TITLE_EYES] = t3f_load_animation_from_bitmap("data/graphics/title_logo_eyes.png");
-	if(!animation[ANIMATION_TITLE_EYES])
-	{
-		return false;
-	}
-	animation[ANIMATION_CROSSHAIR] = t3f_load_animation_from_bitmap("data/graphics/crosshair.png");
-	if(!animation[ANIMATION_CROSSHAIR])
-	{
-		return false;
-	}
 	animation[ANIMATION_CURSOR] = t3f_load_animation_from_bitmap("data/graphics/cursor.png");
-	if(!animation[ANIMATION_CROSSHAIR])
+	if(!animation[ANIMATION_CURSOR])
 	{
 		return false;
 	}
-	animation[ANIMATION_PLAYER_SHOT_PARTICLE] = t3f_load_animation_from_bitmap("data/graphics/player_shot_particle.png");
-	if(!animation[ANIMATION_PLAYER_SHOT_PARTICLE])
-	{
-		return false;
-	}
-	animation[ANIMATION_DARK_SHIELD] = t3f_load_animation_from_bitmap("data/graphics/dark_orb_shield.png");
-	if(!animation[ANIMATION_DARK_SHIELD])
-	{
-		return false;
-	}
-	atlas = t3f_create_atlas(512, 512);
-	if(!atlas)
-	{
-		return false;
-	}
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_PLAYER], T3F_ATLAS_SPRITE);
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_DEMON], T3F_ATLAS_SPRITE);
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_ARCHDEMON], T3F_ATLAS_SPRITE);
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_PLAYER_SHOT], T3F_ATLAS_SPRITE);
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_ENEMY_SHOT], T3F_ATLAS_SPRITE);
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_SPIRIT], T3F_ATLAS_SPRITE);
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_CROSSHAIR], T3F_ATLAS_SPRITE);
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_PLAYER_SHOT_PARTICLE], T3F_ATLAS_SPRITE);
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_DARK_ORB], T3F_ATLAS_SPRITE);
-	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_DARK_SHIELD], T3F_ATLAS_SPRITE);
 	
-	/* load BG images */
-	for(i = 0; i < 11; i++)
-	{
-		sprintf(buffer, "data/graphics/bg%02d.png", i);
-		bitmap[i] = t3f_load_resource((void **)(&bitmap[i]), T3F_RESOURCE_TYPE_BITMAP, buffer, 0, 0, 0);
-		if(!bitmap[i])
-		{
-			return false;
-		}
-	}
 	#ifndef ALLEGRO_MACOSX
 		bitmap[BITMAP_ICON] = t3f_load_resource((void **)(&bitmap[BITMAP_ICON]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/icon.png", 0, 0, 0);
 		if(!bitmap[BITMAP_ICON])
@@ -667,88 +570,8 @@ bool initialize(int argc, char * argv[])
 		return false;
 	}
 
-	sample[SAMPLE_GAME_OVER] = al_load_sample("data/sounds/game_over.ogg");
-	if(!sample[SAMPLE_GAME_OVER])
-	{
-		return false;
-	}
-	sample[SAMPLE_LEVEL_UP] = al_load_sample("data/sounds/level_up.ogg");
-	if(!sample[SAMPLE_LEVEL_UP])
-	{
-		return false;
-	}
-	sample[SAMPLE_MAX_MULTIPLIER] = al_load_sample("data/sounds/max_multiplier.ogg");
-	if(!sample[SAMPLE_MAX_MULTIPLIER])
-	{
-		return false;
-	}
-	sample[SAMPLE_HIGH_SCORE] = al_load_sample("data/sounds/high_score.ogg");
-	if(!sample[SAMPLE_HIGH_SCORE])
-	{
-		return false;
-	}
-	sample[SAMPLE_TWIN_SHOT] = al_load_sample("data/sounds/twin_shot.ogg");
-	if(!sample[SAMPLE_TWIN_SHOT])
-	{
-		return false;
-	}
-	sample[SAMPLE_TRIPLE_SHOT] = al_load_sample("data/sounds/triple_shot.ogg");
-	if(!sample[SAMPLE_TRIPLE_SHOT])
-	{
-		return false;
-	}
-	sample[SAMPLE_POWERUP] = al_load_sample("data/sounds/powerup.ogg");
-	if(!sample[SAMPLE_POWERUP])
-	{
-		return false;
-	}
-	sample[SAMPLE_SHOOT] = al_load_sample("data/sounds/shoot.ogg");
-	if(!sample[SAMPLE_SHOOT])
-	{
-		return false;
-	}
-	sample[SAMPLE_HIT] = al_load_sample("data/sounds/hit.ogg");
-	if(!sample[SAMPLE_HIT])
-	{
-		return false;
-	}
-	sample[SAMPLE_DIE] = al_load_sample("data/sounds/die.ogg");
-	if(!sample[SAMPLE_DIE])
-	{
-		return false;
-	}
-	sample[SAMPLE_MULTIPLIER] = al_load_sample("data/sounds/multiplier.ogg");
-	if(!sample[SAMPLE_MULTIPLIER])
-	{
-		return false;
-	}
-	sample[SAMPLE_ENEMY_SHOOT] = al_load_sample("data/sounds/enemy_shoot.ogg");
-	if(!sample[SAMPLE_ENEMY_SHOOT])
-	{
-		return false;
-	}
-	sample[SAMPLE_ORB_DIE] = al_load_sample("data/sounds/orb_die.ogg");
-	if(!sample[SAMPLE_ORB_DIE])
-	{
-		return false;
-	}
-	sample[SAMPLE_REJECTED] = al_load_sample("data/sounds/rejected.ogg");
-	if(!sample[SAMPLE_REJECTED])
-	{
-		return false;
-	}
 	sample[SAMPLE_LOGO] = al_load_sample("data/sounds/logo.ogg");
 	if(!sample[SAMPLE_LOGO])
-	{
-		return false;
-	}
-	cinema = load_cinema("data/cinema/intro.cin", 0);
-	if(!cinema)
-	{
-		return false;
-	}
-	ending_cinema = load_cinema("data/cinema/ending.cin", 0);
-	if(!ending_cinema)
 	{
 		return false;
 	}
@@ -856,13 +679,6 @@ void uninitialize(void)
 {
 	int i;
 	
-	for(i = 0; i < MAX_BITMAPS; i++)
-	{
-		if(bitmap[i])
-		{
-			t3f_destroy_resource(bitmap[i]);
-		}
-	}
 	for(i = 0; i < MAX_FONTS; i++)
 	{
 		if(font[i])

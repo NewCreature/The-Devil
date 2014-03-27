@@ -3,6 +3,8 @@
 #include "t3f/animation.h"
 #include "t3f/sound.h"
 #include "t3f/music.h"
+#include "t3f/resource.h"
+#include "t3f/atlas.h"
 #include "main.h"
 #include "game.h"
 #include "title.h"
@@ -13,12 +15,251 @@
 #include "particle.h"
 #include "leaderboard.h"
 
+bool game_load_data(void)
+{
+	animation[ANIMATION_PLAYER] = t3f_load_animation_from_bitmap("data/graphics/player.png");
+	if(!animation[ANIMATION_PLAYER])
+	{
+		return false;
+	}
+	animation[ANIMATION_DEMON] = t3f_load_animation_from_bitmap("data/graphics/demon.png");
+	if(!animation[ANIMATION_DEMON])
+	{
+		return false;
+	}
+	animation[ANIMATION_ARCHDEMON] = t3f_load_animation_from_bitmap("data/graphics/archdemon.png");
+	if(!animation[ANIMATION_ARCHDEMON])
+	{
+		return false;
+	}
+	animation[ANIMATION_PLAYER_SHOT] = t3f_load_animation_from_bitmap("data/graphics/player_shot.png");
+	if(!animation[ANIMATION_PLAYER_SHOT])
+	{
+		return false;
+	}
+	animation[ANIMATION_ENEMY_SHOT] = t3f_load_animation_from_bitmap("data/graphics/enemy_shot.png");
+	if(!animation[ANIMATION_ENEMY_SHOT])
+	{
+		return false;
+	}
+	
+	/* load spirit animation */
+	animation[ANIMATION_SPIRIT] = t3f_create_animation();
+	if(!animation[ANIMATION_SPIRIT])
+	{
+		return false;
+	}
+	animation[ANIMATION_SPIRIT]->bitmap[0] = t3f_load_resource((void **)(&animation[ANIMATION_SPIRIT]->bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/spirit0.png", 0, 0, 0);
+	animation[ANIMATION_SPIRIT]->bitmap[1] = t3f_load_resource((void **)(&animation[ANIMATION_SPIRIT]->bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/spirit1.png", 0, 0, 0);
+	animation[ANIMATION_SPIRIT]->bitmaps = 2;
+	t3f_animation_add_frame(animation[ANIMATION_SPIRIT], 0, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_SPIRIT]->bitmap[0]), al_get_bitmap_height(animation[ANIMATION_SPIRIT]->bitmap[0]), 0, 5);
+	t3f_animation_add_frame(animation[ANIMATION_SPIRIT], 1, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_SPIRIT]->bitmap[1]), al_get_bitmap_height(animation[ANIMATION_SPIRIT]->bitmap[1]), 0, 5);
+	
+	/* load dark orb animation */
+	animation[ANIMATION_DARK_ORB] = t3f_create_animation();
+	if(!animation[ANIMATION_DARK_ORB])
+	{
+		return false;
+	}
+	animation[ANIMATION_DARK_ORB]->bitmap[0] = t3f_load_resource((void **)(&animation[ANIMATION_DARK_ORB]->bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/dark_orb0.png", 0, 0, 0);
+	animation[ANIMATION_DARK_ORB]->bitmap[1] = t3f_load_resource((void **)(&animation[ANIMATION_DARK_ORB]->bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/dark_orb1.png", 0, 0, 0);
+	animation[ANIMATION_DARK_ORB]->bitmaps = 2;
+	t3f_animation_add_frame(animation[ANIMATION_DARK_ORB], 0, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_DARK_ORB]->bitmap[0]), al_get_bitmap_height(animation[ANIMATION_DARK_ORB]->bitmap[0]), 0, 5);
+	t3f_animation_add_frame(animation[ANIMATION_DARK_ORB], 1, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_DARK_ORB]->bitmap[1]), al_get_bitmap_height(animation[ANIMATION_DARK_ORB]->bitmap[1]), 0, 5);
+
+	animation[ANIMATION_CROSSHAIR] = t3f_load_animation_from_bitmap("data/graphics/crosshair.png");
+	if(!animation[ANIMATION_CROSSHAIR])
+	{
+		return false;
+	}
+	
+	animation[ANIMATION_PLAYER_SHOT_PARTICLE] = t3f_load_animation_from_bitmap("data/graphics/player_shot_particle.png");
+	if(!animation[ANIMATION_PLAYER_SHOT_PARTICLE])
+	{
+		return false;
+	}
+	animation[ANIMATION_DARK_SHIELD] = t3f_load_animation_from_bitmap("data/graphics/dark_orb_shield.png");
+	if(!animation[ANIMATION_DARK_SHIELD])
+	{
+		return false;
+	}
+	atlas = t3f_create_atlas(512, 512);
+	if(!atlas)
+	{
+		return false;
+	}
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_PLAYER], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_DEMON], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_ARCHDEMON], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_PLAYER_SHOT], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_ENEMY_SHOT], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_SPIRIT], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_CROSSHAIR], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_PLAYER_SHOT_PARTICLE], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_DARK_ORB], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_DARK_SHIELD], T3F_ATLAS_SPRITE);
+
+	/* load the first two level backdrops */
+	bitmap[0] = t3f_load_resource((void **)(&bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg00.png", 0, 0, 0);
+	if(!bitmap[0])
+	{
+		return false;
+	}
+	bitmap[1] = t3f_load_resource((void **)(&bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg01.png", 0, 0, 0);
+	if(!bitmap[1])
+	{
+		return false;
+	}
+
+	sample[SAMPLE_GAME_OVER] = al_load_sample("data/sounds/game_over.ogg");
+	if(!sample[SAMPLE_GAME_OVER])
+	{
+		return false;
+	}
+	sample[SAMPLE_LEVEL_UP] = al_load_sample("data/sounds/level_up.ogg");
+	if(!sample[SAMPLE_LEVEL_UP])
+	{
+		return false;
+	}
+	sample[SAMPLE_MAX_MULTIPLIER] = al_load_sample("data/sounds/max_multiplier.ogg");
+	if(!sample[SAMPLE_MAX_MULTIPLIER])
+	{
+		return false;
+	}
+	sample[SAMPLE_HIGH_SCORE] = al_load_sample("data/sounds/high_score.ogg");
+	if(!sample[SAMPLE_HIGH_SCORE])
+	{
+		return false;
+	}
+	sample[SAMPLE_TWIN_SHOT] = al_load_sample("data/sounds/twin_shot.ogg");
+	if(!sample[SAMPLE_TWIN_SHOT])
+	{
+		return false;
+	}
+	sample[SAMPLE_TRIPLE_SHOT] = al_load_sample("data/sounds/triple_shot.ogg");
+	if(!sample[SAMPLE_TRIPLE_SHOT])
+	{
+		return false;
+	}
+	sample[SAMPLE_POWERUP] = al_load_sample("data/sounds/powerup.ogg");
+	if(!sample[SAMPLE_POWERUP])
+	{
+		return false;
+	}
+	sample[SAMPLE_SHOOT] = al_load_sample("data/sounds/shoot.ogg");
+	if(!sample[SAMPLE_SHOOT])
+	{
+		return false;
+	}
+	sample[SAMPLE_HIT] = al_load_sample("data/sounds/hit.ogg");
+	if(!sample[SAMPLE_HIT])
+	{
+		return false;
+	}
+	sample[SAMPLE_DIE] = al_load_sample("data/sounds/die.ogg");
+	if(!sample[SAMPLE_DIE])
+	{
+		return false;
+	}
+	sample[SAMPLE_MULTIPLIER] = al_load_sample("data/sounds/multiplier.ogg");
+	if(!sample[SAMPLE_MULTIPLIER])
+	{
+		return false;
+	}
+	sample[SAMPLE_ENEMY_SHOOT] = al_load_sample("data/sounds/enemy_shoot.ogg");
+	if(!sample[SAMPLE_ENEMY_SHOOT])
+	{
+		return false;
+	}
+	sample[SAMPLE_ORB_DIE] = al_load_sample("data/sounds/orb_die.ogg");
+	if(!sample[SAMPLE_ORB_DIE])
+	{
+		return false;
+	}
+	sample[SAMPLE_REJECTED] = al_load_sample("data/sounds/rejected.ogg");
+	if(!sample[SAMPLE_REJECTED])
+	{
+		return false;
+	}
+	return true;
+}
+
+void game_free_data(void)
+{
+	int i;
+	
+	t3f_destroy_animation(animation[ANIMATION_PLAYER]);
+	animation[ANIMATION_PLAYER] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_DEMON]);
+	animation[ANIMATION_DEMON] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_ARCHDEMON]);
+	animation[ANIMATION_ARCHDEMON] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_PLAYER_SHOT]);
+	animation[ANIMATION_PLAYER_SHOT] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_ENEMY_SHOT]);
+	animation[ANIMATION_ENEMY_SHOT] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_SPIRIT]);
+	animation[ANIMATION_SPIRIT] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_DARK_ORB]);
+	animation[ANIMATION_DARK_ORB] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_CROSSHAIR]);
+	animation[ANIMATION_CROSSHAIR] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_PLAYER_SHOT_PARTICLE]);
+	animation[ANIMATION_PLAYER_SHOT_PARTICLE] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_DARK_SHIELD]);
+	animation[ANIMATION_DARK_SHIELD] = NULL;
+	t3f_destroy_atlas(atlas);
+	atlas = NULL;
+
+	for(i = 0; i < MAX_BITMAPS; i++)
+	{
+		if(bitmap[i])
+		{
+			t3f_destroy_resource(bitmap[i]);
+			bitmap[i] = NULL;
+		}
+	}
+
+	al_destroy_sample(sample[SAMPLE_GAME_OVER]);
+	sample[SAMPLE_GAME_OVER] = NULL;
+	al_destroy_sample(sample[SAMPLE_LEVEL_UP]);
+	sample[SAMPLE_LEVEL_UP] = NULL;
+	al_destroy_sample(sample[SAMPLE_MAX_MULTIPLIER]);
+	sample[SAMPLE_MAX_MULTIPLIER] = NULL;
+	al_destroy_sample(sample[SAMPLE_HIGH_SCORE]);
+	sample[SAMPLE_HIGH_SCORE] = NULL;
+	al_destroy_sample(sample[SAMPLE_TWIN_SHOT]);
+	sample[SAMPLE_TWIN_SHOT] = NULL;
+	al_destroy_sample(sample[SAMPLE_TRIPLE_SHOT]);
+	sample[SAMPLE_TRIPLE_SHOT] = NULL;
+	al_destroy_sample(sample[SAMPLE_POWERUP]);
+	sample[SAMPLE_POWERUP] = NULL;
+	al_destroy_sample(sample[SAMPLE_SHOOT]);
+	sample[SAMPLE_SHOOT] = NULL;
+	al_destroy_sample(sample[SAMPLE_HIT]);
+	sample[SAMPLE_HIT] = NULL;
+	al_destroy_sample(sample[SAMPLE_DIE]);
+	sample[SAMPLE_DIE] = NULL;
+	al_destroy_sample(sample[SAMPLE_MULTIPLIER]);
+	sample[SAMPLE_MULTIPLIER] = NULL;
+	al_destroy_sample(sample[SAMPLE_ENEMY_SHOOT]);
+	sample[SAMPLE_ENEMY_SHOOT] = NULL;
+	al_destroy_sample(sample[SAMPLE_ORB_DIE]);
+	sample[SAMPLE_ORB_DIE] = NULL;
+	al_destroy_sample(sample[SAMPLE_REJECTED]);
+	sample[SAMPLE_REJECTED] = NULL;
+}
+
 bool game_init(int mode)
 {
 	int i;
 	
 	game_mode = mode;
 	
+	al_stop_timer(t3f_timer);
+	game_load_data();
+	al_start_timer(t3f_timer);
+
 	/* create spawners */
 	enemy_spawners = 0;
 	for(i = 0; i < (640 + 32 + 32) / 32; i++)
@@ -157,6 +398,8 @@ void game_exit(void)
 		}
 	}
 	al_stop_timer(t3f_timer);
+	game_free_data();
+	title_load_data();
 	if(upload_scores && !konami_mode && !finale_mode && !fire_power)
 	{
 		t3net_upload_score("http://www.t3-i.com/leaderboards/poll.php", "devil", "1.1", game_mode_text[game_mode], "0", network_id, score * 2 + 'v' + 'g' + 'o' + 'l' + 'f');
@@ -286,6 +529,21 @@ bool game_load_level(LEVEL_DATA * lp, int lev)
 	return true;
 }
 
+void game_load_next_level_bitmap(void)
+{
+	char buf[256];
+	int last_bitmap, next_bitmap;
+
+	last_bitmap = current_level;
+	next_bitmap = (current_level + 2) % 11;
+	sprintf(buf, "data/graphics/bg%02d.png", next_bitmap);
+	t3f_destroy_resource(bitmap[last_bitmap]);
+	bitmap[last_bitmap] = NULL;
+	al_stop_timer(t3f_timer);
+	bitmap[next_bitmap] = t3f_load_resource((void **)(&bitmap[next_bitmap]), T3F_RESOURCE_TYPE_BITMAP, buf, 0, 0, 0);
+	al_start_timer(t3f_timer);
+}
+
 void game_level_logic(void)
 {
 	switch(game_mode)
@@ -304,6 +562,7 @@ void game_level_logic(void)
 			}
 			if(state_ticks % 1800 == 0)
 			{
+				game_load_next_level_bitmap();
 				current_level++;
 				if(current_level == 2)
 				{
@@ -326,6 +585,7 @@ void game_level_logic(void)
 		{
 			if(state_ticks % 1800 == 0)
 			{
+				game_load_next_level_bitmap();
 				current_level++;
 				if(current_level == 2)
 				{
@@ -471,6 +731,7 @@ void game_logic(void)
 					ending_cinema->position = 0;
 					ending_cinema->tick = 0;
 					click = true;
+					ending_cinema = load_cinema("data/cinema/ending.cin", 0);
 					state = STATE_ENDING;
 				}
 			}
