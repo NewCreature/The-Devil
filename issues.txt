@@ -1,0 +1,14 @@
+v1.3
+----
+
+[ ]Use bitmap graphics for touch helpers.
+
+[ ]Add enemy and control indicators around player sprite to make it easier to
+   play on touch devices.
+
+[ ]Add new display option for filling the screen. We should place in-game HUD
+   using t3d_display_top, etc.
+
+[ ]Reset clipping rectangle before drawing touch helpers in case there are black
+   bars around the screen. This will allow the touch helpers to render outside
+   the view.
