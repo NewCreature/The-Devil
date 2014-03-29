@@ -775,9 +775,7 @@ bool set_video_mode(int w, int h, int flags)
 		t3f_display = NULL;
 		t3f_set_gfx_mode(640, 480, flags);
 		al_register_event_source(t3f_queue, al_get_display_event_source(t3f_display));
-		printf("break 3\n");
 		t3f_reload_resources();
-		printf("break 4\n");
 		title_init();
 		al_hide_mouse_cursor(t3f_display);
 	}
