@@ -344,8 +344,6 @@ void player_control_touch(void)
 				break;
 			}
 		}
-		player.vx = 0;
-		player.vy = 0;
 	}
 	else
 	{

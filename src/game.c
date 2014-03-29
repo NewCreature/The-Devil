@@ -800,6 +800,7 @@ void game_render_bg(void)
 void game_render(void)
 {
 	float alpha;
+	int i;
 	
 	game_render_bg();
 	powerup_render();
@@ -840,6 +841,17 @@ void game_render(void)
 		al_draw_filled_rectangle(320 - enemy[0].var2 + 2, 460 + 2, 320 + enemy[0].var2 + 2, 468 + 2, al_map_rgba_f(0.0, 0.0, 0.0, 0.8));
 		al_draw_filled_rectangle(320 - enemy[0].var2, 460, 320 + enemy[0].var2, 468, al_map_rgba_f(0.0, 1.0, 0.0, 1.0));
 		al_hold_bitmap_drawing(true);
+	}
+	if(controller_type == CONTROLLER_TYPE_TOUCH)
+	{
+		for(i = 0; i < 2; i++)
+		{
+			if(touch_stick[i].active)
+			{
+				al_draw_circle(touch_stick[i].pin_x, touch_stick[i].pin_y, touch_size, al_map_rgba_f(0.0, 0.5, 0.0, 0.5), 1.0);
+				al_draw_filled_circle(touch_stick[i].pos_x, touch_stick[i].pos_y, 3.0, al_map_rgba_f(0.0, 0.5, 0.0, 0.5));
+			}
+		}
 	}
 	if(flash_time > 0)
 	{

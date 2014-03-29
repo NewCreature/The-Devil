@@ -68,7 +68,7 @@ int death_time = 0;
 int flash_time = 0;
 int fade_time = 0;
 TOUCH_STICK touch_stick[2];
-float touch_size = 32.0;
+float touch_size = 64.0;
 
 /* network data */
 int network_id_pos = 0;
