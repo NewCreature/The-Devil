@@ -270,6 +270,11 @@ int menu_proc_back(int i, void * p)
 					t3f_write_controller_config(t3f_config, "Analog Controls", controller);
 					break;
 				}
+				case CONTROLLER_TYPE_TOUCH:
+				{
+					t3f_write_controller_config(t3f_config, "Touch Controls", controller);
+					break;
+				}
 			}
 			menu_fix_controller_type_text();
 			current_menu = TITLE_MENU_CONTROL;
@@ -291,16 +296,19 @@ int menu_proc_back(int i, void * p)
 
 int menu_proc_controller_type_left(int i, void * p)
 {
-	char * controller_section[4] = {"Normal Controls", "Mouse Controls", "Analog Controls", "Touch Controls"};
+	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
 
 	controller_type--;
 	if(controller_type < 0)
 	{
 		controller_type = CONTROLLER_TYPES - 1;
 	}
-	if(!t3f_read_controller_config(t3f_config, controller_section[controller_type], controller))
+	if(controller_type != CONTROLLER_TYPE_TOUCH)
 	{
-		detect_controller(controller_type);
+		if(!t3f_read_controller_config(t3f_config, controller_section[controller_type], controller))
+		{
+			detect_controller(controller_type);
+		}
 	}
 	menu_fix_controller_type_text();
 	menu_fix_controller_type_config();
@@ -309,16 +317,19 @@ int menu_proc_controller_type_left(int i, void * p)
 
 int menu_proc_controller_type_right(int i, void * p)
 {
-	char * controller_section[4] = {"Normal Controls", "Mouse Controls", "Analog Controls", "Touch Controls"};
+	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
 
 	controller_type++;
 	if(controller_type >= CONTROLLER_TYPES)
 	{
 		controller_type = 0;
 	}
-	if(!t3f_read_controller_config(t3f_config, controller_section[controller_type], controller))
+	if(controller_type != CONTROLLER_TYPE_TOUCH)
 	{
-		detect_controller(controller_type);
+		if(!t3f_read_controller_config(t3f_config, controller_section[controller_type], controller))
+		{
+			detect_controller(controller_type);
+		}
 	}
 	menu_fix_controller_type_text();
 	menu_fix_controller_type_config();

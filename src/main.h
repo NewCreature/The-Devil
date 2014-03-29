@@ -178,6 +178,7 @@ extern int death_time;
 extern int flash_time;
 extern int fade_time;
 extern TOUCH_STICK touch_stick[2]; 
+extern float touch_size;
 
 /* network data */
 extern int network_id_pos;

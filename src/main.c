@@ -67,7 +67,8 @@ char * game_mode_text[16] = {"Story", "Story-Easy", "Eternal"};
 int death_time = 0;
 int flash_time = 0;
 int fade_time = 0;
-TOUCH_STICK touch_stick[2]; 
+TOUCH_STICK touch_stick[2];
+float touch_size = 32.0;
 
 /* network data */
 int network_id_pos = 0;
@@ -599,7 +600,7 @@ bool initialize(int argc, char * argv[])
 	if(val)
 	{
 		controller_type = atoi(val);
-		if(controller_type > 2)
+		if(controller_type >= CONTROLLER_TYPES)
 		{
 			controller_type = -1;
 		}
@@ -664,9 +665,12 @@ bool initialize(int argc, char * argv[])
 	}
 	else
 	{
-		if(!t3f_read_controller_config(t3f_config, controller_section[controller_type], controller))
+		if(controller_type != CONTROLLER_TYPE_TOUCH)
 		{
-			detect_controller(-1);
+			if(!t3f_read_controller_config(t3f_config, controller_section[controller_type], controller))
+			{
+				detect_controller(-1);
+			}
 		}
 	}
 	t3f_srand(&rng_state, time(0));
