@@ -297,7 +297,7 @@ void player_control_touch(void)
 			touch_stick[0].pos_x = t3f_touch[touch_stick[0].touch_id].x;
 			touch_stick[0].pos_y = t3f_touch[touch_stick[0].touch_id].y;
 			/* handle player movement */
-			strength = t3f_distance(touch_stick[0].pin_x, touch_stick[0].pin_y, touch_stick[0].pos_x, touch_stick[0].pos_y) * 1.5;
+			strength = (t3f_distance(touch_stick[0].pin_x, touch_stick[0].pin_y, touch_stick[0].pos_x, touch_stick[0].pos_y) / touch_size) * 1.5;
 			if(strength > 1.0)
 			{
 				strength = 1.0;
@@ -341,7 +341,7 @@ void player_logic(void)
 			}
 			case CONTROLLER_TYPE_TOUCH:
 			{
-				player_control_analog();
+				player_control_touch();
 				break;
 			}
 		}
