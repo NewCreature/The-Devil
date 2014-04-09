@@ -399,7 +399,7 @@ T3NET_LEADERBOARD * t3net_get_leaderboard(char * url, char * game, char * versio
 	strcpy(lp->mode, mode);
 	strcpy(lp->option, option);
 	lp->ascend = ascend;
-	if(!t3net_update_leaderboard(lp))
+	if(!t3net_update_leaderboard_2(lp))
 	{
 		t3net_destroy_leaderboard(lp);
 		return NULL;
@@ -471,6 +471,8 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 			walk_node = mxmlWalkNext(walk_node, top_node, MXML_DESCEND);
 			if(walk_node)
 			{
+				printf("%s\n", mxmlGetElement(walk_node));
+				printf("%d\n", mxmlGetInteger(walk_node));
 				switch(walk_node->type)
 				{
 					case MXML_CUSTOM:
@@ -481,12 +483,15 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 					/* if we find element "name" start a new entry in the list */
 					case MXML_ELEMENT:
 					{
+						printf("element: %s\n", walk_node->value.element.name);
+						printf("%s\n", mxmlGetOpaque(walk_node));
 						if(!strcasecmp(walk_node->value.element.name, "leaderboard"))
 						{
 							loop_out = 1;
 						}
 						else if(!strcasecmp(walk_node->value.element.name, "name"))
 						{
+							printf("adding name\n");
 							ecount++;
 							strcpy(lp->entry[ecount - 1]->name, "");
 							lp->entry[ecount - 1]->score = -1;
@@ -504,6 +509,7 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 					}
 					case MXML_OPAQUE:
 					{
+						printf("opaque\n");
 						break;
 					}
 					case MXML_REAL:
@@ -512,10 +518,10 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 					}
 					case MXML_TEXT:
 					{
+						printf("text\n");
 						/* get score for this name */
 						if(current_element && strlen(walk_node->value.text.string) > 0)
 						{
-							
 							/* append extra name elements */
 							if(!strcasecmp(current_element, "name"))
 							{
@@ -557,6 +563,98 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 	mxmlDelete(top_node);
 	free(data);
 	
+	return 1;
+}
+
+int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
+{
+	CURL * curl;
+	char url_w_arg[1024] = {0};
+	char * data = NULL;
+	int ecount = 0;
+	int text_pos;
+	int text_char;
+	int text_fill_pos;
+	char text[256];
+	
+	if(!lp)
+	{
+		return 0;
+	}
+	
+	data = malloc(65536);
+	if(!data)
+	{
+		return 0;
+	}
+	
+	/* make HTTP request */
+	curl = curl_easy_init();
+	if(!curl)
+	{
+		free(data);
+		return 0;
+	}
+	sprintf(url_w_arg, "%s?game=%s&version=%s&mode=%s&option=%s%s&limit=%d", lp->url, lp->game, lp->version, lp->mode, lp->option, lp->ascend ? "&ascend=true" : "", lp->entries);
+	curl_easy_setopt(curl, CURLOPT_URL, url_w_arg);
+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, t3net_internal_write_function);
+	curl_easy_setopt(curl, CURLOPT_WRITEDATA, data);
+	curl_easy_setopt(curl, CURLOPT_TIMEOUT, T3NET_TIMEOUT_TIME);
+	if(curl_easy_perform(curl))
+	{
+		curl_easy_cleanup(curl);
+		free(data);
+		return 0;
+	}
+    curl_easy_cleanup(curl);
+
+	text_pos = 0;
+	while(ecount < lp->entries)
+	{
+		/* read the name */
+		text_char = 0;
+		text_fill_pos = 0;
+		while(text_char != '\n')
+		{
+			text_char = data[text_pos];
+			lp->entry[ecount]->name[text_fill_pos] = text_char;
+			text_fill_pos++;
+			text_pos++;
+		}
+		if(text_fill_pos > 0)
+		{
+			lp->entry[ecount]->name[text_fill_pos - 1] = '\0';
+		}
+		
+		/* read the score */
+		text_char = 0;
+		text_fill_pos = 0;
+		strncpy(text, "", 256);
+		while(text_char != '\n')
+		{
+			text_char = data[text_pos];
+			if(text_char != '\t')
+			{
+				text[text_fill_pos] = text_char;
+				text_fill_pos++;
+			}
+			text_pos++;
+		}
+		if(text_fill_pos > 0)
+		{
+			text[text_fill_pos - 1] = '\0';
+		}
+		lp->entry[ecount]->score = atoi(text);
+		ecount++;
+		
+		/* get out if we've reached the end of the data */
+		if(text_pos >= strnlen(data, 65536))
+		{
+			break;
+		}
+	}
+	lp->entries = ecount;
+	free(data);
 	return 1;
 }
 
