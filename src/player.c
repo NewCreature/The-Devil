@@ -353,8 +353,8 @@ void player_control_touch(void)
 		}
 		else
 		{
-			touch_stick[1].pos_x = t3f_touch[touch_stick[0].touch_id].x;
-			touch_stick[1].pos_y = t3f_touch[touch_stick[0].touch_id].y;
+			touch_stick[1].pos_x = t3f_touch[touch_stick[1].touch_id].x;
+			touch_stick[1].pos_y = t3f_touch[touch_stick[1].touch_id].y;
 			strength = (t3f_distance(touch_stick[1].pin_x, touch_stick[1].pin_y, touch_stick[1].pos_x, touch_stick[1].pos_y) / touch_size) * 1.5;
 			if(strength > 1.0)
 			{
