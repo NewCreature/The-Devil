@@ -210,11 +210,13 @@ void logic(void * data)
 
 void render_mouse(void)
 {
-	if(!t3f_mouse_hidden && !mouse_disabled)
-	{
-		t3f_draw_animation(animation[ANIMATION_CURSOR], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, t3f_mouse_x - 2 + 2, t3f_mouse_y + 2, 0, 0);
-		t3f_draw_animation(animation[ANIMATION_CURSOR], t3f_color_white, state_ticks, t3f_mouse_x - 2, t3f_mouse_y, 0, 0);
-	}
+	#ifndef T3F_ANDROID
+		if(!t3f_mouse_hidden && !mouse_disabled)
+		{
+			t3f_draw_animation(animation[ANIMATION_CURSOR], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, t3f_mouse_x - 2 + 2, t3f_mouse_y + 2, 0, 0);
+			t3f_draw_animation(animation[ANIMATION_CURSOR], t3f_color_white, state_ticks, t3f_mouse_x - 2, t3f_mouse_y, 0, 0);
+		}
+	#endif
 }
 
 void render(void * data)
