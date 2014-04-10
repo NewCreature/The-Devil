@@ -10,10 +10,10 @@ v1.3
    bars around the screen. This will allow the touch helpers to render outside
    the view.
 
+[X]Hide cursor on Android port.
+
 [ ]Add new display option for filling the screen. We should place in-game HUD
    using t3d_display_top, etc.
-
-[ ]Hide cursor on Android port.
 
 [ ]Add touch friendly menus using larger font.
 
