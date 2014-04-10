@@ -6,7 +6,7 @@
 #include "particle.h"
 
 static bool fire = false;
-static float fire_angle;
+float fire_angle;
 
 void player_fire_shot(float angle)
 {

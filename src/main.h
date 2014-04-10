@@ -56,6 +56,8 @@
 #define ANIMATION_TITLE_EYES   11
 #define ANIMATION_DARK_ORB     12
 #define ANIMATION_DARK_SHIELD  13
+#define ANIMATION_RADAR        14
+#define ANIMATION_RADAR_DOT    15
 
 #define MAX_FONTS               8
 #define FONT_LARGE              0

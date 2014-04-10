@@ -83,6 +83,16 @@ bool game_load_data(void)
 	{
 		return false;
 	}
+	animation[ANIMATION_RADAR] = t3f_load_animation_from_bitmap("data/graphics/radar.png");
+	if(!animation[ANIMATION_RADAR])
+	{
+		return false;
+	}
+	animation[ANIMATION_RADAR_DOT] = t3f_load_animation_from_bitmap("data/graphics/radar_dot.png");
+	if(!animation[ANIMATION_RADAR_DOT])
+	{
+		return false;
+	}
 	atlas = t3f_create_atlas(512, 512);
 	if(!atlas)
 	{
@@ -98,6 +108,8 @@ bool game_load_data(void)
 	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_PLAYER_SHOT_PARTICLE], T3F_ATLAS_SPRITE);
 	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_DARK_ORB], T3F_ATLAS_SPRITE);
 	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_DARK_SHIELD], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_RADAR], T3F_ATLAS_SPRITE);
+	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_RADAR_DOT], T3F_ATLAS_SPRITE);
 
 	/* load the first two level backdrops */
 	bitmap[0] = t3f_load_resource((void **)(&bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg00.png", 0, 0, 0);
@@ -208,6 +220,10 @@ void game_free_data(void)
 	animation[ANIMATION_PLAYER_SHOT_PARTICLE] = NULL;
 	t3f_destroy_animation(animation[ANIMATION_DARK_SHIELD]);
 	animation[ANIMATION_DARK_SHIELD] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_RADAR]);
+	animation[ANIMATION_RADAR] = NULL;
+	t3f_destroy_animation(animation[ANIMATION_RADAR_DOT]);
+	animation[ANIMATION_RADAR_DOT] = NULL;
 	t3f_destroy_atlas(atlas);
 	atlas = NULL;
 
@@ -797,10 +813,50 @@ void game_render_bg(void)
 	}
 }
 
+void game_render_radar(void)
+{
+	double a;
+	int i;
+	
+	if(player.active)
+	{
+		t3f_draw_animation(animation[ANIMATION_RADAR], al_map_rgba_f(0.25, 0.25, 0.25, 0.25), 0, player.x + 16 - al_get_bitmap_width(animation[ANIMATION_RADAR]->bitmap[0]) / 2, player.y + 16 - al_get_bitmap_height(animation[ANIMATION_RADAR]->bitmap[0]) / 2, 0.0, 0);
+		for(i = 0; i < GAME_MAX_ENEMIES; i++)
+		{
+			if(enemy[i].active)
+			{
+				a = atan2(enemy[i].y - player.y, enemy[i].x - player.x);
+				t3f_draw_animation(animation[ANIMATION_RADAR_DOT], al_map_rgba_f(0.25, 0.25, 0.25, 0.25), 0, player.x + cos(a) * 40.0 - 2.0 + 16.0, player.y + sin(a) * 40.0 - 2.0 + 16.0, 0.0, 0);
+			}
+		}
+		t3f_draw_animation(animation[ANIMATION_RADAR_DOT], al_map_rgba_f(0.75, 0.75, 0.0, 0.75), 0, player.x + cos(fire_angle) * 37.0 - 2.0 + 16.0, player.y + sin(fire_angle) * 37.0 - 2.0 + 16.0, 0.0, 0);
+		t3f_draw_animation(animation[ANIMATION_RADAR_DOT], al_map_rgba_f(0.75, 0.75, 0.0, 0.75), 0, player.x + cos(player.angle) * 25.0 - 2.0 + 16.0, player.y + sin(player.angle) * 25.0 - 2.0 + 16.0, 0.0, 0);
+	}
+}
+
+void game_render_touch_helpers(void)
+{
+	int i;
+
+	al_hold_bitmap_drawing(false);
+	al_set_clipping_rectangle(0, 0, al_get_display_width(t3f_display), al_get_display_height(t3f_display));
+	al_hold_bitmap_drawing(true);
+	for(i = 0; i < 2; i++)
+	{
+		if(touch_stick[i].active)
+		{
+			t3f_draw_scaled_animation(animation[ANIMATION_RADAR], al_map_rgba_f(0.0, 0.25, 0.0, 0.25), 0, touch_stick[i].pin_x - 64.0, touch_stick[i].pin_y - 64.0, 0.0, 2.0, 0);
+			t3f_draw_animation(animation[ANIMATION_RADAR_DOT], al_map_rgba_f(0.0, 0.25, 0.0, 0.25), 0, touch_stick[i].pos_x - 2.0, touch_stick[i].pos_y - 2.0, 0.0, 0);
+		}
+	}
+	al_hold_bitmap_drawing(false);
+	t3f_set_clipping_rectangle(0, 0, 0, 0);
+	al_hold_bitmap_drawing(true);
+}
+
 void game_render(void)
 {
 	float alpha;
-	int i;
 	
 	if(t3f_option[T3F_OPTION_RENDER_MODE] != T3F_RENDER_MODE_ALWAYS_CLEAR)
 	{
@@ -821,6 +877,7 @@ void game_render(void)
 	{
 		t3f_draw_animation(animation[ANIMATION_CROSSHAIR], t3f_color_white, player.tick, t3f_mouse_x - 8, t3f_mouse_y - 8, 0, 0);
 	}
+	game_render_radar();
 	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), GAME_STATS_MARGIN + 2, GAME_STATS_MARGIN + 2, 0, "Score: %06d", score);
 	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), GAME_STATS_MARGIN, GAME_STATS_MARGIN, 0, "Score: %06d", score);
 	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), GAME_STATS_MARGIN + 2, GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, 0, "Multiplier: %d", multiplier);
@@ -850,18 +907,7 @@ void game_render(void)
 	}
 	if(controller_type == CONTROLLER_TYPE_TOUCH)
 	{
-		al_hold_bitmap_drawing(false);
-		al_set_clipping_rectangle(0, 0, al_get_display_width(t3f_display), al_get_display_height(t3f_display));
-		for(i = 0; i < 2; i++)
-		{
-			if(touch_stick[i].active)
-			{
-				al_draw_circle(touch_stick[i].pin_x, touch_stick[i].pin_y, touch_size, al_map_rgba_f(0.0, 0.5, 0.0, 0.5), 1.0);
-				al_draw_filled_circle(touch_stick[i].pos_x, touch_stick[i].pos_y, 3.0, al_map_rgba_f(0.0, 0.5, 0.0, 0.5));
-			}
-		}
-		t3f_set_clipping_rectangle(0, 0, 0, 0);
-		al_hold_bitmap_drawing(false);
+		game_render_touch_helpers();
 	}
 	if(flash_time > 0)
 	{
