@@ -120,6 +120,7 @@ void logic(void * data)
 				{
 					t3f_select_next_gui_element(menu[current_menu]);
 				}
+				al_hide_mouse_cursor(t3f_display);
 			}
 			break;
 		}
@@ -674,7 +675,6 @@ bool initialize(int argc, char * argv[])
 		}
 	}
 	t3f_srand(&rng_state, time(0));
-	al_hide_mouse_cursor(t3f_display);
 	t3_logo_setup("data/graphics/logo.png", "data/sounds/logo.ogg");
 	state = STATE_LOGO;
 	return true;
