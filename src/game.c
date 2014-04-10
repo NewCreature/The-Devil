@@ -837,6 +837,9 @@ void game_render_radar(void)
 void game_render_touch_helpers(void)
 {
 	int i;
+	float scale;
+
+	scale = (touch_size * 2.0) / al_get_bitmap_width(animation[ANIMATION_RADAR]->bitmap[0]);
 
 	al_hold_bitmap_drawing(false);
 	al_set_clipping_rectangle(0, 0, al_get_display_width(t3f_display), al_get_display_height(t3f_display));
@@ -845,7 +848,7 @@ void game_render_touch_helpers(void)
 	{
 		if(touch_stick[i].active)
 		{
-			t3f_draw_scaled_animation(animation[ANIMATION_RADAR], al_map_rgba_f(0.0, 0.25, 0.0, 0.25), 0, touch_stick[i].pin_x - 64.0, touch_stick[i].pin_y - 64.0, 0.0, 2.0, 0);
+			t3f_draw_scaled_animation(animation[ANIMATION_RADAR], al_map_rgba_f(0.0, 0.25, 0.0, 0.25), 0, touch_stick[i].pin_x - touch_size, touch_stick[i].pin_y - touch_size, 0.0, scale, 0);
 			t3f_draw_animation(animation[ANIMATION_RADAR_DOT], al_map_rgba_f(0.0, 0.25, 0.0, 0.25), 0, touch_stick[i].pos_x - 2.0, touch_stick[i].pos_y - 2.0, 0.0, 0);
 		}
 	}
