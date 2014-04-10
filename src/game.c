@@ -802,6 +802,12 @@ void game_render(void)
 	float alpha;
 	int i;
 	
+	if(t3f_option[T3F_OPTION_RENDER_MODE] != T3F_RENDER_MODE_ALWAYS_CLEAR)
+	{
+		al_set_clipping_rectangle(0, 0, al_get_display_width(t3f_display), al_get_display_height(t3f_display));
+		al_clear_to_color(al_map_rgba_f(0.0, 0.0, 0.0, 1.0));
+		t3f_set_clipping_rectangle(0, 0, 0, 0);
+	}
 	game_render_bg();
 	powerup_render();
 	player_render_shadow();
@@ -844,6 +850,8 @@ void game_render(void)
 	}
 	if(controller_type == CONTROLLER_TYPE_TOUCH)
 	{
+		al_hold_bitmap_drawing(false);
+		al_set_clipping_rectangle(0, 0, al_get_display_width(t3f_display), al_get_display_height(t3f_display));
 		for(i = 0; i < 2; i++)
 		{
 			if(touch_stick[i].active)
@@ -852,6 +860,8 @@ void game_render(void)
 				al_draw_filled_circle(touch_stick[i].pos_x, touch_stick[i].pos_y, 3.0, al_map_rgba_f(0.0, 0.5, 0.0, 0.5));
 			}
 		}
+		t3f_set_clipping_rectangle(0, 0, 0, 0);
+		al_hold_bitmap_drawing(false);
 	}
 	if(flash_time > 0)
 	{
