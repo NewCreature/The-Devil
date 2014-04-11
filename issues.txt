@@ -19,3 +19,7 @@ v1.3
 
 [ ]Implement Back button.
 
+[ ]Clicking the right arrow to change Control Type causes crash when moving
+   past Mouse + Keyboard.
+
+[ ]Need to implement Touch Small, Touch Medium, and Touch Large control types.
