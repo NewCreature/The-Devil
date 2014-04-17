@@ -716,6 +716,10 @@ int t3f_set_gfx_mode(int w, int h, int flags)
 				}
 			}
 		}
+		if(flags & T3F_FILL_SCREEN)
+		{
+			t3f_flags |= T3F_FILL_SCREEN;
+		}
 		sprintf(val, "%d", w);
 		al_set_config_value(t3f_config, "T3F", "display_width", val);
 		sprintf(val, "%d", h);
