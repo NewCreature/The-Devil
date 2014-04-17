@@ -471,8 +471,6 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 			walk_node = mxmlWalkNext(walk_node, top_node, MXML_DESCEND);
 			if(walk_node)
 			{
-				printf("%s\n", mxmlGetElement(walk_node));
-				printf("%d\n", mxmlGetInteger(walk_node));
 				switch(walk_node->type)
 				{
 					case MXML_CUSTOM:
@@ -483,15 +481,12 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 					/* if we find element "name" start a new entry in the list */
 					case MXML_ELEMENT:
 					{
-						printf("element: %s\n", walk_node->value.element.name);
-						printf("%s\n", mxmlGetOpaque(walk_node));
 						if(!strcasecmp(walk_node->value.element.name, "leaderboard"))
 						{
 							loop_out = 1;
 						}
 						else if(!strcasecmp(walk_node->value.element.name, "name"))
 						{
-							printf("adding name\n");
 							ecount++;
 							strcpy(lp->entry[ecount - 1]->name, "");
 							lp->entry[ecount - 1]->score = -1;
@@ -509,7 +504,6 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 					}
 					case MXML_OPAQUE:
 					{
-						printf("opaque\n");
 						break;
 					}
 					case MXML_REAL:
@@ -518,7 +512,6 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 					}
 					case MXML_TEXT:
 					{
-						printf("text\n");
 						/* get score for this name */
 						if(current_element && strlen(walk_node->value.text.string) > 0)
 						{
@@ -648,7 +641,7 @@ int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
 		ecount++;
 		
 		/* get out if we've reached the end of the data */
-		if(text_pos >= strnlen(data, 65536))
+		if(text_pos >= strlen(data))
 		{
 			break;
 		}
