@@ -529,16 +529,12 @@ bool initialize(int argc, char * argv[])
 	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
 	
 	process_arguments(argc, argv);
-	if(!t3f_initialize("The Devil", 640, 480, 60.0, logic, render, T3F_DEFAULT | T3F_USE_MOUSE | T3F_USE_JOYSTICK | T3F_USE_TOUCH | T3F_FORCE_ASPECT, NULL))
+	if(!t3f_initialize("The Devil", 640, 480, 60.0, logic, render, T3F_DEFAULT | T3F_USE_MOUSE | T3F_USE_JOYSTICK | T3F_USE_TOUCH | T3F_FORCE_ASPECT | T3F_FILL_SCREEN, NULL))
 	{
 		return false;
 	}
 	t3f_set_event_handler(event_handler);
 	al_inhibit_screensaver(true);
-	if(!al_init_ttf_addon())
-	{
-		return false;
-	}
 	animation[ANIMATION_LOGO] = t3f_load_animation_from_bitmap("data/graphics/logo.png");
 	if(!animation[ANIMATION_LOGO])
 	{

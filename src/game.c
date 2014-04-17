@@ -881,31 +881,31 @@ void game_render(void)
 		t3f_draw_animation(animation[ANIMATION_CROSSHAIR], t3f_color_white, player.tick, t3f_mouse_x - 8, t3f_mouse_y - 8, 0, 0);
 	}
 	game_render_radar();
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), GAME_STATS_MARGIN + 2, GAME_STATS_MARGIN + 2, 0, "Score: %06d", score);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), GAME_STATS_MARGIN, GAME_STATS_MARGIN, 0, "Score: %06d", score);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), GAME_STATS_MARGIN + 2, GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, 0, "Multiplier: %d", multiplier);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), GAME_STATS_MARGIN, GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]), 0, "Multiplier: %d", multiplier);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_left + GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + 2, 0, "Score: %06d", score);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_left + GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN, 0, "Score: %06d", score);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_left + GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, 0, "Multiplier: %d", multiplier);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_left + GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]), 0, "Multiplier: %d", multiplier);
 	if(current_level < 10)
 	{
-		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 640 - GAME_STATS_MARGIN + 2, GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
-		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 640 - GAME_STATS_MARGIN, GAME_STATS_MARGIN, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
+		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_right - GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
+		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_right - GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
 	}
 	else
 	{
-		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 640 - GAME_STATS_MARGIN + 2, GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level);
-		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 640 - GAME_STATS_MARGIN, GAME_STATS_MARGIN, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level);
+		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_right - GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level);
+		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_right - GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level);
 	}
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 640 - GAME_STATS_MARGIN + 2, GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, ALLEGRO_ALIGN_RIGHT, "Lives: %2d", lives);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 640 - GAME_STATS_MARGIN, GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]), ALLEGRO_ALIGN_RIGHT, "Lives: %2d", lives);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 320 + 2, GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_CENTRE, "High Score: %06d", high_score[game_mode]);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, GAME_STATS_MARGIN, ALLEGRO_ALIGN_CENTRE, "High Score: %06d", high_score[game_mode]);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_right - GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, ALLEGRO_ALIGN_RIGHT, "Lives: %2d", lives);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_right - GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]), ALLEGRO_ALIGN_RIGHT, "Lives: %2d", lives);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 320 + 2, t3f_display_top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_CENTRE, "High Score: %06d", high_score[game_mode]);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_display_top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_CENTRE, "High Score: %06d", high_score[game_mode]);
 	if(enemy[0].type == ENEMY_TYPE_DARK_ORB && enemy[0].active)
 	{
-		al_draw_text(font[FONT_TINY], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 320 + 2, 440 + 2, ALLEGRO_ALIGN_CENTRE, "Dark Power Orb");
-		al_draw_text(font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, 440, ALLEGRO_ALIGN_CENTRE, "Dark Power Orb");
+		al_draw_text(font[FONT_TINY], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 320 + 2, t3f_display_bottom - 40 + 2, ALLEGRO_ALIGN_CENTRE, "Dark Power Orb");
+		al_draw_text(font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_display_bottom - 40, ALLEGRO_ALIGN_CENTRE, "Dark Power Orb");
 		al_hold_bitmap_drawing(false);
-		al_draw_filled_rectangle(320 - enemy[0].var2 + 2, 460 + 2, 320 + enemy[0].var2 + 2, 468 + 2, al_map_rgba_f(0.0, 0.0, 0.0, 0.8));
-		al_draw_filled_rectangle(320 - enemy[0].var2, 460, 320 + enemy[0].var2, 468, al_map_rgba_f(0.0, 1.0, 0.0, 1.0));
+		al_draw_filled_rectangle(320 - enemy[0].var2 + 2, t3f_display_bottom - 20 + 2, 320 + enemy[0].var2 + 2, t3f_display_bottom - 12 + 2, al_map_rgba_f(0.0, 0.0, 0.0, 0.8));
+		al_draw_filled_rectangle(320 - enemy[0].var2, t3f_display_bottom - 20, 320 + enemy[0].var2, t3f_display_bottom - 12, al_map_rgba_f(0.0, 1.0, 0.0, 1.0));
 		al_hold_bitmap_drawing(true);
 	}
 	if(controller_type == CONTROLLER_TYPE_TOUCH)
