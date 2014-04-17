@@ -132,7 +132,7 @@ void logic(void * data)
 			{
 				destroy_cinema(cinema);
 				cinema = NULL;
-				state = STATE_TITLE;
+				state = STATE_TITLE_MENU;
 			}
 			break;
 		}
@@ -144,6 +144,11 @@ void logic(void * data)
 		case STATE_TITLE:
 		{
 			title_logic();
+			break;
+		}
+		case STATE_TITLE_MENU:
+		{
+			title_menu_logic();
 			break;
 		}
 		case STATE_TITLE_OUT:
@@ -188,12 +193,12 @@ void logic(void * data)
 					else
 					{
 						current_menu = TITLE_MENU_MAIN;
-						state = STATE_TITLE;
+						state = STATE_TITLE_MENU;
 					}
 				}
 				else
 				{
-					state = STATE_TITLE;
+					state = STATE_TITLE_MENU;
 					current_menu = TITLE_MENU_MAIN;
 				}
 			}
@@ -244,6 +249,11 @@ void render(void * data)
 		case STATE_TITLE:
 		{
 			title_render();
+			break;
+		}
+		case STATE_TITLE_MENU:
+		{
+			title_menu_render();
 			break;
 		}
 		case STATE_TITLE_OUT:
@@ -555,7 +565,7 @@ bool initialize(int argc, char * argv[])
 		al_set_display_icon(t3f_display, bitmap[BITMAP_ICON]);
 	#endif
 	
-	font[FONT_LARGE] = t3f_load_resource((void **)(&font[FONT_LARGE]), T3F_RESOURCE_TYPE_FONT, "data/fonts/isle_of_the_dead.ttf", 32, 0, 0);
+	font[FONT_LARGE] = t3f_load_resource((void **)(&font[FONT_LARGE]), T3F_RESOURCE_TYPE_FONT, "data/fonts/isle_of_the_dead.ttf", 60, 0, 0);
 	if(!font[FONT_LARGE])
 	{
 		return false;

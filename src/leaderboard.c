@@ -18,7 +18,7 @@ void leaderboard_logic(void)
 {
 	state_ticks++;
 	title_bg_logic();
-	title_menu_logic(menu[LEADERBOARD_MENU]);
+	title_process_menu(menu[LEADERBOARD_MENU]);
 }
 
 void leaderboard_render(void)
@@ -26,7 +26,7 @@ void leaderboard_render(void)
 	ALLEGRO_COLOR color;
 	int i;
 	int offset = 0;
-	int yoffset = 200 - 32;
+	int yoffset = 200 - 68;
 	int size = al_get_font_line_height(font[FONT_SMALL]);
 	
 	title_bg_render();

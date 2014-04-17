@@ -439,13 +439,13 @@ void game_exit(void)
 		else
 		{
 			current_menu = TITLE_MENU_MAIN;
-			state = STATE_TITLE;
+			state = STATE_TITLE_MENU;
 		}
 	}
 	else
 	{
 		current_menu = TITLE_MENU_MAIN;
-		state = STATE_TITLE;
+		state = STATE_TITLE_MENU;
 	}
 	t3f_play_music("data/music/title.xm");
 	al_start_timer(t3f_timer);
@@ -758,7 +758,7 @@ void game_logic(void)
 		}
 		case GAME_STATE_PAUSED:
 		{
-			title_menu_logic(menu[PAUSE_MENU]);
+			title_process_menu(menu[PAUSE_MENU]);
 			if(t3f_key[ALLEGRO_KEY_ESCAPE])
 			{
 				game_state = resume_state;

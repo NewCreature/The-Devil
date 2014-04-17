@@ -12,15 +12,16 @@
 #include "game.h"
 #include "particle.h"
 
-#define STATE_INTRO  0
-#define STATE_TITLE  1
-#define STATE_GAME   2
-#define STATE_LOGO   3
-#define STATE_ENDING 4
-#define STATE_TITLE_IN 5
-#define STATE_TITLE_OUT 6
+#define STATE_INTRO        0
+#define STATE_TITLE_MENU   1
+#define STATE_GAME         2
+#define STATE_LOGO         3
+#define STATE_ENDING       4
+#define STATE_TITLE_IN     5
+#define STATE_TITLE_OUT    6
 #define STATE_LEADERBOARDS 7
-#define STATE_TITLE_GAME 8
+#define STATE_TITLE_GAME   8
+#define STATE_TITLE        9
 
 #define TITLE_MAX_MENUS            32
 #define TITLE_MENU_MAIN             0
