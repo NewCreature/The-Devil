@@ -130,8 +130,9 @@ static bool t3_logo_touched(void)
 	
 	for(i = 0; i < T3F_MAX_TOUCHES; i++)
 	{
-		if(t3f_touch[i].active)
+		if(t3f_touch[i].released)
 		{
+			t3f_touch[i].released = false;
 			return true;
 		}
 	}

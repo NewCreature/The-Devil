@@ -1227,21 +1227,21 @@ void title_in_render(void)
 	if(state_ticks < 60)
 	{
 		alpha = (float)(state_ticks) / 60.0;
-		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(alpha, alpha, alpha, alpha), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 60, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(alpha, alpha, alpha, alpha), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
 	}
 	else if(state_ticks < 180)
 	{
-		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 60, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
 	}
 	else
 	{
 		title_bg_render();
-		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 60 + 4, 0, 0);
-		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2 + 4, 60 + 4, 0, 0);
-		t3f_draw_animation(animation[ANIMATION_TITLE], t3f_color_white, state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2, 60, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2 + 4, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE], t3f_color_white, state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
 		al_hold_bitmap_drawing(false);
 		al_draw_filled_rectangle(0.0, 0.0, 640, 480, al_map_rgba_f(0.0, 0.0, 0.0, 1.0 - (float)(state_ticks - 180) / 60.0));
-		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 60, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
 	}
 }
 
@@ -1427,8 +1427,9 @@ void title_logic(void)
 	title_bg_logic();
 	for(i = 0; i < T3F_MAX_TOUCHES; i++)
 	{
-		if(t3f_touch[i].active)
+		if(t3f_touch[i].released)
 		{
+			t3f_touch[i].released = false;
 			state = STATE_TITLE_MENU;
 		}
 	}
@@ -1437,10 +1438,11 @@ void title_logic(void)
 void title_render(void)
 {
 	title_bg_render();
-	t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 160 + 4, 0, 0);
-	t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2 + 4, 160 + 4, 0, 0);
-	t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 160, 0, 0);
-	t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2, 160, 0, 0);
+	t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 0, 0);
+	t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2 + 4, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 0, 0);
+	t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
+	t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
+	render_mouse();
 }
 
 void title_menu_logic(void)
