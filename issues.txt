@@ -26,6 +26,8 @@ v1.3
 
 [X]Show soft keyboard when choosing the name entry menu item.
 
+[ ]Fix crash around level 10.
+
 [ ]Fix menus that have settings that don't apply to touch devices.
 
 [ ]Add quit confirmation menu.
