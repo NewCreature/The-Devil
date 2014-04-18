@@ -12,12 +12,12 @@ v1.3
 
 [X]Hide cursor on Android port.
 
-[ ]Add new display option for filling the screen. We should place in-game HUD
+[X]Add touch friendly menus using larger font.
+
+[X]Add new display option for filling the screen. We should place in-game HUD
    using t3d_display_top, etc.
 
-[ ]Add touch friendly menus using larger font.
-
-[ ]Implement Back button.
+[X]Implement Back button.
 
 [ ]Clicking the right arrow to change Control Type causes crash when moving
    past Mouse + Keyboard.
