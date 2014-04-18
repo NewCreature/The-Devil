@@ -24,11 +24,15 @@ v1.3
 
 [X]Need to implement Touch Small, Touch Medium, and Touch Large control types.
 
+[X]Show soft keyboard when choosing the name entry menu item.
+
 [ ]Fix menus that have settings that don't apply to touch devices.
 
-[ ]Show soft keyboard when choosing the name entry menu item.
-
 [ ]Add quit confirmation menu.
+
+[ ]Add touch-specific Network ID menu that is centered in the top half of the
+   screen. This is so the user will be able to see the text they are typing when
+   the soft keyboard is being displayed.
 
 [ ]Add credits screen.
 
