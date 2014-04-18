@@ -24,5 +24,9 @@ v1.3
 
 [ ]Need to implement Touch Small, Touch Medium, and Touch Large control types.
 
+[ ]Add credits screen.
+
+[ ]Update cinemas.
+
 [ ]Add debugging info to initialization phase so we can try to figure out what
    is preventing the build from running on OS X 10.6.
