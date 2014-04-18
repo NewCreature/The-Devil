@@ -24,6 +24,10 @@ v1.3
 
 [X]Need to implement Touch Small, Touch Medium, and Touch Large control types.
 
+[ ]Fix menus that have settings that don't apply to touch devices.
+
+[ ]Show soft keyboard when choosing the name entry menu item.
+
 [ ]Add quit confirmation menu.
 
 [ ]Add credits screen.
