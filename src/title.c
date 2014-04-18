@@ -732,6 +732,7 @@ int menu_proc_network_id(int i, void * p)
 	network_id_pos = strlen(network_id);
 	menu_fix_internet_text();
 	t3f_clear_keys();
+	t3f_show_soft_keyboard();
 	return 1;
 }
 
