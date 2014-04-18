@@ -638,13 +638,14 @@ void game_level_logic(void)
 
 void game_logic(void)
 {
-	if(t3f_key[ALLEGRO_KEY_ESCAPE] && game_state != GAME_STATE_PAUSED)
+	if((t3f_key[ALLEGRO_KEY_ESCAPE] || t3f_key[ALLEGRO_KEY_BACK]) && game_state != GAME_STATE_PAUSED)
 	{
 		resume_state = game_state;
 		game_state = GAME_STATE_PAUSED;
 		menu[PAUSE_MENU]->hover_element = 0;
 		t3f_select_next_gui_element(menu[PAUSE_MENU]);
 		t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
+		t3f_key[ALLEGRO_KEY_BACK] = 0;
 		return;
 	}
 	switch(game_state)

@@ -18,6 +18,13 @@ void leaderboard_logic(void)
 {
 	state_ticks++;
 	title_bg_logic();
+	if(t3f_key[ALLEGRO_KEY_ESCAPE] || t3f_key[ALLEGRO_KEY_BACK])
+	{
+		t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
+		t3f_key[ALLEGRO_KEY_BACK] = 0;
+		state = STATE_TITLE_MENU;
+		current_menu = TITLE_MENU_MAIN;
+	}
 	title_process_menu(menu[LEADERBOARD_MENU]);
 }
 

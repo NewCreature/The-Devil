@@ -285,6 +285,11 @@ int menu_proc_back(int i, void * p)
 			current_menu = TITLE_MENU_MODE;
 			break;
 		}
+		case TITLE_MENU_MAIN:
+		{
+			state = STATE_TITLE;
+			break;
+		}
 		default:
 		{
 			current_menu = TITLE_MENU_MAIN;
@@ -974,7 +979,11 @@ bool title_init(void)
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_settings, "Settings", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_quit, "Exit to OS", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	#ifndef T3F_ANDROID
+		t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_quit, "Exit to OS", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	#else
+		t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_back, "Back", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	#endif
 	t3f_center_gui(menu[TITLE_MENU_MAIN], 16, 480);
 	
 	oy = 0;
@@ -1426,12 +1435,21 @@ void title_logic(void)
 	
 	state_ticks++;
 	title_bg_logic();
-	for(i = 0; i < T3F_MAX_TOUCHES; i++)
+	if(t3f_key[ALLEGRO_KEY_ESCAPE] || t3f_key[ALLEGRO_KEY_BACK])
 	{
-		if(t3f_touch[i].released)
+		t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
+		t3f_key[ALLEGRO_KEY_BACK] = 0;
+		t3f_exit();
+	}
+	else
+	{
+		for(i = 0; i < T3F_MAX_TOUCHES; i++)
 		{
-			t3f_touch[i].released = false;
-			state = STATE_TITLE_MENU;
+			if(t3f_touch[i].released)
+			{
+				t3f_touch[i].released = false;
+				state = STATE_TITLE_MENU;
+			}
 		}
 	}
 }
@@ -1458,7 +1476,16 @@ void title_menu_logic(void)
 	{
 		title_name_entry_logic();
 	}
-	title_process_menu(menu[current_menu]);
+	if(t3f_key[ALLEGRO_KEY_ESCAPE] || t3f_key[ALLEGRO_KEY_BACK])
+	{
+		t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
+		t3f_key[ALLEGRO_KEY_BACK] = 0;
+		menu_proc_back(0, NULL);
+	}
+	else
+	{
+		title_process_menu(menu[current_menu]);
+	}
 }
 
 void title_menu_render(void)

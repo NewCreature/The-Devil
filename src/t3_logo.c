@@ -182,7 +182,11 @@ void t3_logo_logic(void)
 	{
 		t3_logo_done = true;
 	}
-	if(t3_logo_touched() && t3_logo_fade < 270)
+	if(t3f_key[ALLEGRO_KEY_BACK])
+	{
+		t3f_exit();
+	}
+	else if((t3f_read_key(0) || t3_logo_touched()) && t3_logo_fade < 270)
 	{
 		t3_logo_fade = 270;
 	}
