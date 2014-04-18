@@ -41,8 +41,8 @@ int t3f_key_buffer[T3F_KEY_BUFFER_MAX] = {0};
 int t3f_key_buffer_keys = 0;
 
 /* mouse data */
-int t3f_mouse_x = 0;
-int t3f_mouse_y = 0;
+float t3f_mouse_x = 0;
+float t3f_mouse_y = 0;
 int t3f_mouse_z = 0;
 int t3f_mouse_dx = 0;
 int t3f_mouse_dy = 0;
@@ -943,7 +943,7 @@ char t3f_read_key(int flags)
 	return rkey;
 }
 
-void t3f_get_mouse_mickeys(int * x, int * y, int * z)
+void t3f_get_mouse_mickeys(float * x, float * y, int * z)
 {
 	if(x)
 	{
