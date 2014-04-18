@@ -1214,6 +1214,7 @@ void title_in_logic(void)
 	state_ticks++;
 	if(state_ticks >= 240)
 	{
+		t3f_clear_touch_data();
 		state = STATE_TITLE;
 		state_ticks = 0;
 	}
