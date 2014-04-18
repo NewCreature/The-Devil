@@ -19,10 +19,12 @@ v1.3
 
 [X]Implement Back button.
 
-[ ]Clicking the right arrow to change Control Type causes crash when moving
+[X]Clicking the right arrow to change Control Type causes crash when moving
    past Mouse + Keyboard.
 
-[ ]Need to implement Touch Small, Touch Medium, and Touch Large control types.
+[X]Need to implement Touch Small, Touch Medium, and Touch Large control types.
+
+[ ]Add quit confirmation menu.
 
 [ ]Add credits screen.
 
