@@ -409,7 +409,9 @@ void player_logic(void)
 				player_control_analog();
 				break;
 			}
-			case CONTROLLER_TYPE_TOUCH:
+			case CONTROLLER_TYPE_TOUCH_S:
+			case CONTROLLER_TYPE_TOUCH_M:
+			case CONTROLLER_TYPE_TOUCH_L:
 			{
 				player_control_touch();
 				break;

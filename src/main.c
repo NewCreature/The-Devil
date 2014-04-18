@@ -528,7 +528,11 @@ void detect_controller(int type)
 	#ifdef PANDORA
 		detect_controller_pandora(type);
 	#else
-		detect_controller_desktop(type);
+		#ifndef T3F_ANDROID
+			detect_controller_desktop(type);
+		#else
+			controller_type = CONTROLLER_TYPE_TOUCH_M;
+		#endif
 	#endif
 	menu_fix_controller_type_config();
 }
@@ -609,10 +613,17 @@ bool initialize(int argc, char * argv[])
 	if(val)
 	{
 		controller_type = atoi(val);
-		if(controller_type >= CONTROLLER_TYPES)
-		{
-			controller_type = -1;
-		}
+		#ifndef T3F_ANDROID
+			if(controller_type >= CONTROLLER_TYPES)
+			{
+				controller_type = -1;
+			}
+		#else
+			if(controller_type < CONTROLLER_TYPE_TOUCH_S || controller_type > CONTROLLER_TYPE_TOUCH_L)
+			{
+				controller_type = -1;
+			}
+		#endif
 	}
 	val = al_get_config_value(t3f_config, "Save Data", "High Score (S)");
 	if(val)
@@ -674,7 +685,7 @@ bool initialize(int argc, char * argv[])
 	}
 	else
 	{
-		if(controller_type != CONTROLLER_TYPE_TOUCH)
+		if(controller_type < CONTROLLER_TYPE_TOUCH_S)
 		{
 			if(!t3f_read_controller_config(t3f_config, controller_section[controller_type], controller))
 			{

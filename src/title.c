@@ -34,9 +34,19 @@ static void menu_fix_controller_type_text(void)
 			sprintf(menu_text[0], "Dual Analog");
 			break;
 		}
-		case CONTROLLER_TYPE_TOUCH:
+		case CONTROLLER_TYPE_TOUCH_S:
 		{
-			sprintf(menu_text[0], "Touch");
+			sprintf(menu_text[0], "Touch Small");
+			break;
+		}
+		case CONTROLLER_TYPE_TOUCH_M:
+		{
+			sprintf(menu_text[0], "Touch Medium");
+			break;
+		}
+		case CONTROLLER_TYPE_TOUCH_L:
+		{
+			sprintf(menu_text[0], "Touch Large");
 			break;
 		}
 	}
@@ -270,11 +280,6 @@ int menu_proc_back(int i, void * p)
 					t3f_write_controller_config(t3f_config, "Analog Controls", controller);
 					break;
 				}
-				case CONTROLLER_TYPE_TOUCH:
-				{
-					t3f_write_controller_config(t3f_config, "Touch Controls", controller);
-					break;
-				}
 			}
 			menu_fix_controller_type_text();
 			current_menu = TITLE_MENU_CONTROL;
@@ -299,16 +304,55 @@ int menu_proc_back(int i, void * p)
 	return 1;
 }
 
+#ifdef T3F_ANDROID
+	static void fix_touch_size(void)
+	{
+		switch(controller_type)
+		{
+			case CONTROLLER_TYPE_TOUCH_S:
+			{
+				touch_size = 48.0;
+				break;
+			}
+			case CONTROLLER_TYPE_TOUCH_M:
+			{
+				touch_size = 64.0;
+				break;
+			}
+			case CONTROLLER_TYPE_TOUCH_L:
+			{
+				touch_size = 96.0;
+				break;
+			}
+		}
+	}
+#endif
+
 int menu_proc_controller_type_left(int i, void * p)
 {
 	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
 
 	controller_type--;
-	if(controller_type < 0)
+	#ifndef T3F_ANDROID
+		if(controller_type < 0)
+		{
+			controller_type = CONTROLLER_TYPE_ANALOG;
+		}
+	#else
+		if(controller_type < CONTROLLER_TYPE_TOUCH_S)
+		{
+			controller_type = CONTROLLER_TYPE_TOUCH_L;
+		}
+		fix_touch_size();
+	#endif
+	if(controller_type == CONTROLLER_TYPE_ANALOG)
 	{
-		controller_type = CONTROLLER_TYPES - 1;
+		if(al_get_num_joysticks() <= 0)
+		{
+			controller_type = CONTROLLER_TYPE_MOUSE;
+		}
 	}
-	if(controller_type != CONTROLLER_TYPE_TOUCH)
+	if(controller_type < CONTROLLER_TYPE_TOUCH_S)
 	{
 		if(!t3f_read_controller_config(t3f_config, controller_section[controller_type], controller))
 		{
@@ -325,11 +369,26 @@ int menu_proc_controller_type_right(int i, void * p)
 	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
 
 	controller_type++;
-	if(controller_type >= CONTROLLER_TYPES)
+	#ifndef T3F_ANDROID
+		if(controller_type > CONTROLLER_TYPE_ANALOG)
+		{
+			controller_type = 0;
+		}
+	#else
+		if(controller_type > CONTROLLER_TYPE_TOUCH_L)
+		{
+			controller_type = CONTROLLER_TYPE_TOUCH_S;
+		}
+		fix_touch_size();
+	#endif
+	if(controller_type == CONTROLLER_TYPE_ANALOG)
 	{
-		controller_type = 0;
+		if(al_get_num_joysticks() <= 0)
+		{
+			controller_type = CONTROLLER_TYPE_NORMAL;
+		}
 	}
-	if(controller_type != CONTROLLER_TYPE_TOUCH)
+	if(controller_type < CONTROLLER_TYPE_TOUCH_S)
 	{
 		if(!t3f_read_controller_config(t3f_config, controller_section[controller_type], controller))
 		{

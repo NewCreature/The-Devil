@@ -909,7 +909,7 @@ void game_render(void)
 		al_draw_filled_rectangle(320 - enemy[0].var2, t3f_display_bottom - 20, 320 + enemy[0].var2, t3f_display_bottom - 12, al_map_rgba_f(0.0, 1.0, 0.0, 1.0));
 		al_hold_bitmap_drawing(true);
 	}
-	if(controller_type == CONTROLLER_TYPE_TOUCH)
+	if(controller_type >= CONTROLLER_TYPE_TOUCH_S)
 	{
 		game_render_touch_helpers();
 	}
