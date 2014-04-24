@@ -189,14 +189,14 @@ void logic(void * data)
 					}
 					else
 					{
-						current_menu = TITLE_MENU_MAIN;
+						select_menu(TITLE_MENU_MAIN);
 						state = STATE_TITLE;
 					}
 				}
 				else
 				{
 					state = STATE_TITLE;
-					current_menu = TITLE_MENU_MAIN;
+					select_menu(TITLE_MENU_MAIN);
 				}
 			}
 			break;
@@ -598,7 +598,7 @@ bool initialize(int argc, char * argv[])
 	}
 	if(first_run)
 	{
-		current_menu = TITLE_MENU_FIRST;
+		select_menu(TITLE_MENU_FIRST);
 		al_set_config_value(t3f_config, "Settings", "First Run", "false");
 	}
 	val = al_get_config_value(t3f_config, "Controls", "Type");

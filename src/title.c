@@ -154,16 +154,24 @@ void menu_analog_logic(void)
 	}
 }
 
+void select_menu(int mmenu)
+{
+	current_menu = mmenu;
+	menu[current_menu]->hover_element = -1;
+	#ifndef T3F_ANDROID
+		t3f_select_next_gui_element(menu[current_menu]);
+	#endif
+}
+
 int menu_proc_game(int i, void * p)
 {
-	current_menu = TITLE_MENU_MAIN;
-	t3f_select_next_gui_element(menu[current_menu]);
+	select_menu(TITLE_MENU_MAIN);
 	return 1;
 }
 
 int menu_proc_play(int i, void * p)
 {
-	current_menu = TITLE_MENU_MODE;
+	select_menu(TITLE_MENU_MODE);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -194,7 +202,7 @@ int menu_proc_leaderboards(int i, void * p)
 
 int menu_proc_settings(int i, void * p)
 {
-	current_menu = TITLE_MENU_SETTINGS;
+	select_menu(TITLE_MENU_SETTINGS);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -208,7 +216,7 @@ int menu_proc_quit(int i, void * p)
 
 int menu_proc_play_story(int i, void * p)
 {
-	current_menu = TITLE_MENU_DIFFICULTY;
+	select_menu(TITLE_MENU_DIFFICULTY);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -245,13 +253,13 @@ int menu_proc_back(int i, void * p)
 		case TITLE_MENU_CONTROL:
 		case TITLE_MENU_DISPLAY:
 		{
-			current_menu = TITLE_MENU_SETTINGS;
+			select_menu(TITLE_MENU_SETTINGS);
 			menu_fix_internet_text();
 			break;
 		}
 		case TITLE_MENU_NETWORK_ID:
 		{
-			current_menu = TITLE_MENU_INTERNET;
+			select_menu(TITLE_MENU_INTERNET);
 			al_set_config_value(t3f_config, "Network", "ID", network_id);
 			al_set_config_value(t3f_config, "Network", "Upload", upload_scores ? "true" : "false");
 			network_id_entry = false;
@@ -281,22 +289,27 @@ int menu_proc_back(int i, void * p)
 				}
 			}
 			menu_fix_controller_type_text();
-			current_menu = TITLE_MENU_CONTROL;
+			select_menu(TITLE_MENU_CONTROL);
 			break;
 		}
 		case TITLE_MENU_DIFFICULTY:
 		{
-			current_menu = TITLE_MENU_MODE;
+			select_menu(TITLE_MENU_MODE);
 			break;
 		}
 		case TITLE_MENU_MAIN:
 		{
-			current_menu = MENU_TITLE;
+			select_menu(MENU_TITLE);
+			break;
+		}
+		case MENU_TITLE:
+		{
+			t3f_exit();
 			break;
 		}
 		default:
 		{
-			current_menu = TITLE_MENU_MAIN;
+			select_menu(TITLE_MENU_MAIN);
 			break;
 		}
 	}
@@ -434,21 +447,21 @@ static void update_controller_menu_text(void)
 
 int menu_proc_controls(int i, void * p)
 {
-	current_menu = TITLE_MENU_CONTROL;
+	select_menu(TITLE_MENU_CONTROL);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
 int menu_proc_internet(int i, void * p)
 {
-	current_menu = TITLE_MENU_INTERNET;
+	select_menu(TITLE_MENU_INTERNET);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
 int menu_proc_display(int i, void * p)
 {
-	current_menu = TITLE_MENU_DISPLAY;
+	select_menu(TITLE_MENU_DISPLAY);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -459,19 +472,19 @@ int menu_proc_controller_configure(int i, void * p)
 	{
 		case CONTROLLER_TYPE_NORMAL:
 		{
-			current_menu = TITLE_MENU_CONTROL_NORMAL;
+			select_menu(TITLE_MENU_CONTROL_NORMAL);
 			t3f_select_next_gui_element(menu[current_menu]);
 			break;
 		}
 		case CONTROLLER_TYPE_MOUSE:
 		{
-			current_menu = TITLE_MENU_CONTROL_MOUSE;
+			select_menu(TITLE_MENU_CONTROL_MOUSE);
 			t3f_select_next_gui_element(menu[current_menu]);
 			break;
 		}
 		case CONTROLLER_TYPE_ANALOG:
 		{
-			current_menu = TITLE_MENU_CONTROL_ANALOG;
+			select_menu(TITLE_MENU_CONTROL_ANALOG);
 			t3f_select_next_gui_element(menu[current_menu]);
 			break;
 		}
@@ -607,7 +620,7 @@ int menu_proc_set_move_vertical(int i, void * p)
 	analog_type = 0;
 	analog_max = 0.0;
 	controller->binding[0].flags |= T3F_CONTROLLER_FLAG_AXIS_NO_ADJUST;
-	current_menu = TITLE_MENU_ANALOG;
+	select_menu(TITLE_MENU_ANALOG);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -640,7 +653,7 @@ int menu_proc_set_move_horizontal(int i, void * p)
 	analog_type = 1;
 	analog_max = 0.0;
 	controller->binding[2].flags |= T3F_CONTROLLER_FLAG_AXIS_NO_ADJUST;
-	current_menu = TITLE_MENU_ANALOG;
+	select_menu(TITLE_MENU_ANALOG);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -673,7 +686,7 @@ int menu_proc_set_fire_vertical(int i, void * p)
 	analog_type = 2;
 	analog_max = 0.0;
 	controller->binding[4].flags |= T3F_CONTROLLER_FLAG_AXIS_NO_ADJUST;
-	current_menu = TITLE_MENU_ANALOG;
+	select_menu(TITLE_MENU_ANALOG);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -706,7 +719,7 @@ int menu_proc_set_fire_horizontal(int i, void * p)
 	analog_type = 3;
 	analog_max = 0.0;
 	controller->binding[6].flags |= T3F_CONTROLLER_FLAG_AXIS_NO_ADJUST;
-	current_menu = TITLE_MENU_ANALOG;
+	select_menu(TITLE_MENU_ANALOG);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -727,7 +740,7 @@ int menu_proc_upload_toggle(int i, void * p)
 
 int menu_proc_network_id(int i, void * p)
 {
-	current_menu = TITLE_MENU_NETWORK_ID;
+	select_menu(TITLE_MENU_NETWORK_ID);
 	network_id_entry = true;
 	network_id_pos = strlen(network_id);
 	t3f_clear_keys();
@@ -753,7 +766,7 @@ int menu_proc_leaderboard_mode_left(int i, void * p)
 	if(!leaderboard)
 	{
 		state = STATE_TITLE;
-		current_menu = TITLE_MENU_MAIN;
+		select_menu(TITLE_MENU_MAIN);
 	}
 	return 1;
 }
@@ -770,7 +783,7 @@ int menu_proc_leaderboard_mode_right(int i, void * p)
 	if(!leaderboard)
 	{
 		state = STATE_TITLE;
-		current_menu = TITLE_MENU_MAIN;
+		select_menu(TITLE_MENU_MAIN);
 	}
 	return 1;
 }
@@ -778,7 +791,7 @@ int menu_proc_leaderboard_mode_right(int i, void * p)
 int menu_proc_leaderboard_done(int i, void * p)
 {
 	state = STATE_TITLE;
-	current_menu = TITLE_MENU_MAIN;
+	select_menu(TITLE_MENU_MAIN);
 	return 1;
 }
 
@@ -799,7 +812,7 @@ int menu_proc_first_yes(int i, void * p)
 	upload_scores = true;
 	al_set_config_value(t3f_config, "Network", "Upload", upload_scores ? "true" : "false");
 	menu_fix_internet_text();
-	current_menu = TITLE_MENU_INTERNET;
+	select_menu(TITLE_MENU_INTERNET);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -809,7 +822,7 @@ int menu_proc_first_no(int i, void * p)
 	upload_scores = false;
 	al_set_config_value(t3f_config, "Network", "Upload", upload_scores ? "true" : "false");
 	menu_fix_internet_text();
-	current_menu = TITLE_MENU_MAIN;
+	select_menu(TITLE_MENU_MAIN);
 	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
@@ -992,7 +1005,7 @@ int menu_proc_analog_done(int i, void * p)
 		{
 			controller->binding[analog_type * 2].mid = controller->state[analog_type * 2].pos;
 			controller->binding[0].flags &= ~T3F_CONTROLLER_FLAG_AXIS_NO_ADJUST;
-			current_menu = TITLE_MENU_CONTROL_ANALOG;
+			select_menu(TITLE_MENU_CONTROL_ANALOG);
 			break;
 		}
 	}
@@ -1209,8 +1222,8 @@ bool title_init(void)
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	menu_fix_internet_text();
-	#ifndef T3F_ANDROID
-		t3f_center_gui(menu[TITLE_MENU_NETWORK_ID], 16, 240);
+	#ifdef T3F_ANDROID
+		t3f_center_gui(menu[TITLE_MENU_NETWORK_ID], 20 + t3f_display_top, 240);
 	#else
 		t3f_center_gui(menu[TITLE_MENU_NETWORK_ID], 20, 480);
 	#endif
@@ -1363,6 +1376,7 @@ void title_name_entry_logic(void)
 			menu_fix_internet_text();
 			menu_proc_back(0, NULL);
 			t3f_key[ALLEGRO_KEY_ENTER] = 0;
+			t3f_show_soft_keyboard(false);
 		}
 		else if(input >= 32 && input < 127)
 		{

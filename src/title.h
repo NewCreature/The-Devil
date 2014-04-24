@@ -1,6 +1,7 @@
 #ifndef TITLE_H
 #define TITLE_H
 
+void select_menu(int mmenu);
 void menu_fix_leaderboard_text(void);
 void menu_fix_controller_type_config(void);
 bool title_load_data(void);
