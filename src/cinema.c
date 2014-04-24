@@ -1,4 +1,5 @@
 #include "t3f/t3f.h"
+#include "t3f/resource.h"
 #include "main.h"
 #include "cinema.h"
 #include "title.h"
@@ -25,6 +26,8 @@ void destroy_cinema(CINEMA * cp)
 	{
 		t3f_destroy_animation(cp->animation[i]);
 	}
+	t3f_destroy_resource(cp->font);
+	t3f_destroy_resource(cp->bg_image);
 	free(cp);
 }
 
@@ -105,6 +108,18 @@ CINEMA * load_cinema(const char * fn, int flags)
 		cp->frame[i].ticks = al_fread16le(fp);
 	}
 	al_fclose(fp);
+
+	cp->bg_image = t3f_load_resource((void **)(&cp->bg_image), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg00.png", 0, 0, 0);
+	if(!cp->bg_image)
+	{
+		return false;
+	}
+
+	cp->font = t3f_load_resource((void **)(&cp->font), T3F_RESOURCE_TYPE_FONT, "data/fonts/isle_of_the_dead.ttf", 36, 0, 0);
+	if(!cp->font)
+	{
+		return NULL;
+	}
 	return cp;
 }
 
@@ -176,7 +191,7 @@ void cinema_logic(CINEMA * cp)
 	
 }
 
-static float cinema_get_text_tab(const char * text)
+static float cinema_get_text_tab(ALLEGRO_FONT * fp, const char * text)
 {
 	char buffer[64] = {0};
 	int i;
@@ -189,7 +204,7 @@ static float cinema_get_text_tab(const char * text)
 			break;
 		}
 	}
-	return al_get_text_width(font[2], buffer);
+	return al_get_text_width(fp, buffer);
 }
 
 typedef struct
@@ -342,9 +357,9 @@ void cinema_render(CINEMA * cp)
 		{
 			case CINEMA_ENTITY_TEXT:
 			{
-				tab = cinema_get_text_tab(cp->frame[cp->position].entity[i].data);
-				cinema_draw_text(font[2], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 4 + 2, 4 + 2, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
-				cinema_draw_text(font[2], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 4, 4, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
+				tab = cinema_get_text_tab(cp->font, cp->frame[cp->position].entity[i].data);
+				cinema_draw_text(cp->font, al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 4 + 2, 4 + 2, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
+				cinema_draw_text(cp->font, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 4, 4, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
 				break;
 			}
 			case CINEMA_ENTITY_ANIMATION:

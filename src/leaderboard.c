@@ -36,7 +36,7 @@ void leaderboard_render(void)
 	int yoffset = 200 - 68;
 	int size = al_get_font_line_height(font[FONT_SMALL]);
 	
-	title_bg_render();
+	title_bg_render(bitmap[0]);
 	for(i = 0; i < 10; i++)
 	{
 		if(i < leaderboard->entries)

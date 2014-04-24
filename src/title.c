@@ -170,6 +170,7 @@ int menu_proc_play(int i, void * p)
 
 int menu_proc_story(int i, void * p)
 {
+//	title_free_data();
 	cinema = load_cinema("data/cinema/intro.cin", 0);
 	cinema->position = 0;
 	cinema->tick = 0;
@@ -1286,14 +1287,14 @@ void title_bg_logic(void)
 	title_flicker++;
 }
 
-void title_bg_render(void)
+void title_bg_render(ALLEGRO_BITMAP * bp)
 {
 	float alpha;
-	al_draw_bitmap(bitmap[0], 0, 0, 0);
+	al_draw_bitmap(bp, 0, 0, 0);
 	alpha = (float)(title_flicker % 512) / 512.0;
-	t3f_draw_bitmap(bitmap[0], al_map_rgba_f(alpha, alpha, alpha, alpha), 0, 0, (float)(title_flicker % 512) / 2.0 - 256.0, 0);
+	t3f_draw_bitmap(bp, al_map_rgba_f(alpha, alpha, alpha, alpha), 0, 0, (float)(title_flicker % 512) / 2.0 - 256.0, 0);
 	alpha = 1.0 - (float)(title_flicker % 512) / 512.0;
-	t3f_draw_bitmap(bitmap[0], al_map_rgba_f(alpha, alpha, alpha, alpha), 0, 0, (float)-(title_flicker % 512) / 2.0, 0);
+	t3f_draw_bitmap(bp, al_map_rgba_f(alpha, alpha, alpha, alpha), 0, 0, (float)-(title_flicker % 512) / 2.0, 0);
 }
 
 void title_in_logic(void)
@@ -1327,7 +1328,7 @@ void title_in_render(void)
 	}
 	else
 	{
-		title_bg_render();
+		title_bg_render(bitmap[0]);
 		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
 		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
 		t3f_draw_animation(animation[ANIMATION_TITLE], t3f_color_white, state_ticks, x, y, 0, 0);
@@ -1517,7 +1518,7 @@ void title_render(void)
 {
 	float x, y;
 
-	title_bg_render();
+	title_bg_render(bitmap[0]);
 
 	/* render title logo if we are on title menu */
 	if(current_menu == MENU_TITLE)
@@ -1581,7 +1582,7 @@ void title_out_logic(void)
 void title_out_render(void)
 {
 	al_hold_bitmap_drawing(true);
-	title_bg_render();
+	title_bg_render(bitmap[0]);
 	t3f_render_gui(menu[current_menu]);
 	al_hold_bitmap_drawing(false);
 	al_draw_filled_rectangle(0.0, 0.0, 640, 480, al_map_rgba_f(0.0, 0.0, 0.0, (float)state_ticks / 60.0));
@@ -1606,6 +1607,6 @@ void title_game_logic(void)
 void title_game_render(void)
 {
 	al_hold_bitmap_drawing(true);
-	title_bg_render();
+	title_bg_render(bitmap[0]);
 	al_hold_bitmap_drawing(false);
 }

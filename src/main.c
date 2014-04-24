@@ -132,6 +132,7 @@ void logic(void * data)
 			{
 				destroy_cinema(cinema);
 				cinema = NULL;
+				title_load_data();
 				state = STATE_TITLE;
 			}
 			break;
@@ -169,6 +170,7 @@ void logic(void * data)
 			{
 				destroy_cinema(ending_cinema);
 				ending_cinema = NULL;
+				title_load_data();
 				if(upload_scores)
 				{
 					download_leaderboard();
@@ -231,7 +233,7 @@ void render(void * data)
 		}
 		case STATE_INTRO:
 		{
-			title_bg_render();
+			title_bg_render(cinema->bg_image);
 			cinema_render(cinema);
 			render_mouse();
 			break;
@@ -263,7 +265,7 @@ void render(void * data)
 		}
 		case STATE_ENDING:
 		{
-			title_bg_render();
+			title_bg_render(ending_cinema->bg_image);
 			cinema_render(ending_cinema);
 			render_mouse();
 			break;

@@ -64,8 +64,8 @@
 
 #define MAX_FONTS               8
 #define FONT_LARGE              0
-#define FONT_SMALL              1
-#define FONT_TINY               2
+#define FONT_SMALL              2
+#define FONT_TINY               3
 
 #define MAX_SAMPLES            16
 #define SAMPLE_LEVEL_UP         0

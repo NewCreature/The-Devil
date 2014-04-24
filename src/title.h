@@ -8,7 +8,7 @@ void title_free_data(void);
 bool title_init(void);
 void title_exit(void);
 void title_bg_logic(void);
-void title_bg_render(void);
+void title_bg_render(ALLEGRO_BITMAP * bp);
 void title_in_logic(void);
 void title_in_render(void);
 bool title_joystick_button_pressed(void);
