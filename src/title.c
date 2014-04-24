@@ -172,7 +172,6 @@ int menu_proc_game(int i, void * p)
 int menu_proc_play(int i, void * p)
 {
 	select_menu(TITLE_MENU_MODE);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
@@ -203,7 +202,6 @@ int menu_proc_leaderboards(int i, void * p)
 int menu_proc_settings(int i, void * p)
 {
 	select_menu(TITLE_MENU_SETTINGS);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
@@ -217,7 +215,6 @@ int menu_proc_quit(int i, void * p)
 int menu_proc_play_story(int i, void * p)
 {
 	select_menu(TITLE_MENU_DIFFICULTY);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
@@ -448,21 +445,18 @@ static void update_controller_menu_text(void)
 int menu_proc_controls(int i, void * p)
 {
 	select_menu(TITLE_MENU_CONTROL);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
 int menu_proc_internet(int i, void * p)
 {
 	select_menu(TITLE_MENU_INTERNET);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
 int menu_proc_display(int i, void * p)
 {
 	select_menu(TITLE_MENU_DISPLAY);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
@@ -473,19 +467,16 @@ int menu_proc_controller_configure(int i, void * p)
 		case CONTROLLER_TYPE_NORMAL:
 		{
 			select_menu(TITLE_MENU_CONTROL_NORMAL);
-			t3f_select_next_gui_element(menu[current_menu]);
 			break;
 		}
 		case CONTROLLER_TYPE_MOUSE:
 		{
 			select_menu(TITLE_MENU_CONTROL_MOUSE);
-			t3f_select_next_gui_element(menu[current_menu]);
 			break;
 		}
 		case CONTROLLER_TYPE_ANALOG:
 		{
 			select_menu(TITLE_MENU_CONTROL_ANALOG);
-			t3f_select_next_gui_element(menu[current_menu]);
 			break;
 		}
 	}
@@ -621,7 +612,6 @@ int menu_proc_set_move_vertical(int i, void * p)
 	analog_max = 0.0;
 	controller->binding[0].flags |= T3F_CONTROLLER_FLAG_AXIS_NO_ADJUST;
 	select_menu(TITLE_MENU_ANALOG);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
@@ -654,7 +644,6 @@ int menu_proc_set_move_horizontal(int i, void * p)
 	analog_max = 0.0;
 	controller->binding[2].flags |= T3F_CONTROLLER_FLAG_AXIS_NO_ADJUST;
 	select_menu(TITLE_MENU_ANALOG);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
@@ -687,7 +676,6 @@ int menu_proc_set_fire_vertical(int i, void * p)
 	analog_max = 0.0;
 	controller->binding[4].flags |= T3F_CONTROLLER_FLAG_AXIS_NO_ADJUST;
 	select_menu(TITLE_MENU_ANALOG);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
@@ -720,7 +708,6 @@ int menu_proc_set_fire_horizontal(int i, void * p)
 	analog_max = 0.0;
 	controller->binding[6].flags |= T3F_CONTROLLER_FLAG_AXIS_NO_ADJUST;
 	select_menu(TITLE_MENU_ANALOG);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
@@ -813,7 +800,6 @@ int menu_proc_first_yes(int i, void * p)
 	al_set_config_value(t3f_config, "Network", "Upload", upload_scores ? "true" : "false");
 	menu_fix_internet_text();
 	select_menu(TITLE_MENU_INTERNET);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
@@ -823,7 +809,6 @@ int menu_proc_first_no(int i, void * p)
 	al_set_config_value(t3f_config, "Network", "Upload", upload_scores ? "true" : "false");
 	menu_fix_internet_text();
 	select_menu(TITLE_MENU_MAIN);
-	t3f_select_next_gui_element(menu[current_menu]);
 	return 1;
 }
 
