@@ -51,7 +51,6 @@
 #define ANIMATION_PLAYER_SHOT   3
 #define ANIMATION_ENEMY_SHOT    4
 #define ANIMATION_SPIRIT        5
-#define ANIMATION_LOGO          6
 #define ANIMATION_TITLE         7
 #define ANIMATION_CROSSHAIR     8
 #define ANIMATION_CURSOR        9

@@ -128,12 +128,15 @@ void logic(void * data)
 		{
 			title_bg_logic();
 			cinema_logic(cinema);
-			if(cinema->position >= cinema->frames)
+			if(cinema->position >= cinema->frames || t3f_key[ALLEGRO_KEY_ESCAPE] || t3f_key[ALLEGRO_KEY_BACK])
 			{
 				destroy_cinema(cinema);
 				cinema = NULL;
 				title_load_data();
 				state = STATE_TITLE;
+				menu[current_menu]->hover_element = -1;
+				t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
+				t3f_key[ALLEGRO_KEY_BACK] = 0;
 			}
 			break;
 		}
@@ -166,7 +169,7 @@ void logic(void * data)
 		{
 			title_bg_logic();
 			cinema_logic(ending_cinema);
-			if(ending_cinema->position >= ending_cinema->frames)
+			if(ending_cinema->position >= ending_cinema->frames || t3f_key[ALLEGRO_KEY_ESCAPE] || t3f_key[ALLEGRO_KEY_BACK])
 			{
 				destroy_cinema(ending_cinema);
 				ending_cinema = NULL;
@@ -198,6 +201,9 @@ void logic(void * data)
 					state = STATE_TITLE;
 					select_menu(TITLE_MENU_MAIN);
 				}
+				menu[current_menu]->hover_element = -1;
+				t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
+				t3f_key[ALLEGRO_KEY_BACK] = 0;
 			}
 			break;
 		}
@@ -541,11 +547,6 @@ bool initialize(int argc, char * argv[])
 	}
 	t3f_set_event_handler(event_handler);
 	al_inhibit_screensaver(true);
-	animation[ANIMATION_LOGO] = t3f_load_animation_from_bitmap("data/graphics/logo.png");
-	if(!animation[ANIMATION_LOGO])
-	{
-		return false;
-	}
 	animation[ANIMATION_CURSOR] = t3f_load_animation_from_bitmap("data/graphics/cursor.png");
 	if(!animation[ANIMATION_CURSOR])
 	{
