@@ -86,22 +86,6 @@ void menu_fix_leaderboard_text(void)
 void menu_fix_internet_text(void)
 {
 	sprintf(menu_text[9], "%s", upload_scores ? "Yes" : "No");
-	if(network_id_entry)
-	{
-		if(!(menu[TITLE_MENU_INTERNET]->element[5].flags & T3F_GUI_ELEMENT_STATIC))
-		{
-			menu[TITLE_MENU_INTERNET]->element[5].flags ^= T3F_GUI_ELEMENT_STATIC;
-			menu[TITLE_MENU_INTERNET]->element[5].color = al_map_rgba_f(1.0, 1.0, 1.0, 1.0);
-		}
-	}
-	else
-	{
-		if((menu[TITLE_MENU_INTERNET]->element[5].flags & T3F_GUI_ELEMENT_STATIC))
-		{
-			menu[TITLE_MENU_INTERNET]->element[5].flags ^= T3F_GUI_ELEMENT_STATIC;
-			menu[TITLE_MENU_INTERNET]->element[5].color = al_map_rgba_f(1.0, 0.0, 0.0, 1.0);
-		}
-	}
 }
 
 void menu_fix_display_text(void)
@@ -168,6 +152,13 @@ void menu_analog_logic(void)
 			break;
 		}
 	}
+}
+
+int menu_proc_game(int i, void * p)
+{
+	current_menu = TITLE_MENU_MAIN;
+	t3f_select_next_gui_element(menu[current_menu]);
+	return 1;
 }
 
 int menu_proc_play(int i, void * p)
@@ -254,6 +245,12 @@ int menu_proc_back(int i, void * p)
 		case TITLE_MENU_DISPLAY:
 		{
 			current_menu = TITLE_MENU_SETTINGS;
+			menu_fix_internet_text();
+			break;
+		}
+		case TITLE_MENU_NETWORK_ID:
+		{
+			current_menu = TITLE_MENU_INTERNET;
 			al_set_config_value(t3f_config, "Network", "ID", network_id);
 			al_set_config_value(t3f_config, "Network", "Upload", upload_scores ? "true" : "false");
 			network_id_entry = false;
@@ -293,7 +290,7 @@ int menu_proc_back(int i, void * p)
 		}
 		case TITLE_MENU_MAIN:
 		{
-			state = STATE_TITLE;
+			current_menu = MENU_TITLE;
 			break;
 		}
 		default:
@@ -729,10 +726,16 @@ int menu_proc_upload_toggle(int i, void * p)
 
 int menu_proc_network_id(int i, void * p)
 {
+	current_menu = TITLE_MENU_NETWORK_ID;
 	network_id_entry = true;
 	network_id_pos = strlen(network_id);
-	menu_fix_internet_text();
 	t3f_clear_keys();
+	t3f_show_soft_keyboard(true);
+	return 1;
+}
+
+int menu_proc_network_id_name(int i, void * p)
+{
 	t3f_show_soft_keyboard(true);
 	return 1;
 }
@@ -748,7 +751,7 @@ int menu_proc_leaderboard_mode_left(int i, void * p)
 	menu_fix_leaderboard_text();
 	if(!leaderboard)
 	{
-		state = STATE_TITLE_MENU;
+		state = STATE_TITLE;
 		current_menu = TITLE_MENU_MAIN;
 	}
 	return 1;
@@ -765,7 +768,7 @@ int menu_proc_leaderboard_mode_right(int i, void * p)
 	menu_fix_leaderboard_text();
 	if(!leaderboard)
 	{
-		state = STATE_TITLE_MENU;
+		state = STATE_TITLE;
 		current_menu = TITLE_MENU_MAIN;
 	}
 	return 1;
@@ -773,7 +776,7 @@ int menu_proc_leaderboard_mode_right(int i, void * p)
 
 int menu_proc_leaderboard_done(int i, void * p)
 {
-	state = STATE_TITLE_MENU;
+	state = STATE_TITLE;
 	current_menu = TITLE_MENU_MAIN;
 	return 1;
 }
@@ -1045,7 +1048,7 @@ bool title_init(void)
 	#else
 		t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_back, "Back", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
-	t3f_center_gui(menu[TITLE_MENU_MAIN], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_MAIN], 20, 480);
 	
 	oy = 0;
 	menu[TITLE_MENU_DIFFICULTY] = t3f_create_gui(0, 0);
@@ -1054,7 +1057,7 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_DIFFICULTY], menu_proc_play_normal, "Normal", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_DIFFICULTY], menu_proc_back, "Back", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_center_gui(menu[TITLE_MENU_DIFFICULTY], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_DIFFICULTY], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_MODE] = t3f_create_gui(0, 0);
@@ -1063,7 +1066,7 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_MODE], menu_proc_play_eternal, "Eternal", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_MODE], menu_proc_back, "Back", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_center_gui(menu[TITLE_MENU_MODE], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_MODE], 20, 480);
 	
 	oy = 0;
 	menu[TITLE_MENU_SETTINGS] = t3f_create_gui(0, 0);
@@ -1075,7 +1078,7 @@ bool title_init(void)
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_SETTINGS], menu_proc_back, "Back", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	menu_fix_controller_type_text();
-	t3f_center_gui(menu[TITLE_MENU_SETTINGS], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_SETTINGS], 20, 480);
 	
 	oy = 0;
 	menu[TITLE_MENU_CONTROL] = t3f_create_gui(0, 0);
@@ -1093,7 +1096,7 @@ bool title_init(void)
 	#endif
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	menu_fix_controller_type_text();
-	t3f_center_gui(menu[TITLE_MENU_CONTROL], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_CONTROL], 20, 480);
 	
 	oy = 0;
 	menu[TITLE_MENU_CONTROL_NORMAL] = t3f_create_gui(0, 0);
@@ -1130,7 +1133,7 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_fire_right, menu_text[8], font[FONT_SMALL], 480, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_back, "Done", font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_center_gui(menu[TITLE_MENU_CONTROL_NORMAL], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_CONTROL_NORMAL], 20, 480);
 	
 	oy = 0;
 	menu[TITLE_MENU_CONTROL_MOUSE] = t3f_create_gui(0, 0);
@@ -1151,7 +1154,7 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_set_move_right, menu_text[4], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_back, "Done", font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_center_gui(menu[TITLE_MENU_CONTROL_MOUSE], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_CONTROL_MOUSE], 20, 480);
 	
 	oy = 0;
 	menu[TITLE_MENU_CONTROL_ANALOG] = t3f_create_gui(0, 0);
@@ -1172,7 +1175,7 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_set_fire_horizontal, menu_text[4], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_back, "Done", font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_center_gui(menu[TITLE_MENU_CONTROL_ANALOG], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_CONTROL_ANALOG], 20, 480);
 	
 	oy = 0;
 	menu[TITLE_MENU_ANALOG] = t3f_create_gui(0, 0);
@@ -1181,7 +1184,7 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], NULL, menu_text[15], font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], menu_proc_analog_done, "Done", font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_center_gui(menu[TITLE_MENU_ANALOG], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_ANALOG], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_INTERNET] = t3f_create_gui(0, 0);
@@ -1191,14 +1194,26 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_upload_toggle, "<", font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Yes") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_upload_toggle, ">", font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Yes") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], NULL, "Network ID", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
-	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_network_id, network_id, font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_network_id, "Network ID", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	menu_fix_internet_text();
-	t3f_center_gui(menu[TITLE_MENU_INTERNET], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_INTERNET], 20, 480);
 	
+	oy = 0;
+	menu[TITLE_MENU_NETWORK_ID] = t3f_create_gui(0, 0);
+	t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], NULL, "Network ID", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	oy += al_get_font_line_height(font[FONT_LARGE]);
+	t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], NULL, network_id, font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	oy += al_get_font_line_height(font[FONT_LARGE]);
+	t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	menu_fix_internet_text();
+	#ifndef T3F_ANDROID
+		t3f_center_gui(menu[TITLE_MENU_NETWORK_ID], 16, 240);
+	#else
+		t3f_center_gui(menu[TITLE_MENU_NETWORK_ID], 20, 480);
+	#endif
+
 	oy = 0;
 	menu[TITLE_MENU_DISPLAY] = t3f_create_gui(0, 0);
 	#ifndef PANDORA
@@ -1217,7 +1232,7 @@ bool title_init(void)
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	menu_fix_display_text();
-	t3f_center_gui(menu[TITLE_MENU_DISPLAY], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_DISPLAY], 20, 480);
 	
 	oy = 0;
 	menu[LEADERBOARD_MENU] = t3f_create_gui(0, 0);
@@ -1225,14 +1240,14 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[LEADERBOARD_MENU], menu_proc_leaderboard_mode_left, "<", font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Story Mode (Easy)") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_add_gui_text_element(menu[LEADERBOARD_MENU], menu_proc_leaderboard_mode_right, ">", font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Story Mode (Easy)") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_add_gui_text_element(menu[LEADERBOARD_MENU], menu_proc_leaderboard_done, "Done", font[FONT_LARGE], 320, 318, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_center_gui(menu[LEADERBOARD_MENU], 16, 480);
+	t3f_center_gui(menu[LEADERBOARD_MENU], 20, 480);
 	
 	oy = 0;
 	menu[PAUSE_MENU] = t3f_create_gui(0, 0);
 	t3f_add_gui_text_element(menu[PAUSE_MENU], menu_proc_pause_resume, "Resume Game", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[PAUSE_MENU], menu_proc_pause_quit, "Quit", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_center_gui(menu[PAUSE_MENU], 16, 480);
+	t3f_center_gui(menu[PAUSE_MENU], 20, 480);
 	
 	oy = 0;
 	menu[TITLE_MENU_FIRST] = t3f_create_gui(0, 0);
@@ -1243,8 +1258,12 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], menu_proc_first_yes, "Yes", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], menu_proc_first_no, "No", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_center_gui(menu[TITLE_MENU_FIRST], 16, 480);
+	t3f_center_gui(menu[TITLE_MENU_FIRST], 20, 480);
 	
+	oy = 240 + al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + al_get_font_line_height(font[FONT_LARGE]) / 3;
+	menu[MENU_TITLE] = t3f_create_gui(0, 0);
+	t3f_add_gui_text_element(menu[MENU_TITLE], menu_proc_game, "Game", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+
 	return true;
 }
 
@@ -1292,26 +1311,29 @@ void title_in_logic(void)
 void title_in_render(void)
 {
 	float alpha;
+	float x, y;
 	
+	x = 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2;
+	y = 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 - al_get_font_line_height(font[FONT_LARGE]);
 	al_clear_to_color(al_map_rgba_f(0.0, 0.0, 0.0, 1.0));
 	if(state_ticks < 60)
 	{
 		alpha = (float)(state_ticks) / 60.0;
-		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(alpha, alpha, alpha, alpha), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(alpha, alpha, alpha, alpha), state_ticks, x, y, 0, 0);
 	}
 	else if(state_ticks < 180)
 	{
-		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, x, y, 0, 0);
 	}
 	else
 	{
 		title_bg_render();
-		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 0, 0);
-		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2 + 4, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 0, 0);
-		t3f_draw_animation(animation[ANIMATION_TITLE], t3f_color_white, state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE], t3f_color_white, state_ticks, x, y, 0, 0);
 		al_hold_bitmap_drawing(false);
 		al_draw_filled_rectangle(0.0, 0.0, 640, 480, al_map_rgba_f(0.0, 0.0, 0.0, 1.0 - (float)(state_ticks - 180) / 60.0));
-		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, x, y, 0, 0);
 	}
 }
 
@@ -1338,6 +1360,8 @@ void title_name_entry_logic(void)
 				strcpy(network_id, "Anonymous");
 			}
 			menu_fix_internet_text();
+			menu_proc_back(0, NULL);
+			t3f_key[ALLEGRO_KEY_ENTER] = 0;
 		}
 		else if(input >= 32 && input < 127)
 		{
@@ -1489,42 +1513,38 @@ void title_process_menu(T3F_GUI * mp)
 	}
 }
 
-void title_logic(void)
-{
-	int i;
-	
-	state_ticks++;
-	title_bg_logic();
-	if(t3f_key[ALLEGRO_KEY_ESCAPE] || t3f_key[ALLEGRO_KEY_BACK])
-	{
-		t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
-		t3f_key[ALLEGRO_KEY_BACK] = 0;
-		t3f_exit();
-	}
-	else
-	{
-		for(i = 0; i < T3F_MAX_TOUCHES; i++)
-		{
-			if(t3f_touch[i].released)
-			{
-				t3f_touch[i].released = false;
-				state = STATE_TITLE_MENU;
-			}
-		}
-	}
-}
-
 void title_render(void)
 {
+	float x, y;
+
 	title_bg_render();
-	t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 0, 0);
-	t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2 + 4, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + 4, 0, 0);
-	t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
-	t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, 320 - al_get_bitmap_width(animation[ANIMATION_TITLE]->bitmap[0]) / 2, 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2, 0, 0);
+
+	/* render title logo if we are on title menu */
+	if(current_menu == MENU_TITLE)
+	{
+		x = 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2;
+		y = 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 - al_get_font_line_height(font[FONT_LARGE]);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, x, y, 0, 0);
+		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, x, y, 0, 0);
+	}
+
+	t3f_render_gui(menu[current_menu]);
+	
+	/* render blinking cursor */
+	if(current_menu == TITLE_MENU_NETWORK_ID && network_id_entry)
+	{
+		if(state_ticks % 20 < 10)
+		{
+			al_draw_text(font[FONT_LARGE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), menu[current_menu]->ox + menu[current_menu]->element[1].ox + al_get_text_width(font[FONT_LARGE], network_id) / 2, menu[current_menu]->oy + menu[current_menu]->element[1].oy, 0, "_");
+			al_draw_text(font[FONT_LARGE], t3f_color_white, menu[current_menu]->ox + menu[current_menu]->element[1].ox + al_get_text_width(font[FONT_LARGE], network_id) / 2 - 2, menu[current_menu]->oy + menu[current_menu]->element[1].oy - 2, 0, "_");
+		}
+	}
 	render_mouse();
 }
 
-void title_menu_logic(void)
+void title_logic(void)
 {
 	state_ticks++;
 	title_bg_logic();
@@ -1546,23 +1566,6 @@ void title_menu_logic(void)
 	{
 		title_process_menu(menu[current_menu]);
 	}
-}
-
-void title_menu_render(void)
-{
-	title_bg_render();
-	t3f_render_gui(menu[current_menu]);
-	
-	/* render blinking cursor */
-	if(current_menu == TITLE_MENU_INTERNET && network_id_entry)
-	{
-		if(state_ticks % 20 < 10)
-		{
-			al_draw_text(font[FONT_LARGE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), menu[current_menu]->ox + menu[current_menu]->element[5].ox + al_get_text_width(font[FONT_LARGE], network_id) / 2, menu[current_menu]->oy + menu[current_menu]->element[5].oy, 0, "_");
-			al_draw_text(font[FONT_LARGE], t3f_color_white, menu[current_menu]->ox + menu[current_menu]->element[5].ox + al_get_text_width(font[FONT_LARGE], network_id) / 2 - 2, menu[current_menu]->oy + menu[current_menu]->element[5].oy - 2, 0, "_");
-		}
-	}
-	render_mouse();
 }
 
 void title_out_logic(void)

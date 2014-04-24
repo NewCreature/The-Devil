@@ -439,13 +439,13 @@ void game_exit(void)
 		else
 		{
 			current_menu = TITLE_MENU_MAIN;
-			state = STATE_TITLE_MENU;
+			state = STATE_TITLE;
 		}
 	}
 	else
 	{
 		current_menu = TITLE_MENU_MAIN;
-		state = STATE_TITLE_MENU;
+		state = STATE_TITLE;
 	}
 	t3f_play_music("data/music/title.xm");
 	al_start_timer(t3f_timer);

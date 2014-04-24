@@ -16,8 +16,6 @@ bool title_touched(void);
 void title_process_menu(T3F_GUI * mp);
 void title_logic(void);
 void title_render(void);
-void title_menu_logic(void);
-void title_menu_render(void);
 void title_out_logic(void);
 void title_out_render(void);
 void title_game_logic(void);

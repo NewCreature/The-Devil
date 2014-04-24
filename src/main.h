@@ -13,7 +13,7 @@
 #include "particle.h"
 
 #define STATE_INTRO        0
-#define STATE_TITLE_MENU   1
+//#define STATE_TITLE_MENU   1
 #define STATE_GAME         2
 #define STATE_LOGO         3
 #define STATE_ENDING       4
@@ -38,6 +38,8 @@
 #define TITLE_MENU_FIRST           11
 #define TITLE_MENU_DISPLAY         12
 #define TITLE_MENU_ANALOG          13
+#define TITLE_MENU_NETWORK_ID      14
+#define MENU_TITLE                 15
 
 #define MAX_BITMAPS            16
 #define BITMAP_ICON            11

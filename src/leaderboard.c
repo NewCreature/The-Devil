@@ -22,7 +22,7 @@ void leaderboard_logic(void)
 	{
 		t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
 		t3f_key[ALLEGRO_KEY_BACK] = 0;
-		state = STATE_TITLE_MENU;
+		state = STATE_TITLE;
 		current_menu = TITLE_MENU_MAIN;
 	}
 	title_process_menu(menu[LEADERBOARD_MENU]);

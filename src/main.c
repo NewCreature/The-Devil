@@ -32,7 +32,7 @@ T3F_RNG_STATE rng_state;
 
 /* menu data */
 T3F_GUI * menu[TITLE_MAX_MENUS] = {NULL};
-int current_menu = TITLE_MENU_MAIN;
+int current_menu = MENU_TITLE;
 char menu_text[32][64] = {{0}};
 
 /* game data */
@@ -112,8 +112,8 @@ void logic(void * data)
 			if(t3_logo_done)
 			{
 				t3f_play_music("data/music/title.xm");
-				title_init();
 				title_load_data();
+				title_init();
 				state = STATE_TITLE_IN;
 				state_ticks = 0;
 				if(mouse_disabled)
@@ -132,7 +132,7 @@ void logic(void * data)
 			{
 				destroy_cinema(cinema);
 				cinema = NULL;
-				state = STATE_TITLE_MENU;
+				state = STATE_TITLE;
 			}
 			break;
 		}
@@ -144,11 +144,6 @@ void logic(void * data)
 		case STATE_TITLE:
 		{
 			title_logic();
-			break;
-		}
-		case STATE_TITLE_MENU:
-		{
-			title_menu_logic();
 			break;
 		}
 		case STATE_TITLE_OUT:
@@ -193,12 +188,12 @@ void logic(void * data)
 					else
 					{
 						current_menu = TITLE_MENU_MAIN;
-						state = STATE_TITLE_MENU;
+						state = STATE_TITLE;
 					}
 				}
 				else
 				{
-					state = STATE_TITLE_MENU;
+					state = STATE_TITLE;
 					current_menu = TITLE_MENU_MAIN;
 				}
 			}
@@ -249,11 +244,6 @@ void render(void * data)
 		case STATE_TITLE:
 		{
 			title_render();
-			break;
-		}
-		case STATE_TITLE_MENU:
-		{
-			title_menu_render();
 			break;
 		}
 		case STATE_TITLE_OUT:
