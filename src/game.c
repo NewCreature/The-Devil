@@ -552,7 +552,7 @@ void game_load_next_level_bitmap(void)
 	char buf[256];
 	int last_bitmap, next_bitmap;
 
-	last_bitmap = current_level;
+	last_bitmap = current_level % 11;
 	next_bitmap = (current_level + 2) % 11;
 	sprintf(buf, "data/graphics/bg%02d.png", next_bitmap);
 	t3f_destroy_resource(bitmap[last_bitmap]);
@@ -790,8 +790,8 @@ void game_render_bg(void)
 	{
 		case GAME_MODE_ETERNAL:
 		{
-			cur = current_level % 10;
-			next = (current_level + 1) % 10;
+			cur = current_level % 11;
+			next = (current_level + 1) % 11;
 			al_draw_bitmap(bitmap[cur], 0, 0, 0);
 			alpha = (float)(state_ticks % 1800) / 1800.0;
 			al_draw_tinted_bitmap(bitmap[next], al_map_rgba_f(alpha, alpha, alpha, alpha), 0, 0, 0);
@@ -886,7 +886,7 @@ void game_render(void)
 	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_left + GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN, 0, "Score: %06d", score);
 	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_left + GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, 0, "Multiplier: %d", multiplier);
 	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_left + GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]), 0, "Multiplier: %d", multiplier);
-	if(current_level < 10)
+	if(game_mode == GAME_MODE_ETERNAL || current_level < 10)
 	{
 		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_right - GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
 		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_right - GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
