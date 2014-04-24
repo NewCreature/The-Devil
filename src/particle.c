@@ -31,8 +31,8 @@ void generate_particle(int type, float x, float y, float angle, float speed, int
 			particle[i].x = x;
 			particle[i].y = y;
 			particle[i].angle = angle;
-			particle[i].vx = cos(angle);
-			particle[i].vy = sin(angle);
+			particle[i].vx = cos(angle) * speed;
+			particle[i].vy = sin(angle) * speed;
 			particle[i].var = life;
 			particle[i].var2 = life;
 			particle[i].active = true;
