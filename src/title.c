@@ -3,6 +3,7 @@
 #include "t3f/resource.h"
 #include "t3f/view.h"
 #include "t3f/draw.h"
+#include "t3f/android.h"
 #include "main.h"
 #include "title.h"
 #include "enemy.h"
@@ -732,7 +733,7 @@ int menu_proc_network_id(int i, void * p)
 	network_id_pos = strlen(network_id);
 	menu_fix_internet_text();
 	t3f_clear_keys();
-	t3f_show_soft_keyboard();
+	t3f_show_soft_keyboard(true);
 	return 1;
 }
 
@@ -1084,10 +1085,12 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_type_left, "<", font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Normal Controller") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_type_right, ">", font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Normal Controller") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_autodetect, "Autodetect", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_configure, "Configure", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	oy += al_get_font_line_height(font[FONT_LARGE]);
+	#ifndef T3F_ANDROID
+		t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_autodetect, "Autodetect", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		oy += al_get_font_line_height(font[FONT_LARGE]);
+		t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_configure, "Configure", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		oy += al_get_font_line_height(font[FONT_LARGE]);
+	#endif
 	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	menu_fix_controller_type_text();
 	t3f_center_gui(menu[TITLE_MENU_CONTROL], 16, 480);
@@ -1226,9 +1229,6 @@ bool title_init(void)
 	
 	oy = 0;
 	menu[PAUSE_MENU] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[PAUSE_MENU], NULL, "Paused", font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
-	oy += al_get_font_line_height(font[FONT_LARGE]);
-	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[PAUSE_MENU], menu_proc_pause_resume, "Resume Game", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[PAUSE_MENU], menu_proc_pause_quit, "Quit", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
