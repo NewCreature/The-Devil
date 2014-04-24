@@ -293,6 +293,7 @@ void player_control_touch(void)
 				touch_stick[0].pos_x = t3f_touch[i].x;
 				touch_stick[0].pos_y = t3f_touch[i].y;
 				touch_stick[0].active = true;
+				touch_used[0] = i;
 				break;
 			}
 		}
@@ -341,6 +342,7 @@ void player_control_touch(void)
 				touch_stick[1].pos_x = t3f_touch[i].x;
 				touch_stick[1].pos_y = t3f_touch[i].y;
 				touch_stick[1].active = true;
+				touch_used[1] = i;
 				break;
 			}
 		}
