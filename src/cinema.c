@@ -358,8 +358,8 @@ void cinema_render(CINEMA * cp)
 			case CINEMA_ENTITY_TEXT:
 			{
 				tab = cinema_get_text_tab(cp->font, cp->frame[cp->position].entity[i].data);
-				cinema_draw_text(cp->font, al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 4 + 2, 4 + 2, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
-				cinema_draw_text(cp->font, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 4, 4, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
+				cinema_draw_text(cp->font, al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 4 + 2, t3f_display_top + 4 + 2, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
+				cinema_draw_text(cp->font, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 4, t3f_display_top + 4, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
 				break;
 			}
 			case CINEMA_ENTITY_ANIMATION:
