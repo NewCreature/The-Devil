@@ -427,7 +427,7 @@ void game_exit(void)
 			leaderboard_place = -1;
 			for(i = 0; i < leaderboard->entries; i++)
 			{
-				if(score * 2 + 'v' + 'g' + 'o' + 'l' + 'f' == leaderboard->entry[i]->score && !strcmp(network_id, leaderboard->entry[i]->name))
+				if((unsigned int)score * 2 + 'v' + 'g' + 'o' + 'l' + 'f' == leaderboard->entry[i]->score && !strcmp(network_id, leaderboard->entry[i]->name))
 				{
 					leaderboard_place = i;
 					break;
@@ -636,6 +636,83 @@ void game_level_logic(void)
 	}
 }
 
+void read_touch_controls(void)
+{
+	int touch_used[2] = {-1, -1};
+	int i;
+	
+	/* see which touches are already in use */
+	for(i = 0; i < 2; i++)
+	{
+		if(touch_stick[i].active)
+		{
+			touch_used[i] = touch_stick[i].touch_id;
+		}
+	}
+
+	/* player movement */
+	if(!touch_stick[0].active)
+	{
+		for(i = 0; i < T3F_MAX_TOUCHES; i++)
+		{
+			if(i != touch_used[0] && i != touch_used[1] && t3f_touch[i].active && t3f_touch[i].x < 320.0)
+			{
+				touch_stick[0].touch_id = i;
+				touch_stick[0].pin_x = t3f_touch[i].x;
+				touch_stick[0].pin_y = t3f_touch[i].y;
+				touch_stick[0].pos_x = t3f_touch[i].x;
+				touch_stick[0].pos_y = t3f_touch[i].y;
+				touch_stick[0].active = true;
+				touch_used[0] = i;
+				break;
+			}
+		}
+	}
+	else
+	{
+		if(!t3f_touch[touch_stick[0].touch_id].active)
+		{
+			touch_stick[0].active = false;
+		}
+		else
+		{
+			touch_stick[0].pos_x = t3f_touch[touch_stick[0].touch_id].x;
+			touch_stick[0].pos_y = t3f_touch[touch_stick[0].touch_id].y;
+		}
+	}
+
+	/* player attack */
+	if(!touch_stick[1].active)
+	{
+		for(i = 0; i < T3F_MAX_TOUCHES; i++)
+		{
+			if(i != touch_used[0] && i != touch_used[1] && t3f_touch[i].active && t3f_touch[i].x >= 320.0)
+			{
+				touch_stick[1].touch_id = i;
+				touch_stick[1].pin_x = t3f_touch[i].x;
+				touch_stick[1].pin_y = t3f_touch[i].y;
+				touch_stick[1].pos_x = t3f_touch[i].x;
+				touch_stick[1].pos_y = t3f_touch[i].y;
+				touch_stick[1].active = true;
+				touch_used[1] = i;
+				break;
+			}
+		}
+	}
+	else
+	{
+		if(!t3f_touch[touch_stick[1].touch_id].active)
+		{
+			touch_stick[1].active = false;
+		}
+		else
+		{
+			touch_stick[1].pos_x = t3f_touch[touch_stick[1].touch_id].x;
+			touch_stick[1].pos_y = t3f_touch[touch_stick[1].touch_id].y;
+		}
+	}
+}
+
 void game_logic(void)
 {
 	if((t3f_key[ALLEGRO_KEY_ESCAPE] || t3f_key[ALLEGRO_KEY_BACK]) && game_state != GAME_STATE_PAUSED)
@@ -647,6 +724,10 @@ void game_logic(void)
 		t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
 		t3f_key[ALLEGRO_KEY_BACK] = 0;
 		return;
+	}
+	if(controller_type >= CONTROLLER_TYPE_TOUCH_S)
+	{
+		read_touch_controls();
 	}
 	switch(game_state)
 	{

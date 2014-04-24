@@ -9,7 +9,7 @@ static char t3net_server_key[1024] = {0};
 
 static void t3net_strcpy(char * dest, char * src)
 {
-	int i;
+	unsigned int i;
 	int write_pos = 0;
 	
 	for(i = 0; i < strlen(dest) + 1; i++)
@@ -565,7 +565,7 @@ int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
 	char url_w_arg[1024] = {0};
 	char * data = NULL;
 	int ecount = 0;
-	int text_pos;
+	unsigned int text_pos;
 	int text_char;
 	int text_fill_pos;
 	char text[256];

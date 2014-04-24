@@ -268,121 +268,66 @@ void player_control_analog(void)
 void player_control_touch(void)
 {
 	float strength;
-	int touch_used[2] = {-1, -1};
-	int i;
 	
-	/* see which touches are already in use */
-	for(i = 0; i < 2; i++)
-	{
-		if(touch_stick[i].active)
-		{
-			touch_used[i] = touch_stick[i].touch_id;
-		}
-	}
-
 	/* player movement */
 	if(!touch_stick[0].active)
 	{
-		for(i = 0; i < T3F_MAX_TOUCHES; i++)
-		{
-			if(i != touch_used[0] && i != touch_used[1] && t3f_touch[i].active && t3f_touch[i].x < 320.0)
-			{
-				touch_stick[0].touch_id = i;
-				touch_stick[0].pin_x = t3f_touch[i].x;
-				touch_stick[0].pin_y = t3f_touch[i].y;
-				touch_stick[0].pos_x = t3f_touch[i].x;
-				touch_stick[0].pos_y = t3f_touch[i].y;
-				touch_stick[0].active = true;
-				touch_used[0] = i;
-				break;
-			}
-		}
 		player.vx = 0;
 		player.vy = 0;
 	}
 	else
 	{
-		if(!t3f_touch[touch_stick[0].touch_id].active)
+		/* handle player movement */
+		strength = (t3f_distance(touch_stick[0].pin_x, touch_stick[0].pin_y, touch_stick[0].pos_x, touch_stick[0].pos_y) / touch_size) * 1.5;
+		if(strength > 1.0)
 		{
-			touch_stick[0].active = false;
+			strength = 1.0;
+		}
+		if(strength > 0.1)
+		{
+			player.angle = atan2(touch_stick[0].pos_y - touch_stick[0].pin_y, touch_stick[0].pos_x - touch_stick[0].pin_x);
 		}
 		else
 		{
-			touch_stick[0].pos_x = t3f_touch[touch_stick[0].touch_id].x;
-			touch_stick[0].pos_y = t3f_touch[touch_stick[0].touch_id].y;
-			/* handle player movement */
-			strength = (t3f_distance(touch_stick[0].pin_x, touch_stick[0].pin_y, touch_stick[0].pos_x, touch_stick[0].pos_y) / touch_size) * 1.5;
-			if(strength > 1.0)
-			{
-				strength = 1.0;
-			}
-			if(strength > 0.1)
-			{
-				player.angle = atan2(touch_stick[0].pos_y - touch_stick[0].pin_y, touch_stick[0].pos_x - touch_stick[0].pin_x);
-			}
-			else
-			{
-				strength = 0.0;
-			}
-			player.vx = cos(player.angle) * player.speed * strength;
-			player.vy = sin(player.angle) * player.speed * strength;
+			strength = 0.0;
 		}
+		player.vx = cos(player.angle) * player.speed * strength;
+		player.vy = sin(player.angle) * player.speed * strength;
 	}
 
 	/* player attack */
 	if(!touch_stick[1].active)
 	{
-		for(i = 0; i < T3F_MAX_TOUCHES; i++)
-		{
-			if(i != touch_used[0] && i != touch_used[1] && t3f_touch[i].active && t3f_touch[i].x >= 320.0)
-			{
-				touch_stick[1].touch_id = i;
-				touch_stick[1].pin_x = t3f_touch[i].x;
-				touch_stick[1].pin_y = t3f_touch[i].y;
-				touch_stick[1].pos_x = t3f_touch[i].x;
-				touch_stick[1].pos_y = t3f_touch[i].y;
-				touch_stick[1].active = true;
-				touch_used[1] = i;
-				break;
-			}
-		}
 	}
 	else
 	{
-		if(!t3f_touch[touch_stick[1].touch_id].active)
+		touch_stick[1].pos_x = t3f_touch[touch_stick[1].touch_id].x;
+		touch_stick[1].pos_y = t3f_touch[touch_stick[1].touch_id].y;
+		strength = (t3f_distance(touch_stick[1].pin_x, touch_stick[1].pin_y, touch_stick[1].pos_x, touch_stick[1].pos_y) / touch_size) * 1.5;
+		if(strength > 1.0)
 		{
-			touch_stick[1].active = false;
+			strength = 1.0;
+		}
+		if(strength > 0.1)
+		{
+			fire_angle = atan2(touch_stick[1].pos_y - touch_stick[1].pin_y, touch_stick[1].pos_x - touch_stick[1].pin_x);
 		}
 		else
 		{
-			touch_stick[1].pos_x = t3f_touch[touch_stick[1].touch_id].x;
-			touch_stick[1].pos_y = t3f_touch[touch_stick[1].touch_id].y;
-			strength = (t3f_distance(touch_stick[1].pin_x, touch_stick[1].pin_y, touch_stick[1].pos_x, touch_stick[1].pos_y) / touch_size) * 1.5;
-			if(strength > 1.0)
+			strength = 0.0;
+		}
+		if(player.var > 0)
+		{
+			player.var--;
+		}
+		else
+		{
+			if(strength <= 0.4)
 			{
-				strength = 1.0;
-			}
-			if(strength > 0.1)
-			{
-				fire_angle = atan2(touch_stick[1].pos_y - touch_stick[1].pin_y, touch_stick[1].pos_x - touch_stick[1].pin_x);
-			}
-			else
-			{
-				strength = 0.0;
-			}
-			if(player.var > 0)
-			{
-				player.var--;
 			}
 			else
 			{
-				if(strength <= 0.4)
-				{
-				}
-				else
-				{
-					fire = true;
-				}
+				fire = true;
 			}
 		}
 	}
