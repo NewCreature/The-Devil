@@ -26,15 +26,13 @@ v1.3
 
 [X]Show soft keyboard when choosing the name entry menu item.
 
-[ ]Fix crash around level 10.
+[X]Fix menus that have settings that don't apply to touch devices.
 
-[ ]Fix menus that have settings that don't apply to touch devices.
-
-[ ]Add quit confirmation menu.
-
-[ ]Add touch-specific Network ID menu that is centered in the top half of the
+[X]Add touch-specific Network ID menu that is centered in the top half of the
    screen. This is so the user will be able to see the text they are typing when
    the soft keyboard is being displayed.
+
+[ ]Fix crash around level 10.
 
 [ ]Add credits screen.
 
