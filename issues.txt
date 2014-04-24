@@ -32,12 +32,9 @@ v1.3
    screen. This is so the user will be able to see the text they are typing when
    the soft keyboard is being displayed.
 
-[ ]Fix crash around level 10.
+[X]Fix crash around level 10.
 
 [ ]Add credits screen.
-
-[ ]Update cinemas. Only load images needed for each scene to conserve memory.
-   might switch to WordLeap cinema engine.
 
 [ ]Add debugging info to initialization phase so we can try to figure out what
    is preventing the build from running on OS X 10.6.
