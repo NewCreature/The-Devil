@@ -567,12 +567,14 @@ bool initialize(int argc, char * argv[])
 	}
 	
 	#ifndef ALLEGRO_MACOSX
-		bitmap[BITMAP_ICON] = t3f_load_resource((void **)(&bitmap[BITMAP_ICON]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/icon.png", 0, 0, 0);
-		if(!bitmap[BITMAP_ICON])
-		{
-			return false;
-		}
-		al_set_display_icon(t3f_display, bitmap[BITMAP_ICON]);
+		#ifndef T3F_ANDROID
+			bitmap[BITMAP_ICON] = t3f_load_resource((void **)(&bitmap[BITMAP_ICON]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/icon.png", 0, 0, 0);
+			if(!bitmap[BITMAP_ICON])
+			{
+				return false;
+			}
+			al_set_display_icon(t3f_display, bitmap[BITMAP_ICON]);
+		#endif
 	#endif
 	
 	font[FONT_LARGE] = t3f_load_resource((void **)(&font[FONT_LARGE]), T3F_RESOURCE_TYPE_FONT, "data/fonts/isle_of_the_dead.ttf", 60, 0, 0);
