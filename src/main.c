@@ -92,8 +92,21 @@ void event_handler(ALLEGRO_EVENT * event, void * data)
 			mouse_disabled = false;
 			break;
 		}
+		case ALLEGRO_EVENT_DISPLAY_HALT_DRAWING:
+		{
+			title_exit();
+			break;
+		}
 	}
 	t3f_event_handler(event);
+	switch(event->type)
+	{
+		case ALLEGRO_EVENT_DISPLAY_RESUME_DRAWING:
+		{
+			title_init();
+			break;
+		}
+	}
 }
 
 void logic(void * data)
