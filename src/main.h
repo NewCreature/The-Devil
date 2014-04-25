@@ -44,7 +44,7 @@
 #define MAX_BITMAPS            16
 #define BITMAP_ICON            11
 
-#define MAX_ANIMATIONS        256
+#define MAX_ANIMATIONS         16
 #define ANIMATION_PLAYER        0
 #define ANIMATION_DEMON         1
 #define ANIMATION_ARCHDEMON     2
@@ -63,8 +63,8 @@
 
 #define MAX_FONTS               8
 #define FONT_LARGE              0
-#define FONT_SMALL              2
-#define FONT_TINY               3
+#define FONT_SMALL              1
+#define FONT_TINY               2
 
 #define MAX_SAMPLES            16
 #define SAMPLE_LEVEL_UP         0
