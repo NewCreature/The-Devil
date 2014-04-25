@@ -841,10 +841,11 @@ void game_logic(void)
 		case GAME_STATE_PAUSED:
 		{
 			title_process_menu(menu[PAUSE_MENU]);
-			if(t3f_key[ALLEGRO_KEY_ESCAPE])
+			if(t3f_key[ALLEGRO_KEY_ESCAPE] || t3f_key[ALLEGRO_KEY_BACK])
 			{
 				game_state = resume_state;
 				t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
+				t3f_key[ALLEGRO_KEY_BACK] = 0;
 			}
 			break;
 		}
