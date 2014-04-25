@@ -34,10 +34,10 @@ v1.3
 
 [X]Fix crash around level 10.
 
+[X]Fix crash on menu display when switching away and back on Android.
+
 [ ]Figure out when we need to load the icon from the bitmap file. Most platforms
    should handle the icon through packaging.
-
-[ ]Fix crash on menu display when switching away and back on Android.
 
 [ ]Add credits screen.
 
