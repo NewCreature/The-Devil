@@ -127,6 +127,11 @@ void logic(void * data)
 				t3f_play_music("data/music/title.xm");
 				title_load_data();
 				title_init();
+				if(first_run)
+				{
+					select_menu(TITLE_MENU_FIRST);
+					al_set_config_value(t3f_config, "Settings", "First Run", "false");
+				}
 				state = STATE_TITLE_IN;
 				state_ticks = 0;
 				if(mouse_disabled)
@@ -611,11 +616,6 @@ bool initialize(int argc, char * argv[])
 		{
 			first_run = false;
 		}
-	}
-	if(first_run)
-	{
-		select_menu(TITLE_MENU_FIRST);
-		al_set_config_value(t3f_config, "Settings", "First Run", "false");
 	}
 	val = al_get_config_value(t3f_config, "Controls", "Type");
 	if(val)
