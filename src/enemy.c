@@ -110,7 +110,7 @@ void enemy_spawn_logic_easy(void)
 	int i;
 	int r;
 	
-	if(rand() % 1500 < level.demon_rate)
+	if(rand() % 3000 < level.demon_rate)
 	{
 		for(i = 0; i < GAME_MAX_ENEMIES; i++)
 		{
@@ -126,7 +126,7 @@ void enemy_spawn_logic_easy(void)
 			}
 		}
 	}
-	if(rand() % 1500 < level.archdemon_rate)
+	if(rand() % 3000 < level.archdemon_rate)
 	{
 		for(i = 0; i < GAME_MAX_ENEMIES; i++)
 		{
