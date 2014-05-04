@@ -43,3 +43,7 @@ v1.3
 
 [ ]Add debugging info to initialization phase so we can try to figure out what
    is preventing the build from running on OS X 10.6.
+
+[ ]Add privacy info screen.
+
+[ ]Fix cinema text being drawn behind graphics in ending.
