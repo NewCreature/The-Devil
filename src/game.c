@@ -828,10 +828,10 @@ void game_logic(void)
 				if(fade_time >= 60)
 				{
 					game_exit();
-					ending_cinema->position = 0;
-					ending_cinema->tick = 0;
 					click = true;
 					ending_cinema = load_cinema("data/cinema/ending.cin", 0);
+					ending_cinema->position = 0;
+					ending_cinema->tick = 0;
 					state = STATE_ENDING;
 				}
 			}
