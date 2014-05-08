@@ -1,6 +1,23 @@
 #ifndef TITLE_H
 #define TITLE_H
 
+typedef struct
+{
+	
+	char text[256];
+	
+} TEXT_LINE;
+
+typedef struct
+{
+	
+	ALLEGRO_FONT * font;
+	TEXT_LINE line[64];
+	int lines;
+	float tab;
+	
+} TEXT_LINE_DATA;
+
 void select_menu(int mmenu);
 void menu_fix_leaderboard_text(void);
 void menu_fix_controller_type_config(void);

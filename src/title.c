@@ -16,6 +16,15 @@ static float analog_max = 0.0;
 static int button_press_counter = 0;
 static bool block_buttons = false;
 
+static const char * privacy_text =
+	"Information We Collect:\n\n"
+	"We collect only enough information to process your request. With regards to this "
+	"software, that entails storing any scores you submit to our leaderboards (includes your "
+	"profile name and score information).\n\n"
+	"What We Do with Your Information:\n\n"
+	"Your leaderboard data is accessible to everyone, so it is advisable to not put "
+	"personal information you don't want to share in your screen name.";
+
 static void menu_fix_controller_type_text(void)
 {
 	switch(controller_type)
@@ -202,6 +211,12 @@ int menu_proc_leaderboards(int i, void * p)
 int menu_proc_settings(int i, void * p)
 {
 	select_menu(TITLE_MENU_SETTINGS);
+	return 1;
+}
+
+int menu_proc_privacy(int i, void * p)
+{
+	select_menu(MENU_PRIVACY);
 	return 1;
 }
 
@@ -1042,6 +1057,8 @@ bool title_init(void)
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_settings, "Settings", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
+	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_privacy, "Privacy", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	oy += al_get_font_line_height(font[FONT_LARGE]);
 	#ifndef T3F_ANDROID
 		t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_quit, "Exit to OS", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
@@ -1280,6 +1297,19 @@ bool title_init(void)
 	oy = 240 + al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmap[0]) / 2 + al_get_font_line_height(font[FONT_LARGE]) / 3;
 	menu[MENU_TITLE] = t3f_create_gui(0, 0);
 	t3f_add_gui_text_element(menu[MENU_TITLE], menu_proc_game, "Game", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+
+	oy = t3f_display_bottom - al_get_font_line_height(font[FONT_LARGE]);
+	menu[MENU_PRIVACY] = t3f_create_gui(0, 0);
+//	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], NULL, menu_text[14], font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+//	oy += al_get_font_line_height(font[FONT_SMALL]);
+//	t3f_add_gui_text_element(menu[MENU_PRIVACY], NULL, menu_text[15], font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+//	oy += al_get_font_line_height(font[FONT_SMALL]);
+	#ifndef T3F_ANDROID
+		t3f_add_gui_text_element(menu[MENU_PRIVACY], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	#else
+		t3f_add_gui_text_element(menu[MENU_PRIVACY], menu_proc_back, "", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	#endif
+//	t3f_center_gui(menu[TITLE_MENU_ANALOG], 20, 480);
 
 	return true;
 }
@@ -1531,9 +1561,129 @@ void title_process_menu(T3F_GUI * mp)
 	}
 }
 
+/* need to make this not rely on spaces, sometimes there might be long stretches with no space which need to be broken up 'mid-word' */
+void create_text_line_data(TEXT_LINE_DATA * lp, ALLEGRO_FONT * fp, float w, float tab, const char * text)
+{
+	char current_line[256];
+	int current_line_pos = 0;
+	int current_line_start_pos = 0;
+	int last_space = -1;
+	int i;
+	float wi = w;
+
+	lp->font = fp;
+	lp->tab = tab;
+	lp->lines = 0;
+	strcpy(lp->line[lp->lines].text, "");
+	if(strlen(text) < 1)
+	{
+		return;
+	}
+	
+	/* divide text into lines */
+	for(i = 0; i < (int)strlen(text); i++)
+	{
+		current_line[current_line_pos] = text[i];
+		current_line[current_line_pos + 1] = '\0';
+		if(text[i] == ' ')
+		{
+			last_space = current_line_pos;
+		}
+		current_line_pos++;
+		
+		/* copy line since we encountered a manual new line */
+		if(text[i] == '\n')
+		{
+			if(current_line_pos > 0)
+			{
+				current_line[current_line_pos - 1] = '\0';
+			}
+			strcpy(lp->line[lp->lines].text, current_line);
+			current_line_start_pos += i + 1;
+			lp->lines++;
+			strcpy(lp->line[lp->lines].text, "");
+			current_line_pos = 0;
+			current_line[current_line_pos] = '\0';
+			wi = w - tab;
+		}
+		
+		/* copy this line to our list of lines because it is long enough */
+		else if(al_get_text_width(fp, current_line) > wi)
+		{
+			current_line[last_space] = '\0';
+			strcpy(lp->line[lp->lines].text, current_line);
+			current_line_start_pos += last_space + 1;
+			while(text[i] != ' ' && i >= 0)
+			{
+				i--;
+			}
+			lp->lines++;
+			strcpy(lp->line[lp->lines].text, "");
+			current_line_pos = 0;
+			current_line[current_line_pos] = '\0';
+			wi = w - tab;
+		}
+	}
+	strcpy(lp->line[lp->lines].text, current_line);
+	lp->lines++;
+}
+
+void draw_text_lines(TEXT_LINE_DATA * lines, ALLEGRO_COLOR color, float x, float y)
+{
+	int i;
+	float px = x;
+	float py = y;
+	
+	for(i = 0; i < lines->lines; i++)
+	{
+		al_draw_text(lines->font, color, px, py, 0, lines->line[i].text);
+		px = x + lines->tab;
+		py += al_get_font_line_height(lines->font);
+	}
+}
+
+void draw_multiline_text(ALLEGRO_FONT * fp, ALLEGRO_COLOR color, float x, float y, float w, float tab, int flags, const char * text)
+{
+	TEXT_LINE_DATA line_data;
+	float pos = x;
+	bool held;
+
+	if(strlen(text) < 1)
+	{
+		return;
+	}
+	held = al_is_bitmap_drawing_held();
+	if(!held)
+	{
+		al_hold_bitmap_drawing(true);
+	}
+	if(flags & T3F_FONT_ALIGN_CENTER)
+	{
+		pos -= al_get_text_width(fp, text) / 2.0;
+	}
+	else if(flags & T3F_FONT_ALIGN_RIGHT)
+	{
+		pos -= al_get_text_width(fp, text);
+	}
+	if(w > 0.0)
+	{
+		create_text_line_data(&line_data, fp, w, tab, text);
+		draw_text_lines(&line_data, color, x, y);
+	}
+	else
+	{
+		al_draw_text(fp, color, x, y, 0, text);
+	}
+	if(!held)
+	{
+		al_hold_bitmap_drawing(false);
+	}
+}
+
 void title_render(void)
 {
 	float x, y;
+	float w;
 
 	title_bg_render(bitmap[0]);
 
@@ -1546,6 +1696,12 @@ void title_render(void)
 		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
 		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, x, y, 0, 0);
 		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, x, y, 0, 0);
+	}
+	else if(current_menu == MENU_PRIVACY)
+	{
+		w = t3f_display_right - t3f_display_left;
+		draw_multiline_text(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), t3f_display_left + 6.0, t3f_display_top + 60.0 + 6.0, w, 0.0, 0, privacy_text);
+		draw_multiline_text(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_left + 4.0, t3f_display_top + 60.0 + 4.0, w, 0.0, 0, privacy_text);
 	}
 
 	t3f_render_gui(menu[current_menu]);

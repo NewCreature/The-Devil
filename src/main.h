@@ -40,6 +40,7 @@
 #define TITLE_MENU_ANALOG          13
 #define TITLE_MENU_NETWORK_ID      14
 #define MENU_TITLE                 15
+#define MENU_PRIVACY               16
 
 #define MAX_BITMAPS            16
 #define BITMAP_ICON            11
