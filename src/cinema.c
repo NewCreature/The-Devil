@@ -55,6 +55,29 @@ void delete_cinema_animation(CINEMA * cp, int index)
 	}
 }
 
+/* move text elements to end of frames */
+static void fix_cinema(CINEMA * cp)
+{
+	int i, j, k;
+	CINEMA_ENTITY temp_entity;
+
+	for(i = 0; i < cp->frames; i++)
+	{
+		for(j = 0; j < cp->frame[i].entities; j++)
+		{
+			if(cp->frame[i].entity[j].type == CINEMA_ENTITY_TEXT)
+			{
+				memcpy(&temp_entity, &cp->frame[i].entity[j], sizeof(CINEMA_ENTITY));
+				for(k = j; k < cp->frame[i].entities - 1; k++)
+				{
+					memcpy(&cp->frame[i].entity[k], &cp->frame[i].entity[k + 1], sizeof(CINEMA_ENTITY));
+				}
+				memcpy(&cp->frame[i].entity[cp->frame[i].entities - 1], &temp_entity, sizeof(CINEMA_ENTITY));
+			}
+		}
+	}
+}
+
 CINEMA * load_cinema(const char * fn, int flags)
 {
 	CINEMA * cp;
@@ -120,6 +143,7 @@ CINEMA * load_cinema(const char * fn, int flags)
 	{
 		return NULL;
 	}
+	fix_cinema(cp);
 	return cp;
 }
 
