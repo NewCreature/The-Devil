@@ -8,6 +8,8 @@ the-devil (1.3) maverick; urgency=low
   * Use larger font for cinemas and menus.
   * Add in-game radar system to help players on mobile devices see where the
     enemies are.
+  * Make easy mode easier.
+  * Add privacy info screen.
 
  -- Todd Cope <todd@t3-i.com>  BUILD_DATE +0000
 
