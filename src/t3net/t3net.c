@@ -445,6 +445,7 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, t3net_internal_write_function);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, data);
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, T3NET_TIMEOUT_TIME);
+	t3net_written = 0;
 	if(curl_easy_perform(curl))
 	{
 		curl_easy_cleanup(curl);
@@ -452,6 +453,7 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 		return 0;
 	}
     curl_easy_cleanup(curl);
+	data[t3net_written] = 0;
     
     top_node = mxmlLoadString(NULL, data, NULL);
     if(!top_node)
@@ -593,6 +595,7 @@ int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, t3net_internal_write_function);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, data);
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, T3NET_TIMEOUT_TIME);
+	t3net_written = 0;
 	if(curl_easy_perform(curl))
 	{
 		curl_easy_cleanup(curl);
@@ -600,6 +603,7 @@ int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
 		return 0;
 	}
     curl_easy_cleanup(curl);
+	data[t3net_written] = 0;
 
 	text_pos = 0;
 	while(ecount < lp->entries)
