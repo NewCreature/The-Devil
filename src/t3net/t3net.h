@@ -30,6 +30,7 @@ typedef struct
 	
 	char name[256];
 	unsigned long score;
+	char extra[256];
 	
 } T3NET_LEADERBOARD_ENTRY;
 
@@ -67,6 +68,6 @@ void t3net_clear_leaderboard(T3NET_LEADERBOARD * lp);
 void t3net_destroy_leaderboard(T3NET_LEADERBOARD * lp);
 
 /* leaderboard upload functions */
-int t3net_upload_score(char * url, char * game, char * version, char * mode, char * option, char * name, unsigned long score);
+int t3net_upload_score(char * url, char * game, char * version, char * mode, char * option, char * name, unsigned long score, char * extra);
 
 #endif

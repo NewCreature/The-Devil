@@ -9,7 +9,7 @@ static char t3net_server_key[1024] = {0};
 
 static void t3net_strcpy(char * dest, char * src)
 {
-	unsigned int i;
+	int i;
 	int write_pos = 0;
 	
 	for(i = 0; i < strlen(dest) + 1; i++)
@@ -29,13 +29,15 @@ static void t3net_strcpy(char * dest, char * src)
 	}
 }
 
+static int t3net_written = 0;
 static size_t t3net_internal_write_function(void * ptr, size_t size, size_t nmemb, void * stream)
 {
-	if(stream)
+	char * str = (char *)stream;
+	if(str)
 	{
-		memcpy(stream, ptr, size * nmemb);
-		((char *)stream)[size * nmemb] = 0;
+		memcpy(&str[t3net_written], ptr, size * nmemb);
 	}
+	t3net_written += size * nmemb;
 	return size * nmemb;
 }
 
@@ -94,6 +96,7 @@ int t3net_update_server_list(T3NET_SERVER_LIST * lp)
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, t3net_internal_write_function);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, data);
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, T3NET_TIMEOUT_TIME); // timeout after 10 seconds
+	t3net_written = 0;
     if(curl_easy_perform(curl)) // check for error
     {
 		curl_easy_cleanup(curl);
@@ -101,6 +104,7 @@ int t3net_update_server_list(T3NET_SERVER_LIST * lp)
 		return 0;
 	}
     curl_easy_cleanup(curl);
+	data[t3net_written] = 0;
     
     top_node = mxmlLoadString(NULL, data, NULL);
     if(!top_node)
@@ -257,6 +261,7 @@ char * t3net_register_server(char * url, char * game, char * version, char * nam
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, t3net_internal_write_function);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, data);
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, T3NET_TIMEOUT_TIME);
+	t3net_written = 0;
 	if(curl_easy_perform(curl))
 	{
 		curl_easy_cleanup(curl);
@@ -264,6 +269,7 @@ char * t3net_register_server(char * url, char * game, char * version, char * nam
 		return NULL;
 	}
     curl_easy_cleanup(curl);
+	data[t3net_written] = 0;
     
 	/* see if we got a key */
     top_node = mxmlLoadString(NULL, data, NULL);
@@ -313,6 +319,7 @@ int t3net_update_server(char * url, char * key, char * capacity)
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, t3net_internal_write_function);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, data);
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, T3NET_TIMEOUT_TIME);
+	t3net_written = 0;
     if(curl_easy_perform(curl))
     {
 		curl_easy_cleanup(curl);
@@ -347,6 +354,7 @@ int t3net_unregister_server(char * url, char * key)
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, t3net_internal_write_function);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, NULL);
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, T3NET_TIMEOUT_TIME);
+	t3net_written = 0;
     if(curl_easy_perform(curl))
     {
 		curl_easy_cleanup(curl);
@@ -517,6 +525,7 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 						/* get score for this name */
 						if(current_element && strlen(walk_node->value.text.string) > 0)
 						{
+							
 							/* append extra name elements */
 							if(!strcasecmp(current_element, "name"))
 							{
@@ -542,6 +551,12 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 								lp->entry[ecount - 1]->score = atoi(walk_node->value.text.string);
 								lp->entries++;
 							}
+							
+							/* get extra data */
+							else if(!strcasecmp(current_element, "extra"))
+							{
+								strcpy(lp->entry[ecount - 1]->extra, walk_node->value.text.string);
+							}
 						}
 						break;
 					}
@@ -561,6 +576,17 @@ int t3net_update_leaderboard(T3NET_LEADERBOARD * lp)
 	return 1;
 }
 
+static int t3net_leaderboard_read_char(const char * buffer, int max, int pos)
+{
+	int r = -1;
+
+	if(pos < max)
+	{
+		r = buffer[pos];
+	}
+	return r;
+}
+
 int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
 {
 	CURL * curl;
@@ -568,7 +594,7 @@ int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
 	char * data = NULL;
 	int ecount = 0;
 	unsigned int text_pos;
-	int text_char;
+	int text_char, text_max;
 	int text_fill_pos;
 	char text[256];
 	
@@ -606,14 +632,15 @@ int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
 	data[t3net_written] = 0;
 
 	text_pos = 0;
+    text_max = strlen(data);
 	while(ecount < lp->entries)
 	{
 		/* read the name */
 		text_char = 0;
 		text_fill_pos = 0;
-		while(text_char != '\n')
+		while(text_char != '\n' && text_char != -1)
 		{
-			text_char = data[text_pos];
+			text_char = t3net_leaderboard_read_char(data, text_max, text_pos);
 			lp->entry[ecount]->name[text_fill_pos] = text_char;
 			text_fill_pos++;
 			text_pos++;
@@ -627,9 +654,9 @@ int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
 		text_char = 0;
 		text_fill_pos = 0;
 		strncpy(text, "", 256);
-		while(text_char != '\n')
+		while(text_char != '\n' && text_char != -1)
 		{
-			text_char = data[text_pos];
+			text_char = t3net_leaderboard_read_char(data, text_max, text_pos);
 			if(text_char != '\t')
 			{
 				text[text_fill_pos] = text_char;
@@ -645,7 +672,7 @@ int t3net_update_leaderboard_2(T3NET_LEADERBOARD * lp)
 		ecount++;
 		
 		/* get out if we've reached the end of the data */
-		if(text_pos >= strlen(data))
+		if(text_pos >= text_max)
 		{
 			break;
 		}
@@ -672,7 +699,7 @@ void t3net_destroy_leaderboard(T3NET_LEADERBOARD * lp)
 	free(lp);
 }
 
-int t3net_upload_score(char * url, char * game, char * version, char * mode, char * option, char * name, unsigned long score)
+int t3net_upload_score(char * url, char * game, char * version, char * mode, char * option, char * name, unsigned long score, char * extra)
 {
 	CURL * curl;
 	char * data = NULL;
@@ -694,11 +721,17 @@ int t3net_upload_score(char * url, char * game, char * version, char * mode, cha
 	}
 	t3net_strcpy(tname, name);
 	sprintf(url_w_arg, "%s?uploadScore&game=%s&version=%s&mode=%s&option=%s&name=%s&score=%lu", url, game, version, mode, option, tname, score);
+	if(extra)
+	{
+		strcat(url_w_arg, "&extra=");
+		strcat(url_w_arg, extra);
+	}
 //	printf("%s\n", url_w_arg);
 	curl_easy_setopt(curl, CURLOPT_URL, url_w_arg);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, t3net_internal_write_function);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, data);
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, T3NET_TIMEOUT_TIME);
+	t3net_written = 0;
     if(curl_easy_perform(curl))
     {
 		curl_easy_cleanup(curl);

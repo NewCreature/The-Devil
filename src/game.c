@@ -420,7 +420,7 @@ void game_exit(void)
 	title_load_data();
 	if(upload_scores && !konami_mode && !finale_mode && !fire_power)
 	{
-		t3net_upload_score("http://www.t3-i.com/leaderboards/poll.php", "devil", "1.1", game_mode_text[game_mode], "0", network_id, score * 2 + 'v' + 'g' + 'o' + 'l' + 'f');
+		t3net_upload_score("http://www.t3-i.com/leaderboards/poll.php", "devil", "1.1", game_mode_text[game_mode], "0", network_id, score * 2 + 'v' + 'g' + 'o' + 'l' + 'f', NULL);
 		download_leaderboard();
 		if(leaderboard)
 		{
