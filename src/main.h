@@ -7,7 +7,7 @@
 #include "t3f/controller.h"
 #include "t3f/gui.h"
 #include "t3f/rng.h"
-#include "t3net/t3net.h"
+#include "t3net/leaderboard.h"
 #include "cinema.h"
 #include "game.h"
 #include "particle.h"
@@ -123,12 +123,12 @@
 
 typedef struct
 {
-	
+
 	int touch_id;
 	float pin_x, pin_y;
 	float pos_x, pos_y;
 	bool active;
-	
+
 } TOUCH_STICK;
 
 extern int state;
@@ -184,7 +184,7 @@ extern char * game_mode_text[16];
 extern int death_time;
 extern int flash_time;
 extern int fade_time;
-extern TOUCH_STICK touch_stick[2]; 
+extern TOUCH_STICK touch_stick[2];
 extern float touch_size;
 
 /* network data */

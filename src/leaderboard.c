@@ -9,7 +9,7 @@ void download_leaderboard(void)
 	{
 		t3net_destroy_leaderboard(leaderboard);
 	}
-	leaderboard = t3net_get_leaderboard("http://www.t3-i.com/leaderboards/query_2.php", "devil", "1.1", game_mode_text[game_mode], "0", 10, 0);
+	leaderboard = t3net_get_leaderboard("http://www.t3-i.com/t3net2/leaderboards/query.php", "devil", "1.1", game_mode_text[game_mode], "0", 10, 0);
 	menu_fix_leaderboard_text();
 	al_start_timer(t3f_timer);
 }
@@ -35,7 +35,7 @@ void leaderboard_render(void)
 	int offset = 0;
 	int yoffset = 200 - 68;
 	int size = al_get_font_line_height(font[FONT_SMALL]);
-	
+
 	title_bg_render(bitmap[0]);
 	for(i = 0; i < 10; i++)
 	{

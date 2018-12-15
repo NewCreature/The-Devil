@@ -42,37 +42,37 @@ bool game_load_data(void)
 	{
 		return false;
 	}
-	
+
 	/* load spirit animation */
 	animation[ANIMATION_SPIRIT] = t3f_create_animation();
 	if(!animation[ANIMATION_SPIRIT])
 	{
 		return false;
 	}
-	animation[ANIMATION_SPIRIT]->bitmap[0] = t3f_load_resource((void **)(&animation[ANIMATION_SPIRIT]->bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/spirit0.png", 0, 0, 0);
-	animation[ANIMATION_SPIRIT]->bitmap[1] = t3f_load_resource((void **)(&animation[ANIMATION_SPIRIT]->bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/spirit1.png", 0, 0, 0);
-	animation[ANIMATION_SPIRIT]->bitmaps = 2;
-	t3f_animation_add_frame(animation[ANIMATION_SPIRIT], 0, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_SPIRIT]->bitmap[0]), al_get_bitmap_height(animation[ANIMATION_SPIRIT]->bitmap[0]), 0, 5);
-	t3f_animation_add_frame(animation[ANIMATION_SPIRIT], 1, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_SPIRIT]->bitmap[1]), al_get_bitmap_height(animation[ANIMATION_SPIRIT]->bitmap[1]), 0, 5);
-	
+	animation[ANIMATION_SPIRIT]->bitmaps->bitmap[0] = t3f_load_resource((void **)(&animation[ANIMATION_SPIRIT]->bitmaps->bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/spirit0.png", 0, 0, 0);
+	animation[ANIMATION_SPIRIT]->bitmaps->bitmap[1] = t3f_load_resource((void **)(&animation[ANIMATION_SPIRIT]->bitmaps->bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/spirit1.png", 0, 0, 0);
+	animation[ANIMATION_SPIRIT]->bitmaps->count = 2;
+	t3f_animation_add_frame(animation[ANIMATION_SPIRIT], 0, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_SPIRIT]->bitmaps->bitmap[0]), al_get_bitmap_height(animation[ANIMATION_SPIRIT]->bitmaps->bitmap[0]), 0, 5, 0);
+	t3f_animation_add_frame(animation[ANIMATION_SPIRIT], 1, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_SPIRIT]->bitmaps->bitmap[1]), al_get_bitmap_height(animation[ANIMATION_SPIRIT]->bitmaps->bitmap[1]), 0, 5, 0);
+
 	/* load dark orb animation */
 	animation[ANIMATION_DARK_ORB] = t3f_create_animation();
 	if(!animation[ANIMATION_DARK_ORB])
 	{
 		return false;
 	}
-	animation[ANIMATION_DARK_ORB]->bitmap[0] = t3f_load_resource((void **)(&animation[ANIMATION_DARK_ORB]->bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/dark_orb0.png", 0, 0, 0);
-	animation[ANIMATION_DARK_ORB]->bitmap[1] = t3f_load_resource((void **)(&animation[ANIMATION_DARK_ORB]->bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/dark_orb1.png", 0, 0, 0);
-	animation[ANIMATION_DARK_ORB]->bitmaps = 2;
-	t3f_animation_add_frame(animation[ANIMATION_DARK_ORB], 0, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_DARK_ORB]->bitmap[0]), al_get_bitmap_height(animation[ANIMATION_DARK_ORB]->bitmap[0]), 0, 5);
-	t3f_animation_add_frame(animation[ANIMATION_DARK_ORB], 1, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_DARK_ORB]->bitmap[1]), al_get_bitmap_height(animation[ANIMATION_DARK_ORB]->bitmap[1]), 0, 5);
+	animation[ANIMATION_DARK_ORB]->bitmaps->bitmap[0] = t3f_load_resource((void **)(&animation[ANIMATION_DARK_ORB]->bitmaps->bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/dark_orb0.png", 0, 0, 0);
+	animation[ANIMATION_DARK_ORB]->bitmaps->bitmap[1] = t3f_load_resource((void **)(&animation[ANIMATION_DARK_ORB]->bitmaps->bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/dark_orb1.png", 0, 0, 0);
+	animation[ANIMATION_DARK_ORB]->bitmaps->count = 2;
+	t3f_animation_add_frame(animation[ANIMATION_DARK_ORB], 0, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_DARK_ORB]->bitmaps->bitmap[0]), al_get_bitmap_height(animation[ANIMATION_DARK_ORB]->bitmaps->bitmap[0]), 0, 5, 0);
+	t3f_animation_add_frame(animation[ANIMATION_DARK_ORB], 1, 0, 0, 0, al_get_bitmap_width(animation[ANIMATION_DARK_ORB]->bitmaps->bitmap[1]), al_get_bitmap_height(animation[ANIMATION_DARK_ORB]->bitmaps->bitmap[1]), 0, 5, 0);
 
 	animation[ANIMATION_CROSSHAIR] = t3f_load_animation_from_bitmap("data/graphics/crosshair.png");
 	if(!animation[ANIMATION_CROSSHAIR])
 	{
 		return false;
 	}
-	
+
 	animation[ANIMATION_PLAYER_SHOT_PARTICLE] = t3f_load_animation_from_bitmap("data/graphics/player_shot_particle.png");
 	if(!animation[ANIMATION_PLAYER_SHOT_PARTICLE])
 	{
@@ -112,13 +112,11 @@ bool game_load_data(void)
 	t3f_add_animation_to_atlas(atlas, animation[ANIMATION_RADAR_DOT], T3F_ATLAS_SPRITE);
 
 	/* load the first two level backdrops */
-	bitmap[0] = t3f_load_resource((void **)(&bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg00.png", 0, 0, 0);
-	if(!bitmap[0])
+	if(!t3f_load_resource((void **)(&bitmap[0]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg00.png", 0, 0, 0))
 	{
 		return false;
 	}
-	bitmap[1] = t3f_load_resource((void **)(&bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg01.png", 0, 0, 0);
-	if(!bitmap[1])
+	if(!t3f_load_resource((void **)(&bitmap[1]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg01.png", 0, 0, 0))
 	{
 		return false;
 	}
@@ -199,7 +197,7 @@ bool game_load_data(void)
 void game_free_data(void)
 {
 	int i;
-	
+
 	t3f_destroy_animation(animation[ANIMATION_PLAYER]);
 	animation[ANIMATION_PLAYER] = NULL;
 	t3f_destroy_animation(animation[ANIMATION_DEMON]);
@@ -269,9 +267,9 @@ void game_free_data(void)
 bool game_init(int mode)
 {
 	int i;
-	
+
 	game_mode = mode;
-	
+
 	al_stop_timer(t3f_timer);
 	game_load_data();
 	al_start_timer(t3f_timer);
@@ -296,7 +294,7 @@ bool game_init(int mode)
 		enemy_spawner[enemy_spawners].y = -32 + i * 32;
 		enemy_spawners++;
 	}
-	
+
 	/* create game objects */
 	player.object = t3f_create_collision_object(8, 8, 16, 16, 32, 32, 0);
 	for(i = 0; i < GAME_MAX_ENEMIES; i++)
@@ -323,7 +321,7 @@ bool game_init(int mode)
 	{
 		particle[i].active = false;
 	}
-	
+
 	/* set game up */
 	touch_stick[0].active = false;
 	touch_stick[1].active = false;
@@ -377,7 +375,7 @@ void game_exit(void)
 {
 	int i;
 	char text[256] = {0};
-	
+
 	/* destroy game objects */
 	t3f_destroy_collision_object(player.object);
 	for(i = 0; i < GAME_MAX_ENEMIES; i++)
@@ -420,7 +418,7 @@ void game_exit(void)
 	title_load_data();
 	if(upload_scores && !konami_mode && !finale_mode && !fire_power)
 	{
-		t3net_upload_score("http://www.t3-i.com/leaderboards/poll.php", "devil", "1.1", game_mode_text[game_mode], "0", network_id, score * 2 + 'v' + 'g' + 'o' + 'l' + 'f', NULL);
+		t3net_upload_score("http://www.t3-i.com/t3net2/leaderboards/insert.php", "devil", "1.1", game_mode_text[game_mode], "0", network_id, score * 2 + 'v' + 'g' + 'o' + 'l' + 'f', NULL);
 		download_leaderboard();
 		if(leaderboard)
 		{
@@ -640,7 +638,7 @@ void read_touch_controls(void)
 {
 	int touch_used[2] = {-1, -1};
 	int i;
-	
+
 	/* see which touches are already in use */
 	for(i = 0; i < 2; i++)
 	{
@@ -867,7 +865,7 @@ void game_render_bg(void)
 {
 	int cur, next;
 	float alpha;
-	
+
 	switch(game_mode)
 	{
 		case GAME_MODE_ETERNAL:
@@ -900,10 +898,10 @@ void game_render_radar(void)
 {
 	double a;
 	int i;
-	
+
 	if(player.active)
 	{
-		t3f_draw_animation(animation[ANIMATION_RADAR], al_map_rgba_f(0.25, 0.25, 0.25, 0.25), 0, player.x + 16 - al_get_bitmap_width(animation[ANIMATION_RADAR]->bitmap[0]) / 2, player.y + 16 - al_get_bitmap_height(animation[ANIMATION_RADAR]->bitmap[0]) / 2, 0.0, 0);
+		t3f_draw_animation(animation[ANIMATION_RADAR], al_map_rgba_f(0.25, 0.25, 0.25, 0.25), 0, player.x + 16 - al_get_bitmap_width(animation[ANIMATION_RADAR]->bitmaps->bitmap[0]) / 2, player.y + 16 - al_get_bitmap_height(animation[ANIMATION_RADAR]->bitmaps->bitmap[0]) / 2, 0.0, 0);
 		for(i = 0; i < GAME_MAX_ENEMIES; i++)
 		{
 			if(enemy[i].active)
@@ -922,7 +920,7 @@ void game_render_touch_helpers(void)
 	int i;
 	float scale;
 
-	scale = (touch_size * 2.0) / al_get_bitmap_width(animation[ANIMATION_RADAR]->bitmap[0]);
+	scale = (touch_size * 2.0) / al_get_bitmap_width(animation[ANIMATION_RADAR]->bitmaps->bitmap[0]);
 
 	al_hold_bitmap_drawing(false);
 	al_set_clipping_rectangle(0, 0, al_get_display_width(t3f_display), al_get_display_height(t3f_display));
@@ -943,7 +941,7 @@ void game_render_touch_helpers(void)
 void game_render(void)
 {
 	float alpha;
-	
+
 	if(t3f_option[T3F_OPTION_RENDER_MODE] != T3F_RENDER_MODE_ALWAYS_CLEAR)
 	{
 		al_set_clipping_rectangle(0, 0, al_get_display_width(t3f_display), al_get_display_height(t3f_display));
@@ -964,31 +962,31 @@ void game_render(void)
 		t3f_draw_animation(animation[ANIMATION_CROSSHAIR], t3f_color_white, player.tick, t3f_mouse_x - 8, t3f_mouse_y - 8, 0, 0);
 	}
 	game_render_radar();
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_left + GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + 2, 0, "Score: %06d", score);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_left + GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN, 0, "Score: %06d", score);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_left + GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, 0, "Multiplier: %d", multiplier);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_left + GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]), 0, "Multiplier: %d", multiplier);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->left + GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, 0, "Score: %06d", score);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->left + GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN, 0, "Score: %06d", score);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->left + GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, 0, "Multiplier: %d", multiplier);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->left + GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]), 0, "Multiplier: %d", multiplier);
 	if(game_mode == GAME_MODE_ETERNAL || current_level < 10)
 	{
-		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_right - GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
-		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_right - GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
+		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->right - GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
+		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->right - GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level + 1);
 	}
 	else
 	{
-		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_right - GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level);
-		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_right - GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level);
+		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->right - GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level);
+		al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->right - GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_RIGHT, "Level: %2d", current_level);
 	}
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_display_right - GAME_STATS_MARGIN + 2, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, ALLEGRO_ALIGN_RIGHT, "Lives: %2d", lives);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_display_right - GAME_STATS_MARGIN, t3f_display_top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]), ALLEGRO_ALIGN_RIGHT, "Lives: %2d", lives);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 320 + 2, t3f_display_top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_CENTRE, "High Score: %06d", high_score[game_mode]);
-	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_display_top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_CENTRE, "High Score: %06d", high_score[game_mode]);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->right - GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]) + 2, ALLEGRO_ALIGN_RIGHT, "Lives: %2d", lives);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->right - GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN + al_get_font_line_height(font[FONT_SMALL]), ALLEGRO_ALIGN_RIGHT, "Lives: %2d", lives);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 320 + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, ALLEGRO_ALIGN_CENTRE, "High Score: %06d", high_score[game_mode]);
+	al_draw_textf(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_default_view->top + GAME_STATS_MARGIN, ALLEGRO_ALIGN_CENTRE, "High Score: %06d", high_score[game_mode]);
 	if(enemy[0].type == ENEMY_TYPE_DARK_ORB && enemy[0].active)
 	{
-		al_draw_text(font[FONT_TINY], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 320 + 2, t3f_display_bottom - 40 + 2, ALLEGRO_ALIGN_CENTRE, "Dark Power Orb");
-		al_draw_text(font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_display_bottom - 40, ALLEGRO_ALIGN_CENTRE, "Dark Power Orb");
+		al_draw_text(font[FONT_TINY], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 320 + 2, t3f_default_view->bottom - 40 + 2, ALLEGRO_ALIGN_CENTRE, "Dark Power Orb");
+		al_draw_text(font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_default_view->bottom - 40, ALLEGRO_ALIGN_CENTRE, "Dark Power Orb");
 		al_hold_bitmap_drawing(false);
-		al_draw_filled_rectangle(320 - enemy[0].var2 + 2, t3f_display_bottom - 20 + 2, 320 + enemy[0].var2 + 2, t3f_display_bottom - 12 + 2, al_map_rgba_f(0.0, 0.0, 0.0, 0.8));
-		al_draw_filled_rectangle(320 - enemy[0].var2, t3f_display_bottom - 20, 320 + enemy[0].var2, t3f_display_bottom - 12, al_map_rgba_f(0.0, 1.0, 0.0, 1.0));
+		al_draw_filled_rectangle(320 - enemy[0].var2 + 2, t3f_default_view->bottom - 20 + 2, 320 + enemy[0].var2 + 2, t3f_default_view->bottom - 12 + 2, al_map_rgba_f(0.0, 0.0, 0.0, 0.8));
+		al_draw_filled_rectangle(320 - enemy[0].var2, t3f_default_view->bottom - 20, 320 + enemy[0].var2, t3f_default_view->bottom - 12, al_map_rgba_f(0.0, 1.0, 0.0, 1.0));
 		al_hold_bitmap_drawing(true);
 	}
 	if(controller_type >= CONTROLLER_TYPE_TOUCH_S)

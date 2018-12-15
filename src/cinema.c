@@ -1,5 +1,6 @@
 #include "t3f/t3f.h"
 #include "t3f/resource.h"
+#include "t3f/file.h"
 #include "main.h"
 #include "cinema.h"
 #include "title.h"
@@ -7,7 +8,7 @@
 CINEMA * create_cinema(void)
 {
 	CINEMA * cp;
-	
+
 	cp = malloc(sizeof(CINEMA));
 	if(!cp)
 	{
@@ -21,7 +22,7 @@ CINEMA * create_cinema(void)
 void destroy_cinema(CINEMA * cp)
 {
 	int i;
-	
+
 	for(i = 0; i < cp->animations; i++)
 	{
 		t3f_destroy_animation(cp->animation[i]);
@@ -43,7 +44,7 @@ void add_cinema_animation(CINEMA * cp, T3F_ANIMATION * ap)
 void delete_cinema_animation(CINEMA * cp, int index)
 {
 	int i;
-	
+
 	if(cp && index < cp->animations)
 	{
 		t3f_destroy_animation(cp->animation[index]);
@@ -84,7 +85,7 @@ CINEMA * load_cinema(const char * fn, int flags)
 	char header[16] = {0};
 	ALLEGRO_FILE * fp;
 	int i, j, t;
-	
+
 	fp = al_fopen(fn, "rb");
 	if(!fp)
 	{
@@ -152,7 +153,7 @@ bool save_cinema(CINEMA * cp, const char * fn)
 	char header[16] = {'C', 'I', 'N', 'M', 'A'};
 	ALLEGRO_FILE * fp;
 	int i, j;
-	
+
 	fp = al_fopen(fn, "wb");
 	if(!fp)
 	{
@@ -192,7 +193,7 @@ bool save_cinema(CINEMA * cp, const char * fn)
 
 void cinema_logic(CINEMA * cp)
 {
-	
+
 	/* skip cinema */
 	if(t3f_key[ALLEGRO_KEY_ESCAPE])
 	{
@@ -212,14 +213,14 @@ void cinema_logic(CINEMA * cp)
 	{
 		click = false;
 	}
-	
+
 }
 
 static float cinema_get_text_tab(ALLEGRO_FONT * fp, const char * text)
 {
 	char buffer[64] = {0};
 	int i;
-	
+
 	for(i = 0; i < strlen(text); i++)
 	{
 		buffer[i] = text[i];
@@ -233,19 +234,19 @@ static float cinema_get_text_tab(ALLEGRO_FONT * fp, const char * text)
 
 typedef struct
 {
-	
+
 	char text[256];
-	
+
 } CINEMA_TEXT_LINE;
 
 typedef struct
 {
-	
+
 	ALLEGRO_FONT * font;
 	CINEMA_TEXT_LINE line[64];
 	int lines;
 	float tab;
-	
+
 } CINEMA_TEXT_LINE_DATA;
 
 void cinema_draw_text(ALLEGRO_FONT * fp, ALLEGRO_COLOR color, float x, float y, float z, float w, float tab, int flags, const char * text);
@@ -268,7 +269,7 @@ void cinema_create_text_line_data(CINEMA_TEXT_LINE_DATA * lp, ALLEGRO_FONT * fp,
 	{
 		return;
 	}
-	
+
 	/* divide text into lines */
 	for(i = 0; i < (int)strlen(text); i++)
 	{
@@ -279,7 +280,7 @@ void cinema_create_text_line_data(CINEMA_TEXT_LINE_DATA * lp, ALLEGRO_FONT * fp,
 			last_space = current_line_pos;
 		}
 		current_line_pos++;
-		
+
 		/* copy line since we encountered a manual new line */
 		if(text[i] == '\n')
 		{
@@ -292,7 +293,7 @@ void cinema_create_text_line_data(CINEMA_TEXT_LINE_DATA * lp, ALLEGRO_FONT * fp,
 			current_line[current_line_pos] = '\0';
 			wi = w - tab;
 		}
-		
+
 		/* copy this line to our list of lines because it is long enough */
 		else if(al_get_text_width(fp, current_line) > wi)
 		{
@@ -319,7 +320,7 @@ void cinema_draw_text_lines(CINEMA_TEXT_LINE_DATA * lines, ALLEGRO_COLOR color, 
 	int i;
 	float px = x;
 	float py = y;
-	
+
 	for(i = 0; i < lines->lines; i++)
 	{
 		cinema_draw_text(lines->font, color, px, py, z, 0.0, 0.0, 0, lines->line[i].text);
@@ -370,7 +371,7 @@ void cinema_render(CINEMA * cp)
 {
 	int i;
 	float tab;
-	
+
 	if(cp->position >= cp->frames)
 	{
 		return;
@@ -382,8 +383,8 @@ void cinema_render(CINEMA * cp)
 			case CINEMA_ENTITY_TEXT:
 			{
 				tab = cinema_get_text_tab(cp->font, cp->frame[cp->position].entity[i].data);
-				cinema_draw_text(cp->font, al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 4 + 2, t3f_display_top + 4 + 2, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
-				cinema_draw_text(cp->font, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 4, t3f_display_top + 4, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
+				cinema_draw_text(cp->font, al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 4 + 2, t3f_default_view->top + 4 + 2, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
+				cinema_draw_text(cp->font, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 4, t3f_default_view->top + 4, 0, 640 - 8, tab, 0, cp->frame[cp->position].entity[i].data);
 				break;
 			}
 			case CINEMA_ENTITY_ANIMATION:

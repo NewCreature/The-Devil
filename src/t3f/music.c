@@ -1,8 +1,5 @@
-#include <allegro5/allegro5.h>
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
-#include "t3f/t3f.h"
-#include "t3f/music.h"
+#include "t3f.h"
+#include "music.h"
 
 ALLEGRO_AUDIO_STREAM * t3f_stream = NULL;
 ALLEGRO_MUTEX * t3f_music_mutex = NULL;
@@ -13,13 +10,16 @@ static float t3f_new_music_volume = 1.0;
 static float t3f_music_target_volume = 1.0;
 static float t3f_music_fade_speed = 0.0;
 static float t3f_music_gain = 1.0;
+static bool t3f_music_looping_disabled = false;
 
 static char t3f_music_thread_fn[4096] = {0};
 static const ALLEGRO_FILE_INTERFACE * t3f_music_thread_file_interface = NULL;
 
+ALLEGRO_DEBUG_CHANNEL("android");
+
 static bool t3f_set_music_state(int state)
 {
-	
+
 	/* create the mutex if necessary */
 	if(!t3f_music_state_mutex)
 	{
@@ -29,7 +29,7 @@ static bool t3f_set_music_state(int state)
 			return false;
 		}
 	}
-	
+
 	al_lock_mutex(t3f_music_state_mutex);
 	t3f_music_state = state;
 	al_unlock_mutex(t3f_music_state_mutex);
@@ -39,7 +39,7 @@ static bool t3f_set_music_state(int state)
 static const char * t3f_get_music_extension(const char * fn)
 {
 	int i;
-	
+
 	for(i = strlen(fn); i >= 0; i--)
 	{
 		if(fn[i] == '.')
@@ -60,13 +60,15 @@ static void * t3f_play_music_thread(void * arg)
 	bool loop_disabled = false;
 	const char * val = NULL;
 	ALLEGRO_CONFIG * config = NULL;
-	
+
+	ALLEGRO_DEBUG("music thread start\n");
 	t3f_music_gain = 1.0;
 	al_lock_mutex(t3f_music_mutex);
 	if(t3f_stream)
 	{
 		t3f_stop_music();
 	}
+	ALLEGRO_DEBUG("setting file interface\n");
 	al_set_new_file_interface(t3f_music_thread_file_interface);
 	t3f_stream = al_load_audio_stream(t3f_music_thread_fn, 4, 4096);
 	if(!t3f_stream)
@@ -75,7 +77,8 @@ static void * t3f_play_music_thread(void * arg)
 		t3f_set_music_state(T3F_MUSIC_STATE_OFF);
 		return NULL;
 	}
-	
+
+	ALLEGRO_DEBUG("configuring music\n");
 	/* look for loop data */
 	path = al_create_path(t3f_music_thread_fn);
 	if(path)
@@ -121,7 +124,11 @@ static void * t3f_play_music_thread(void * arg)
 		}
 		al_destroy_path(path);
 	}
-	
+	if(t3f_music_looping_disabled)
+	{
+		loop_disabled = true;
+	}
+
 	if(loop_disabled)
 	{
 		al_set_audio_stream_playmode(t3f_stream, ALLEGRO_PLAYMODE_ONCE);
@@ -137,6 +144,10 @@ static void * t3f_play_music_thread(void * arg)
 				al_set_audio_stream_loop_secs(t3f_stream, 0.0, al_get_audio_stream_length_secs(t3f_stream));
 				al_set_audio_stream_playmode(t3f_stream, ALLEGRO_PLAYMODE_LOOP);
 			}
+			else
+			{
+				al_set_audio_stream_playmode(t3f_stream, ALLEGRO_PLAYMODE_LOOP);
+			}
 		}
 		else
 		{
@@ -144,6 +155,7 @@ static void * t3f_play_music_thread(void * arg)
 			al_set_audio_stream_playmode(t3f_stream, ALLEGRO_PLAYMODE_LOOP);
 		}
 	}
+	ALLEGRO_DEBUG("start the music\n");
 	t3f_music_volume = t3f_new_music_volume;
 	al_set_audio_stream_gain(t3f_stream, t3f_music_volume * t3f_music_gain);
 	al_attach_audio_stream_to_mixer(t3f_stream, al_get_default_mixer());
@@ -159,7 +171,7 @@ static void * t3f_fade_music_thread(void * arg)
 	bool done = false;
 	ALLEGRO_EVENT event;
 	float s = t3f_music_fade_speed / 50.0;
-	
+
 	timer = al_create_timer(1.0 / s);
 	if(!timer)
 	{
@@ -189,6 +201,7 @@ static void * t3f_fade_music_thread(void * arg)
  * see if there is a corresponding INI file and read loop data from that */
 bool t3f_play_music(const char * fn)
 {
+	ALLEGRO_DEBUG("attempting to play %s\n", fn);
 	if(!(t3f_flags & T3F_USE_SOUND))
 	{
 		return false;
@@ -248,6 +261,7 @@ void t3f_resume_music(void)
 void t3f_set_music_volume(float volume)
 {
 	t3f_music_volume = volume;
+	t3f_new_music_volume = volume; // set this here so music new music will start at the desired volume
 	if(t3f_stream)
 	{
 		al_set_audio_stream_gain(t3f_stream, t3f_music_volume * t3f_music_gain);
@@ -276,7 +290,7 @@ void t3f_fade_out_music(float speed)
 int t3f_get_music_state(void)
 {
 	int state;
-	
+
 	if(t3f_music_state_mutex)
 	{
 		al_lock_mutex(t3f_music_state_mutex);
@@ -285,4 +299,9 @@ int t3f_get_music_state(void)
 		return state;
 	}
 	return T3F_MUSIC_STATE_OFF;
+}
+
+void t3f_disable_music_looping(void)
+{
+	t3f_music_looping_disabled = true;
 }

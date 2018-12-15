@@ -5,7 +5,7 @@
 #include "t3f/controller.h"
 #include "t3f/resource.h"
 #include "t3f/rng.h"
-#include "t3net/t3net.h"
+#include "t3net/leaderboard.h"
 #include "cinema.h"
 #include "main.h"
 #include "title.h"
@@ -112,7 +112,7 @@ void event_handler(ALLEGRO_EVENT * event, void * data)
 void logic(void * data)
 {
 	int i;
-	
+
 	switch(state)
 	{
 		case STATE_LOGO:
@@ -306,7 +306,7 @@ void render(void * data)
 void process_arguments(int argc, char * argv[])
 {
 	int i;
-	
+
 	for(i = 1; i < argc; i++)
 	{
 		if(!strcmp(argv[i], "-v"))
@@ -321,7 +321,7 @@ bool is_dual_analog(int joy)
 {
 	int i;
 	int c = 0;
-	
+
 	for(i = 0; i < al_get_joystick_num_sticks(t3f_joystick[joy]); i++)
 	{
 		if(al_get_joystick_num_axes(t3f_joystick[joy], i) >= 2)
@@ -339,7 +339,7 @@ bool is_dual_analog(int joy)
 int detect_dual_analog(void)
 {
 	int i;
-	
+
 	for(i = 0; i < al_get_num_joysticks(); i++)
 	{
 		if(is_dual_analog(i))
@@ -354,7 +354,7 @@ int get_analog_stick(int joy, int stick)
 {
 	int i;
 	int c = 0;
-	
+
 	for(i = 0; i < al_get_joystick_num_sticks(t3f_joystick[joy]); i++)
 	{
 		if(al_get_joystick_num_axes(t3f_joystick[joy], i) >= 2)
@@ -444,7 +444,7 @@ void detect_controller_desktop(int type)
 {
 	int i = 0;
 	int stick;
-	
+
 	/* autodetect dual analog */
 	if(type < 0)
 	{
@@ -557,7 +557,7 @@ bool initialize(int argc, char * argv[])
 {
 	const char * val;
 	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
-	
+
 	process_arguments(argc, argv);
 	if(!t3f_initialize("The Devil", 640, 480, 60.0, logic, render, T3F_DEFAULT | T3F_USE_MOUSE | T3F_USE_JOYSTICK | T3F_USE_TOUCH | T3F_FORCE_ASPECT | T3F_FILL_SCREEN, NULL))
 	{
@@ -570,7 +570,7 @@ bool initialize(int argc, char * argv[])
 	{
 		return false;
 	}
-	
+
 	#ifndef ALLEGRO_MACOSX
 		#ifndef T3F_ANDROID
 			bitmap[BITMAP_ICON] = t3f_load_resource((void **)(&bitmap[BITMAP_ICON]), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/icon.png", 0, 0, 0);
@@ -581,7 +581,7 @@ bool initialize(int argc, char * argv[])
 			al_set_display_icon(t3f_display, bitmap[BITMAP_ICON]);
 		#endif
 	#endif
-	
+
 	font[FONT_LARGE] = t3f_load_resource((void **)(&font[FONT_LARGE]), T3F_RESOURCE_TYPE_FONT, "data/fonts/isle_of_the_dead.ttf", 60, 0, 0);
 	if(!font[FONT_LARGE])
 	{
@@ -685,7 +685,7 @@ bool initialize(int argc, char * argv[])
 			force_aspect = false;
 		}
 	}
-	
+
 	/* get controller config */
 	if(controller_type < 0)
 	{
@@ -710,7 +710,7 @@ bool initialize(int argc, char * argv[])
 void uninitialize(void)
 {
 	int i;
-	
+
 	for(i = 0; i < MAX_FONTS; i++)
 	{
 		if(font[i])
