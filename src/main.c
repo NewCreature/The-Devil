@@ -743,5 +743,6 @@ int main(int argc, char * argv[])
 	t3f_run();
 	t3f_stop_music();
 	uninitialize();
+	t3f_finish();
 	return 0;
 }
