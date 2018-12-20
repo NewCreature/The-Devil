@@ -455,7 +455,14 @@ void detect_controller_desktop(int type)
 		}
 		else
 		{
-			controller_type = CONTROLLER_TYPE_NORMAL;
+			if(t3f_flags & T3F_USE_MOUSE)
+			{
+				controller_type = CONTROLLER_TYPE_MOUSE;
+			}
+			else
+			{
+				controller_type = CONTROLLER_TYPE_NORMAL;
+			}
 		}
 	}
 	switch(controller_type)
