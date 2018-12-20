@@ -6,7 +6,7 @@ v1.4
 
 [ ]Remove T3 logo and put copyright message on title screen.
 
-[ ]Consider making mouse+keyboard the default control scheme.
+[X]Consider making mouse+keyboard the default control scheme.
 
 
 v1.3
