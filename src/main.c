@@ -530,21 +530,21 @@ void detect_controller_desktop(int type)
 		case CONTROLLER_TYPE_MOUSE:
 		{
 			controller->binding[CONTROLLER_UP].type = T3F_CONTROLLER_BINDING_KEY;
-			controller->binding[CONTROLLER_UP].button = ALLEGRO_KEY_UP;
+			controller->binding[CONTROLLER_UP].button = ALLEGRO_KEY_W;
 			controller->binding[CONTROLLER_DOWN].type = T3F_CONTROLLER_BINDING_KEY;
-			controller->binding[CONTROLLER_DOWN].button = ALLEGRO_KEY_DOWN;
+			controller->binding[CONTROLLER_DOWN].button = ALLEGRO_KEY_S;
 			controller->binding[CONTROLLER_LEFT].type = T3F_CONTROLLER_BINDING_KEY;
-			controller->binding[CONTROLLER_LEFT].button = ALLEGRO_KEY_LEFT;
+			controller->binding[CONTROLLER_LEFT].button = ALLEGRO_KEY_A;
 			controller->binding[CONTROLLER_RIGHT].type = T3F_CONTROLLER_BINDING_KEY;
-			controller->binding[CONTROLLER_RIGHT].button = ALLEGRO_KEY_RIGHT;
+			controller->binding[CONTROLLER_RIGHT].button = ALLEGRO_KEY_D;
 			controller->binding[CONTROLLER_FIRE_UP].type = T3F_CONTROLLER_BINDING_KEY;
-			controller->binding[CONTROLLER_FIRE_UP].button = ALLEGRO_KEY_W;
+			controller->binding[CONTROLLER_FIRE_UP].button = ALLEGRO_KEY_UP;
 			controller->binding[CONTROLLER_FIRE_DOWN].type = T3F_CONTROLLER_BINDING_KEY;
-			controller->binding[CONTROLLER_FIRE_DOWN].button = ALLEGRO_KEY_S;
+			controller->binding[CONTROLLER_FIRE_DOWN].button = ALLEGRO_KEY_DOWN;
 			controller->binding[CONTROLLER_FIRE_LEFT].type = T3F_CONTROLLER_BINDING_KEY;
-			controller->binding[CONTROLLER_FIRE_LEFT].button = ALLEGRO_KEY_A;
+			controller->binding[CONTROLLER_FIRE_LEFT].button = ALLEGRO_KEY_LEFT;
 			controller->binding[CONTROLLER_FIRE_RIGHT].type = T3F_CONTROLLER_BINDING_KEY;
-			controller->binding[CONTROLLER_FIRE_RIGHT].button = ALLEGRO_KEY_D;
+			controller->binding[CONTROLLER_FIRE_RIGHT].button = ALLEGRO_KEY_RIGHT;
 			break;
 		}
 	}
