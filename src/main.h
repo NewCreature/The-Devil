@@ -146,6 +146,10 @@ extern int controller_type;
 extern bool click;
 extern bool mouse_disabled;
 extern T3F_RNG_STATE rng_state;
+extern char copyright_message[256];
+extern ALLEGRO_USTR * copyright_message_ustr;
+extern ALLEGRO_USTR * copyright_message_uchar;
+extern float copyright_message_width;
 
 /* menu data */
 extern T3F_GUI * menu[TITLE_MAX_MENUS];

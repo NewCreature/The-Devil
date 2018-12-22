@@ -14,7 +14,7 @@
 #include "leaderboard.h"
 
 /* main data */
-int state = STATE_LOGO;
+int state = STATE_TITLE_IN;
 int state_ticks = 0;
 T3F_ANIMATION * animation[MAX_ANIMATIONS] = {NULL};
 ALLEGRO_FONT * font[MAX_FONTS] = {NULL};
@@ -29,6 +29,10 @@ bool click = false;
 bool first_run = true;
 bool mouse_disabled = false;
 T3F_RNG_STATE rng_state;
+char copyright_message[256] = {0};
+ALLEGRO_USTR * copyright_message_ustr = NULL;
+ALLEGRO_USTR * copyright_message_uchar = NULL;
+float copyright_message_width = 0.0;
 
 /* menu data */
 T3F_GUI * menu[TITLE_MAX_MENUS] = {NULL};
@@ -571,6 +575,21 @@ bool initialize(int argc, char * argv[])
 		return false;
 	}
 	t3f_set_event_handler(event_handler);
+	#ifdef T3F_NO_UTF8
+		t3f_windows_text_to_utf8(T3F_APP_COPYRIGHT, copyright_message, 256);
+	#else
+		strcpy(copyright_message, T3F_APP_COPYRIGHT);
+	#endif
+	copyright_message_ustr = al_ustr_new(copyright_message);
+	if(!copyright_message_ustr)
+	{
+		return false;
+	}
+	copyright_message_uchar = al_ustr_new(" ");
+	if(!copyright_message_uchar)
+	{
+		return false;
+	}
 	al_inhibit_screensaver(true);
 	animation[ANIMATION_CURSOR] = t3f_load_animation_from_bitmap("data/graphics/cursor.png");
 	if(!animation[ANIMATION_CURSOR])
@@ -605,11 +624,11 @@ bool initialize(int argc, char * argv[])
 		return false;
 	}
 
-	sample[SAMPLE_LOGO] = al_load_sample("data/sounds/logo.ogg");
+/*	sample[SAMPLE_LOGO] = al_load_sample("data/sounds/logo.ogg");
 	if(!sample[SAMPLE_LOGO])
 	{
 		return false;
-	}
+	} */
 	t3f_set_gui_driver(NULL);
 	controller = t3f_create_controller(8);
 	if(!controller)
@@ -709,8 +728,22 @@ bool initialize(int argc, char * argv[])
 		}
 	}
 	t3f_srand(&rng_state, time(0));
-	t3_logo_setup("data/graphics/logo.png", "data/sounds/logo.ogg");
-	state = STATE_LOGO;
+//	t3_logo_setup("data/graphics/logo.png", "data/sounds/logo.ogg");
+	t3f_play_music("data/music/title.xm");
+	title_load_data();
+	title_init();
+	if(first_run)
+	{
+		select_menu(TITLE_MENU_FIRST);
+		al_set_config_value(t3f_config, "Settings", "First Run", "false");
+	}
+	state = STATE_TITLE_IN;
+	state_ticks = 0;
+	if(mouse_disabled)
+	{
+		t3f_select_next_gui_element(menu[current_menu]);
+	}
+	al_hide_mouse_cursor(t3f_display);
 	return true;
 }
 
@@ -718,6 +751,8 @@ void uninitialize(void)
 {
 	int i;
 
+	al_ustr_free(copyright_message_ustr);
+	al_ustr_free(copyright_message_uchar);
 	for(i = 0; i < MAX_FONTS; i++)
 	{
 		if(font[i])

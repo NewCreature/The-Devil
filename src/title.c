@@ -1680,6 +1680,68 @@ void draw_multiline_text(ALLEGRO_FONT * fp, ALLEGRO_COLOR color, float x, float 
 	}
 }
 
+static float get_copyright_message_width(ALLEGRO_FONT * fp, ALLEGRO_FONT * fp2, const char * text)
+{
+	ALLEGRO_FONT * font;
+	int read_pos = 0;
+	int32_t read_char = 0;
+	float text_width = 0.0;
+	int i;
+
+	if(copyright_message_width <= 0.0)
+	{
+		for(i = 0; i < al_ustr_length(copyright_message_ustr); i++)
+		{
+			read_char = al_ustr_get_next(copyright_message_ustr, &read_pos);
+			if(read_char == 179)
+			{
+				font = fp2;
+				read_char = '3';
+			}
+			else
+			{
+				font = fp;
+			}
+			al_ustr_set_chr(copyright_message_uchar, 0, read_char);
+			text_width += al_get_text_width(font, al_cstr(copyright_message_uchar));
+		}
+	}
+	return text_width;
+}
+
+static void draw_copyright_message(ALLEGRO_FONT * fp, ALLEGRO_FONT * fp2, ALLEGRO_COLOR color, float x, float y, int flags, const char * text)
+{
+	ALLEGRO_FONT * font;
+	int read_pos = 0;
+	int32_t read_char = 0;
+	float pos = x;
+	float oy;
+	int i;
+
+	if(flags & ALLEGRO_ALIGN_CENTRE)
+	{
+		pos -= get_copyright_message_width(fp, fp2, text) / 2;
+	}
+	for(i = 0; i < al_ustr_length(copyright_message_ustr); i++)
+	{
+		read_char = al_ustr_get_next(copyright_message_ustr, &read_pos);
+		if(read_char == 179)
+		{
+			font = fp2;
+			read_char = '3';
+			oy = -4.0;
+		}
+		else
+		{
+			font = fp;
+			oy = 0.0;
+		}
+		al_ustr_set_chr(copyright_message_uchar, 0, read_char);
+		al_draw_text(font, color, pos, y + oy, 0, al_cstr(copyright_message_uchar));
+		pos += al_get_text_width(font, al_cstr(copyright_message_uchar));
+	}
+}
+
 void title_render(void)
 {
 	float x, y;
@@ -1696,6 +1758,8 @@ void title_render(void)
 		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
 		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, x, y, 0, 0);
 		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, x, y, 0, 0);
+		draw_copyright_message(font[FONT_SMALL], font[FONT_TINY], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 320, t3f_default_view->bottom - al_get_font_line_height(font[FONT_SMALL]), ALLEGRO_ALIGN_CENTRE, copyright_message);
+		draw_copyright_message(font[FONT_SMALL], font[FONT_TINY], t3f_color_white, 320 - 2, t3f_default_view->bottom - al_get_font_line_height(font[FONT_SMALL]) - 2, ALLEGRO_ALIGN_CENTRE, copyright_message);
 	}
 	else if(current_menu == MENU_PRIVACY)
 	{
