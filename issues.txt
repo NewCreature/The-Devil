@@ -6,7 +6,7 @@ v1.4
 [ ]Figure out what is causing the seemingly random crash when trying to load
    the leaderboard. It seems to happen when internet access is flaky.
 
-[ ]Remove T3 logo and put copyright message on title screen.
+[X]Remove T3 logo and put copyright message on title screen.
 
 [X]Consider making mouse+keyboard the default control scheme.
 
