@@ -1343,12 +1343,52 @@ void title_bg_render(ALLEGRO_BITMAP * bp)
 	t3f_draw_bitmap(bp, al_map_rgba_f(alpha, alpha, alpha, alpha), 0, 0, (float)-(title_flicker % 512) / 2.0, 0);
 }
 
+static bool check_for_skip(void)
+{
+	int i;
+
+	if(t3f_key_pressed())
+	{
+		return true;
+	}
+	for(i = 0; i < 16; i++)
+	{
+		if(t3f_mouse_button[i])
+		{
+			return true;
+		}
+	}
+	for(i = 0; i < T3F_MAX_TOUCHES; i++)
+	{
+		if(t3f_touch[i].active)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+static void clear_mouse_buttons(void)
+{
+	int i;
+
+	for(i = 0; i < 16; i++)
+	{
+		t3f_mouse_button[i] = false;
+	}
+}
+
 void title_in_logic(void)
 {
+	if(check_for_skip())
+	{
+		state_ticks = 240;
+	}
 	title_bg_logic();
 	state_ticks++;
 	if(state_ticks >= 240)
 	{
+		clear_mouse_buttons();
 		t3f_clear_touch_data();
 		state = STATE_TITLE;
 		state_ticks = 0;
