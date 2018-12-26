@@ -506,12 +506,20 @@ int menu_proc_controller_autodetect(void * data, int i, void * p)
 	return 1;
 }
 
+static void bind_input(int slot)
+{
+	t3f_bind_controller(controller, slot);
+	t3f_process_events(true);
+	t3f_mouse_button[0] = false;
+	update_controller_menu_text();
+}
+
 int menu_proc_set_move_up(void * data, int i, void * p)
 {
 	al_stop_timer(t3f_timer);
 	sprintf(menu_text[1], "Select input...");
 	t3f_render(NULL);
-	t3f_bind_controller(controller, 0);
+	bind_input(0);
 	update_controller_menu_text();
 	al_start_timer(t3f_timer);
 	return 1;
@@ -522,7 +530,7 @@ int menu_proc_set_move_down(void * data, int i, void * p)
 	al_stop_timer(t3f_timer);
 	sprintf(menu_text[2], "Select input...");
 	t3f_render(NULL);
-	t3f_bind_controller(controller, 1);
+	bind_input(1);
 	update_controller_menu_text();
 	al_start_timer(t3f_timer);
 	return 1;
@@ -533,7 +541,7 @@ int menu_proc_set_move_left(void * data, int i, void * p)
 	al_stop_timer(t3f_timer);
 	sprintf(menu_text[3], "Select input...");
 	t3f_render(NULL);
-	t3f_bind_controller(controller, 2);
+	bind_input(2);
 	update_controller_menu_text();
 	al_start_timer(t3f_timer);
 	return 1;
@@ -544,7 +552,7 @@ int menu_proc_set_move_right(void * data, int i, void * p)
 	al_stop_timer(t3f_timer);
 	sprintf(menu_text[4], "Select input...");
 	t3f_render(NULL);
-	t3f_bind_controller(controller, 3);
+	bind_input(3);
 	update_controller_menu_text();
 	al_start_timer(t3f_timer);
 	return 1;
@@ -555,7 +563,7 @@ int menu_proc_set_fire_up(void * data, int i, void * p)
 	al_stop_timer(t3f_timer);
 	sprintf(menu_text[5], "Select input...");
 	t3f_render(NULL);
-	t3f_bind_controller(controller, 4);
+	bind_input(4);
 	update_controller_menu_text();
 	block_buttons = true;
 	al_start_timer(t3f_timer);
@@ -567,7 +575,7 @@ int menu_proc_set_fire_down(void * data, int i, void * p)
 	al_stop_timer(t3f_timer);
 	sprintf(menu_text[6], "Select input...");
 	t3f_render(NULL);
-	t3f_bind_controller(controller, 5);
+	bind_input(5);
 	update_controller_menu_text();
 	block_buttons = true;
 	al_start_timer(t3f_timer);
@@ -579,7 +587,7 @@ int menu_proc_set_fire_left(void * data, int i, void * p)
 	al_stop_timer(t3f_timer);
 	sprintf(menu_text[7], "Select input...");
 	t3f_render(NULL);
-	t3f_bind_controller(controller, 6);
+	bind_input(6);
 	update_controller_menu_text();
 	block_buttons = true;
 	al_start_timer(t3f_timer);
@@ -591,7 +599,7 @@ int menu_proc_set_fire_right(void * data, int i, void * p)
 	al_stop_timer(t3f_timer);
 	sprintf(menu_text[8], "Select input...");
 	t3f_render(NULL);
-	t3f_bind_controller(controller, 7);
+	bind_input(7);
 	update_controller_menu_text();
 	block_buttons = true;
 	al_start_timer(t3f_timer);
@@ -606,7 +614,7 @@ int menu_proc_set_move_vertical(void * data, int i, void * p)
 	sprintf(menu_text[1], "Move axis up...");
 	t3f_render(NULL);
 	memcpy(&old_binding, &controller->binding[4], sizeof(T3F_CONTROLLER_BINDING));
-	t3f_bind_controller(controller, 0);
+	bind_input(0);
 	if(controller->binding[0].type != T3F_CONTROLLER_BINDING_JOYSTICK_AXIS)
 	{
 		memcpy(&controller->binding[0], &old_binding, sizeof(T3F_CONTROLLER_BINDING));
@@ -638,7 +646,7 @@ int menu_proc_set_move_horizontal(void * data, int i, void * p)
 	sprintf(menu_text[2], "Move axis left...");
 	t3f_render(NULL);
 	memcpy(&old_binding, &controller->binding[4], sizeof(T3F_CONTROLLER_BINDING));
-	t3f_bind_controller(controller, 2);
+	bind_input(2);
 	if(controller->binding[2].type != T3F_CONTROLLER_BINDING_JOYSTICK_AXIS)
 	{
 		memcpy(&controller->binding[2], &old_binding, sizeof(T3F_CONTROLLER_BINDING));
@@ -670,7 +678,7 @@ int menu_proc_set_fire_vertical(void * data, int i, void * p)
 	sprintf(menu_text[3], "Move axis up...");
 	t3f_render(NULL);
 	memcpy(&old_binding, &controller->binding[4], sizeof(T3F_CONTROLLER_BINDING));
-	t3f_bind_controller(controller, 4);
+	bind_input(4);
 	if(controller->binding[4].type != T3F_CONTROLLER_BINDING_JOYSTICK_AXIS)
 	{
 		memcpy(&controller->binding[4], &old_binding, sizeof(T3F_CONTROLLER_BINDING));
@@ -702,7 +710,7 @@ int menu_proc_set_fire_horizontal(void * data, int i, void * p)
 	sprintf(menu_text[4], "Move axis left...");
 	t3f_render(NULL);
 	memcpy(&old_binding, &controller->binding[4], sizeof(T3F_CONTROLLER_BINDING));
-	t3f_bind_controller(controller, 6);
+	bind_input(6);
 	if(controller->binding[6].type != T3F_CONTROLLER_BINDING_JOYSTICK_AXIS)
 	{
 		memcpy(&controller->binding[6], &old_binding, sizeof(T3F_CONTROLLER_BINDING));
