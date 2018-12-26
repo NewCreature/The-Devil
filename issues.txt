@@ -1,14 +1,11 @@
 v1.4
 ----
 
-[ ]Make control setup menu not malfunction when user assigns button that is
+[X]Make control setup menu not malfunction when user assigns button that is
    being used for a fire button. We should probably just clear the controls
    after each assignment.
 
 [X]Allow skipping the opening animation with a click/touch.
-
-[ ]Figure out what is causing the seemingly random crash when trying to load
-   the leaderboard. It seems to happen when internet access is flaky.
 
 [X]Remove T3 logo and put copyright message on title screen.
 
