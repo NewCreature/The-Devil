@@ -34,6 +34,11 @@ const char * t3f_get_controller_name(T3F_CONTROLLER * cp, int binding)
 			sprintf(t3f_controller_return_name, "Keyboard");
 			return t3f_controller_return_name;
 		}
+		case T3F_CONTROLLER_BINDING_MOUSE_BUTTON:
+		{
+			sprintf(t3f_controller_return_name, "Mouse");
+			return t3f_controller_return_name;
+		}
 		case T3F_CONTROLLER_BINDING_JOYSTICK_BUTTON:
 		case T3F_CONTROLLER_BINDING_JOYSTICK_AXIS:
 		{
@@ -80,6 +85,18 @@ const char * t3f_get_controller_binding_name(T3F_CONTROLLER * cp, int binding)
 		case T3F_CONTROLLER_BINDING_KEY:
 		{
 			sprintf(t3f_binding_return_name, "%s", al_keycode_to_name(cp->binding[binding].button));
+			if(string_is_empty(t3f_binding_return_name))
+			{
+				return unknown_binding_string;
+			}
+			else
+			{
+				return t3f_binding_return_name;
+			}
+		}
+		case T3F_CONTROLLER_BINDING_MOUSE_BUTTON:
+		{
+			sprintf(t3f_binding_return_name, "Button %d", cp->binding[binding].button);
 			if(string_is_empty(t3f_binding_return_name))
 			{
 				return unknown_binding_string;
