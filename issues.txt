@@ -1,7 +1,7 @@
 v1.4
 ----
 
-[ ]When switching from full screen to windowed mode, the view transformation
+[X]When switching from full screen to windowed mode, the view transformation
    still acts like it is in full screen mode.
 
 [X]Make control setup menu not malfunction when user assigns button that is
