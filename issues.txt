@@ -1,6 +1,9 @@
 v1.4
 ----
 
+[ ]When switching from full screen to windowed mode, the view transformation
+   still acts like it is in full screen mode.
+
 [X]Make control setup menu not malfunction when user assigns button that is
    being used for a fire button. We should probably just clear the controls
    after each assignment.
