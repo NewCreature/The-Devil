@@ -912,11 +912,11 @@ void initialize_video_mode(void)
 		}
 		case 3:
 		{
-			printf("break 1\n");
 			al_get_monitor_info(0, &info);
 			al_set_config_value(t3f_config, "T3F", "force_fullscreen", "true");
 			set_video_mode(info.x2 - info.x1, info.y2 - info.y1, flags | T3F_USE_FULLSCREEN);
-			printf("break 2\n");
+			t3f_default_view->need_update = true;
+			t3f_select_view(t3f_default_view);
 			break;
 		}
 	}
