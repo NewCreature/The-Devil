@@ -1,6 +1,8 @@
 v1.4
 ----
 
+[ ]Update changelog.
+
 [X]When switching from full screen to windowed mode, the view transformation
    still acts like it is in full screen mode.
 
