@@ -748,20 +748,30 @@ int menu_proc_upload_toggle(void * data, int i, void * p)
 	return 1;
 }
 
+static void menu_proc_network_id_callback(void * data)
+{
+	if(strlen(network_id) <= 0)
+	{
+		strcpy(network_id, "Anonymous");
+	}
+	menu_proc_back(NULL, 0, NULL);
+}
+
 int menu_proc_network_id(void * data, int i, void * p)
 {
 	select_menu(TITLE_MENU_NETWORK_ID);
 	network_id_entry = true;
 	network_id_pos = strlen(network_id);
 	t3f_clear_keys();
-	t3f_show_soft_keyboard(true);
+	#ifdef ALLEGRO_ANDROID
+		t3f_open_edit_box("Enter Name", network_id, 256, "CapWords", menu_proc_network_id_callback, NULL);
+	#endif
 	return 1;
 }
 
 int menu_proc_network_id_name(void * data, int i, void * p)
 {
-	t3f_show_soft_keyboard(true);
-	return 1;
+	return menu_proc_network_id(data, i, p);
 }
 
 int menu_proc_leaderboard_mode_left(void * data, int i, void * p)
