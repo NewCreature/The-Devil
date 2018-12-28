@@ -1243,7 +1243,7 @@ bool title_init(void)
 	#endif
 	menu_fix_internet_text();
 	#ifdef T3F_ANDROID
-		t3f_center_gui(menu[TITLE_MENU_NETWORK_ID], 20 + t3f_display_top, 240);
+		t3f_center_gui(menu[TITLE_MENU_NETWORK_ID], 20 + t3f_default_view->top, 240);
 	#else
 		t3f_center_gui(menu[TITLE_MENU_NETWORK_ID], 20, 480);
 	#endif
