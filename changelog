@@ -1,5 +1,6 @@
 the-devil (1.4) maverick; urgency=low
 
+  * Upgrade to latest T3F and T3Net frameworks.
   * Remove logo screen in favor of having a copyright message on the title
     screen.
   * Allow intro animation to be skipped.
