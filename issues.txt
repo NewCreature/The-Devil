@@ -1,6 +1,8 @@
 v1.4
 ----
 
+[ ]Fix T3F_VIEW edge calculations.
+
 [X]Update changelog.
 
 [X]When switching from full screen to windowed mode, the view transformation
