@@ -1359,6 +1359,12 @@ static bool check_for_skip(void)
 	{
 		return true;
 	}
+	t3f_read_controller(controller);
+	t3f_update_controller(controller);
+	if(controller->state[CONTROLLER_FIRE_UP].pressed || controller->state[CONTROLLER_FIRE_DOWN].pressed || controller->state[CONTROLLER_FIRE_LEFT].pressed || controller->state[CONTROLLER_FIRE_RIGHT].pressed)
+	{
+		return true;
+	}
 	for(i = 0; i < 16; i++)
 	{
 		if(t3f_mouse_button[i])
@@ -1398,6 +1404,7 @@ void title_in_logic(void)
 	{
 		clear_mouse_buttons();
 		t3f_clear_touch_data();
+		t3f_clear_controller_state(controller);
 		state = STATE_TITLE;
 		state_ticks = 0;
 	}
