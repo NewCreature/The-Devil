@@ -35,6 +35,7 @@ ALLEGRO_USTR * copyright_message_uchar = NULL;
 float copyright_message_width = 0.0;
 
 /* menu data */
+float logo_pos_x, logo_pos_y;
 T3F_GUI * menu[TITLE_MAX_MENUS] = {NULL};
 int current_menu = MENU_TITLE;
 char menu_text[32][64] = {{0}};

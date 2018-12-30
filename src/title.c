@@ -748,14 +748,16 @@ int menu_proc_upload_toggle(void * data, int i, void * p)
 	return 1;
 }
 
-static void menu_proc_network_id_callback(void * data)
-{
-	if(strlen(network_id) <= 0)
+#ifdef ALLEGRO_ANDROID
+	static void menu_proc_network_id_callback(void * data)
 	{
-		strcpy(network_id, "Anonymous");
+		if(strlen(network_id) <= 0)
+		{
+			strcpy(network_id, "Anonymous");
+		}
+		menu_proc_back(NULL, 0, NULL);
 	}
-	menu_proc_back(NULL, 0, NULL);
-}
+#endif
 
 int menu_proc_network_id(void * data, int i, void * p)
 {
@@ -1064,6 +1066,9 @@ void title_free_data(void)
 
 bool title_init(void)
 {
+	float total_height;
+	float free_height;
+	float space;
 	float oy = 0;
 
 	menu[TITLE_MENU_MAIN] = t3f_create_gui(0, 0);
@@ -1312,7 +1317,12 @@ bool title_init(void)
 	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], menu_proc_first_no, "No", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_center_gui(menu[TITLE_MENU_FIRST], 20, 480);
 
-	oy = 240 + al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmaps->bitmap[0]) / 2 + al_get_font_line_height(font[FONT_LARGE]) / 3;
+	total_height = (t3f_default_view->bottom - t3f_default_view->top) - al_get_font_line_height(font[FONT_SMALL]);
+	free_height = total_height - (al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmaps->bitmap[0]) + al_get_font_line_height(font[FONT_LARGE]));
+	space = free_height / 3;
+	logo_pos_x = 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmaps->bitmap[0]) / 2;
+	logo_pos_y = t3f_default_view->top + space;
+	oy = t3f_default_view->top + space + al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmaps->bitmap[0]) + space;
 	menu[MENU_TITLE] = t3f_create_gui(0, 0);
 	t3f_add_gui_text_element(menu[MENU_TITLE], menu_proc_game, "Game", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 
@@ -1426,8 +1436,8 @@ void title_in_render(void)
 	float alpha;
 	float x, y;
 
-	x = 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmaps->bitmap[0]) / 2;
-	y = 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmaps->bitmap[0]) / 2 - al_get_font_line_height(font[FONT_LARGE]);
+	x = logo_pos_x;
+	y = logo_pos_y;
 	al_clear_to_color(al_map_rgba_f(0.0, 0.0, 0.0, 1.0));
 	if(state_ticks < 60)
 	{
@@ -1818,8 +1828,8 @@ void title_render(void)
 	/* render title logo if we are on title menu */
 	if(current_menu == MENU_TITLE)
 	{
-		x = 320 - al_get_bitmap_width(animation[ANIMATION_TITLE_EYES]->bitmaps->bitmap[0]) / 2;
-		y = 240 - al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmaps->bitmap[0]) / 2 - al_get_font_line_height(font[FONT_LARGE]);
+		x = logo_pos_x;
+		y = logo_pos_y;
 		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
 		t3f_draw_animation(animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), state_ticks, x + 4, y + 4, 0, 0);
 		t3f_draw_animation(animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), state_ticks, x, y, 0, 0);

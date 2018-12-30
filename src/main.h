@@ -152,6 +152,7 @@ extern ALLEGRO_USTR * copyright_message_uchar;
 extern float copyright_message_width;
 
 /* menu data */
+extern float logo_pos_x, logo_pos_y;
 extern T3F_GUI * menu[TITLE_MAX_MENUS];
 extern int current_menu;
 extern char menu_text[32][64];
