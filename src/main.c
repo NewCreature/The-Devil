@@ -5,6 +5,7 @@
 #include "t3f/controller.h"
 #include "t3f/resource.h"
 #include "t3f/rng.h"
+#include "t3f/windows.h"
 #include "t3net/leaderboard.h"
 #include "cinema.h"
 #include "main.h"
