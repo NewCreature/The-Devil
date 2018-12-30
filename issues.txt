@@ -1,7 +1,7 @@
 v1.4
 ----
 
-[ ]Fix T3F_VIEW edge calculations.
+[X]Fix T3F_VIEW edge calculations.
 
 [X]Update changelog.
 
