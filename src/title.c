@@ -1840,8 +1840,8 @@ void title_render(void)
 	else if(current_menu == MENU_PRIVACY)
 	{
 		w = t3f_default_view->right - t3f_default_view->left;
-		draw_multiline_text(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), t3f_default_view->left + 6.0, t3f_default_view->top + 60.0 + 6.0, w, 0.0, 0, privacy_text);
-		draw_multiline_text(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->left + 4.0, t3f_default_view->top + 60.0 + 4.0, w, 0.0, 0, privacy_text);
+		draw_multiline_text(font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), t3f_default_view->left + 6.0, t3f_default_view->top + 6.0, w, 0.0, 0, privacy_text);
+		draw_multiline_text(font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->left + 4.0, t3f_default_view->top + 4.0, w, 0.0, 0, privacy_text);
 	}
 
 	t3f_render_gui(menu[current_menu]);
