@@ -5,6 +5,7 @@ the-devil (1.4) maverick; urgency=low
     screen.
   * Allow intro animation to be skipped.
   * Fix issues with input binding menu screen.
+  * Tweak menu spacing.
 
  -- Todd Cope <todd@t3-i.com>  BUILD_DATE +0000
 
