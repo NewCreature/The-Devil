@@ -1072,189 +1072,189 @@ bool title_init(void)
 	float oy = 0;
 
 	menu[TITLE_MENU_MAIN] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_play, "Play Game", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_play, "Play Game", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_story, "View Story", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_story, "View Story", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_leaderboards, "Leaderboards", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_leaderboards, "Leaderboards", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_settings, "Settings", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_settings, "Settings", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_privacy, "Privacy", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_privacy, "Privacy", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_quit, "Exit to OS", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_MAIN], menu_proc_quit, "Exit to OS", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 	t3f_center_gui(menu[TITLE_MENU_MAIN], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_DIFFICULTY] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_DIFFICULTY], menu_proc_play_easy, "Easy", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_DIFFICULTY], menu_proc_play_easy, "Easy", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_DIFFICULTY], menu_proc_play_normal, "Normal", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_DIFFICULTY], menu_proc_play_normal, "Normal", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[TITLE_MENU_DIFFICULTY], menu_proc_back, "Back", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_DIFFICULTY], menu_proc_back, "Back", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 	t3f_center_gui(menu[TITLE_MENU_DIFFICULTY], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_MODE] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_MODE], menu_proc_play_story, "Story", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_MODE], menu_proc_play_story, "Story", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_MODE], menu_proc_play_eternal, "Eternal", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_MODE], menu_proc_play_eternal, "Eternal", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[TITLE_MENU_MODE], menu_proc_back, "Back", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_MODE], menu_proc_back, "Back", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 	t3f_center_gui(menu[TITLE_MENU_MODE], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_SETTINGS] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_SETTINGS], menu_proc_controls, "Controls", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_SETTINGS], menu_proc_controls, "Controls", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_SETTINGS], menu_proc_internet, "Internet Options", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_SETTINGS], menu_proc_internet, "Internet Options", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_SETTINGS], menu_proc_display, "Display Options", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_SETTINGS], menu_proc_display, "Display Options", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[TITLE_MENU_SETTINGS], menu_proc_back, "Back", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_SETTINGS], menu_proc_back, "Back", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 	menu_fix_controller_type_text();
 	t3f_center_gui(menu[TITLE_MENU_SETTINGS], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_CONTROL] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], NULL, "Control Type", font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], NULL, "Control Type", (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], NULL, menu_text[0], font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_type_left, "<", font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Normal Controller") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_type_right, ">", font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Normal Controller") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], NULL, menu_text[0], (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_type_left, "<", (void **)&font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Normal Controller") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_type_right, ">", (void **)&font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Normal Controller") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_autodetect, "Autodetect", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_autodetect, "Autodetect", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 		oy += al_get_font_line_height(font[FONT_LARGE]);
-		t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_configure, "Configure", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_controller_configure, "Configure", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 		oy += al_get_font_line_height(font[FONT_LARGE]);
 	#endif
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL], menu_proc_back, "Done", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 	menu_fix_controller_type_text();
 	t3f_center_gui(menu[TITLE_MENU_CONTROL], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_CONTROL_NORMAL] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Move Up", font[FONT_SMALL], 160, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Move Up", (void **)&font[FONT_SMALL], 160, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_move_up, menu_text[1], font[FONT_SMALL], 160, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_move_up, menu_text[1], (void **)&font[FONT_SMALL], 160, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Move Down", font[FONT_SMALL], 160, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Move Down", (void **)&font[FONT_SMALL], 160, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_move_down, menu_text[2], font[FONT_SMALL], 160, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_move_down, menu_text[2], (void **)&font[FONT_SMALL], 160, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Move Left", font[FONT_SMALL], 160, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Move Left", (void **)&font[FONT_SMALL], 160, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_move_left, menu_text[3], font[FONT_SMALL], 160, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_move_left, menu_text[3], (void **)&font[FONT_SMALL], 160, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Move Right", font[FONT_SMALL], 160, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Move Right", (void **)&font[FONT_SMALL], 160, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_move_right, menu_text[4], font[FONT_SMALL], 160, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_move_right, menu_text[4], (void **)&font[FONT_SMALL], 160, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy = 0;
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Fire Up", font[FONT_SMALL], 480, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Fire Up", (void **)&font[FONT_SMALL], 480, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_fire_up, menu_text[5], font[FONT_SMALL], 480, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_fire_up, menu_text[5], (void **)&font[FONT_SMALL], 480, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Fire Down", font[FONT_SMALL], 480, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Fire Down", (void **)&font[FONT_SMALL], 480, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_fire_down, menu_text[6], font[FONT_SMALL], 480, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_fire_down, menu_text[6], (void **)&font[FONT_SMALL], 480, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Fire Left", font[FONT_SMALL], 480, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Fire Left", (void **)&font[FONT_SMALL], 480, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_fire_left, menu_text[7], font[FONT_SMALL], 480, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_fire_left, menu_text[7], (void **)&font[FONT_SMALL], 480, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Fire Right", font[FONT_SMALL], 480, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], NULL, "Fire Right", (void **)&font[FONT_SMALL], 480, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_fire_right, menu_text[8], font[FONT_SMALL], 480, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_set_fire_right, menu_text[8], (void **)&font[FONT_SMALL], 480, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_back, "Done", font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_NORMAL], menu_proc_back, "Done", (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_center_gui(menu[TITLE_MENU_CONTROL_NORMAL], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_CONTROL_MOUSE] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], NULL, "Move Up", font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], NULL, "Move Up", (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_set_move_up, menu_text[1], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_set_move_up, menu_text[1], (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], NULL, "Move Down", font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], NULL, "Move Down", (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_set_move_down, menu_text[2], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_set_move_down, menu_text[2], (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], NULL, "Move Left", font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], NULL, "Move Left", (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_set_move_left, menu_text[3], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_set_move_left, menu_text[3], (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], NULL, "Move Right", font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], NULL, "Move Right", (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_set_move_right, menu_text[4], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_set_move_right, menu_text[4], (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_back, "Done", font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_MOUSE], menu_proc_back, "Done", (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_center_gui(menu[TITLE_MENU_CONTROL_MOUSE], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_CONTROL_ANALOG] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], NULL, "Move Vertically", font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], NULL, "Move Vertically", (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_set_move_vertical, menu_text[1], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_set_move_vertical, menu_text[1], (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], NULL, "Move Horizontally", font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], NULL, "Move Horizontally", (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_set_move_horizontal, menu_text[2], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_set_move_horizontal, menu_text[2], (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], NULL, "Fire Vertically", font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], NULL, "Fire Vertically", (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_set_fire_vertical, menu_text[3], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_set_fire_vertical, menu_text[3], (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], NULL, "Fire Horizontally", font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], NULL, "Fire Horizontally", (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_set_fire_horizontal, menu_text[4], font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_set_fire_horizontal, menu_text[4], (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_back, "Done", font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_CONTROL_ANALOG], menu_proc_back, "Done", (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_center_gui(menu[TITLE_MENU_CONTROL_ANALOG], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_ANALOG] = t3f_create_gui(0, 0);
-//	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], NULL, menu_text[14], font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+//	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], NULL, menu_text[14], (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 //	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], NULL, menu_text[15], font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], NULL, menu_text[15], (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_SMALL]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], menu_proc_analog_done, "Done", font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], menu_proc_analog_done, "Done", (void **)&font[FONT_SMALL], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_center_gui(menu[TITLE_MENU_ANALOG], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_INTERNET] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], NULL, "Upload Scores", font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], NULL, "Upload Scores", (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], NULL, menu_text[9], font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
-	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_upload_toggle, "<", font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Yes") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_upload_toggle, ">", font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Yes") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], NULL, menu_text[9], (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_upload_toggle, "<", (void **)&font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Yes") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_upload_toggle, ">", (void **)&font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Yes") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_network_id, "Network ID", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_network_id, "Network ID", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_INTERNET], menu_proc_back, "Done", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 	menu_fix_internet_text();
 	t3f_center_gui(menu[TITLE_MENU_INTERNET], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_NETWORK_ID] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], NULL, "Network ID", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], NULL, "Network ID", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], NULL, network_id, font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], NULL, network_id, (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_NETWORK_ID], menu_proc_back, "Done", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 	menu_fix_internet_text();
 	#ifdef T3F_ANDROID
@@ -1267,54 +1267,54 @@ bool title_init(void)
 	menu[TITLE_MENU_DISPLAY] = t3f_create_gui(0, 0);
 	#ifndef PANDORA
 		#ifndef T3F_ANDROID
-			t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], NULL, "Display Type", font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+			t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], NULL, "Display Type", (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 			oy += al_get_font_line_height(font[FONT_LARGE]);
-			t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], NULL, menu_text[12], font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
-			t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_display_left, "<", font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Medium Window") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-			t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_display_right, ">", font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Medium Window") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+			t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], NULL, menu_text[12], (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+			t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_display_left, "<", (void **)&font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Medium Window") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+			t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_display_right, ">", (void **)&font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Medium Window") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 			oy += al_get_font_line_height(font[FONT_LARGE]);
 		#endif
 	#endif
-	t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], NULL, "Force 4:3 Aspect Ratio", font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], NULL, "Force 4:3 Aspect Ratio", (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], NULL, menu_text[13], font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
-	t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_display_toggle, "<", font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Yes") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_display_toggle, ">", font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Yes") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], NULL, menu_text[13], (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_display_toggle, "<", (void **)&font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Yes") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_display_toggle, ">", (void **)&font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Yes") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[TITLE_MENU_DISPLAY], menu_proc_back, "Done", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 	menu_fix_display_text();
 	t3f_center_gui(menu[TITLE_MENU_DISPLAY], 20, 480);
 
 	oy = 0;
 	menu[LEADERBOARD_MENU] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[LEADERBOARD_MENU], NULL, menu_text[10], font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
-	t3f_add_gui_text_element(menu[LEADERBOARD_MENU], menu_proc_leaderboard_mode_left, "<", font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Story Mode (Easy)") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
-	t3f_add_gui_text_element(menu[LEADERBOARD_MENU], menu_proc_leaderboard_mode_right, ">", font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Story Mode (Easy)") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[LEADERBOARD_MENU], NULL, menu_text[10], (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[LEADERBOARD_MENU], menu_proc_leaderboard_mode_left, "<", (void **)&font[FONT_LARGE], 320 - al_get_text_width(font[FONT_LARGE], "Story Mode (Easy)") / 2 - al_get_text_width(font[FONT_LARGE], "<"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[LEADERBOARD_MENU], menu_proc_leaderboard_mode_right, ">", (void **)&font[FONT_LARGE], 320 + al_get_text_width(font[FONT_LARGE], "Story Mode (Easy)") / 2 + al_get_text_width(font[FONT_LARGE], ">"), oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[LEADERBOARD_MENU], menu_proc_leaderboard_done, "Done", font[FONT_LARGE], 320, 318, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[LEADERBOARD_MENU], menu_proc_leaderboard_done, "Done", (void **)&font[FONT_LARGE], 320, 318, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#else
-		t3f_add_gui_text_element(menu[LEADERBOARD_MENU], NULL, "", font[FONT_LARGE], 320, 318, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[LEADERBOARD_MENU], NULL, "", (void **)&font[FONT_LARGE], 320, 318, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 	t3f_center_gui(menu[LEADERBOARD_MENU], 20, 480);
 
 	oy = 0;
 	menu[PAUSE_MENU] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[PAUSE_MENU], menu_proc_pause_resume, "Resume Game", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[PAUSE_MENU], menu_proc_pause_resume, "Resume Game", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[PAUSE_MENU], menu_proc_pause_quit, "Quit", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[PAUSE_MENU], menu_proc_pause_quit, "Quit", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_center_gui(menu[PAUSE_MENU], 20, 480);
 
 	oy = 0;
 	menu[TITLE_MENU_FIRST] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], NULL, "Would you like your scores", font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], NULL, "Would you like your scores", (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], NULL, "to be uploaded to t3-i.com?", font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], NULL, "to be uploaded to t3-i.com?", (void **)&font[FONT_LARGE], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], menu_proc_first_yes, "Yes", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], menu_proc_first_yes, "Yes", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	oy += al_get_font_line_height(font[FONT_LARGE]);
-	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], menu_proc_first_no, "No", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[TITLE_MENU_FIRST], menu_proc_first_no, "No", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	t3f_center_gui(menu[TITLE_MENU_FIRST], 20, 480);
 
 	total_height = (t3f_default_view->bottom - t3f_default_view->top) - al_get_font_line_height(font[FONT_SMALL]);
@@ -1324,18 +1324,18 @@ bool title_init(void)
 	logo_pos_y = t3f_default_view->top + space;
 	oy = t3f_default_view->top + space + al_get_bitmap_height(animation[ANIMATION_TITLE_EYES]->bitmaps->bitmap[0]) + space;
 	menu[MENU_TITLE] = t3f_create_gui(0, 0);
-	t3f_add_gui_text_element(menu[MENU_TITLE], menu_proc_game, "Game", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+	t3f_add_gui_text_element(menu[MENU_TITLE], menu_proc_game, "Game", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 
 	oy = t3f_default_view->bottom - al_get_font_line_height(font[FONT_LARGE]);
 	menu[MENU_PRIVACY] = t3f_create_gui(0, 0);
-//	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], NULL, menu_text[14], font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+//	t3f_add_gui_text_element(menu[TITLE_MENU_ANALOG], NULL, menu_text[14], (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 //	oy += al_get_font_line_height(font[FONT_SMALL]);
-//	t3f_add_gui_text_element(menu[MENU_PRIVACY], NULL, menu_text[15], font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
+//	t3f_add_gui_text_element(menu[MENU_PRIVACY], NULL, menu_text[15], (void **)&font[FONT_SMALL], 320, oy, t3f_color_white, T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW | T3F_GUI_ELEMENT_STATIC);
 //	oy += al_get_font_line_height(font[FONT_SMALL]);
 	#ifndef T3F_ANDROID
-		t3f_add_gui_text_element(menu[MENU_PRIVACY], menu_proc_back, "Done", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[MENU_PRIVACY], menu_proc_back, "Done", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#else
-		t3f_add_gui_text_element(menu[MENU_PRIVACY], menu_proc_back, "", font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
+		t3f_add_gui_text_element(menu[MENU_PRIVACY], menu_proc_back, "", (void **)&font[FONT_LARGE], 320, oy, al_map_rgba_f(1.0, 0.0, 0.0, 1.0), T3F_GUI_ELEMENT_CENTRE | T3F_GUI_ELEMENT_SHADOW);
 	#endif
 //	t3f_center_gui(menu[TITLE_MENU_ANALOG], 20, 480);
 
