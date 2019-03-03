@@ -1,3 +1,10 @@
+the-devil (1.4.1) maverick; urgency=low
+
+  * Fix issues with Android port that were preventing it from working on many
+    devices.
+
+ -- Todd Cope <todd@t3-i.com>  Sun, 03 Mar 2019 15:56:23 +0000
+
 the-devil (1.4) maverick; urgency=low
 
   * Upgrade to latest T3F and T3Net frameworks.
