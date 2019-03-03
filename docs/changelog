@@ -1,0 +1,75 @@
+the-devil (1.4) maverick; urgency=low
+
+  * Upgrade to latest T3F and T3Net frameworks.
+  * Remove logo screen in favor of having a copyright message on the title
+    screen.
+  * Allow intro animation to be skipped.
+  * Fix issues with input binding menu screen.
+  * Tweak menu spacing.
+
+ -- Todd Cope <todd@t3-i.com>  Sun, 30 Dec 2018 01:49:43 +0000
+
+the-devil (1.3) maverick; urgency=low
+
+  * Initialize the random number generator.
+  * Ported to Android.
+  * Add touch controls.
+  * Fill the screen and adjust the HUD to suit.
+  * Reduce memory usage by only loading what is necessary for the current state.
+  * Use larger font for cinemas and menus.
+  * Add in-game radar system to help players on mobile devices see where the
+    enemies are.
+  * Make easy mode easier.
+  * Add privacy info screen.
+
+ -- Todd Cope <todd@t3-i.com>  Fri, 09 May 2014 19:24:00 +0800
+
+the-devil (1.2.1) maverick; urgency=low
+
+  * Added better controller autodetection. The game will now look for a dual-
+    analog controller first and set keyboard controls if it doesn't find one.
+  * Save each controller config separately to prevent glitches on the config
+    screen. This also makes it easier to switch control types as it will now
+    remember configs for each type of controller.
+  * Fix potential crash bugs in title screen related to the leaderboard.
+  * Allow Backspace to be used on Mac OS X to delete letters when entering ID.
+  * Fix blinking cursor on Internet options screen, shown when entering ID.
+  * Add autodetect option to Controls options screen.
+
+ -- Todd Cope <todd@t3-i.com>  Thu, 02 May 2013 04:08:00 +0800
+
+the-devil (1.2) maverick; urgency=low
+
+  * Replaced font.
+  * Enlarged menu items.
+  * Update to latest T3F.
+  * Utilize resource manager for loading graphics.
+  * Don't render high scores on title screen since we now have multiple game
+    modes.
+  * Add display options to settings menu.
+  * Always set 800x480 display on OpenPandora (use -DPANDORA at compile time to
+    enable OpenPandora-specific changes).
+  * Change cinema format and improve cinema text handling.
+  * Use different default controller bindings on OpenPandora.
+  * Improved Max OS X icon.
+  * Allow analog controllers to be configured more thoroughly.
+  * Allow controllers to be used to navigate UI.
+  * Updated README to include credits.
+  * Highlight selected menu items.
+  * Don't show targetting reticule when game is paused.
+  * Updated copyright info.
+
+ -- Todd Cope <todd@t3-i.com>  Fri, 26 Apr 2013 09:55:00 +0800
+
+the-devil (1.11) maverick; urgency=low
+
+  * Changed to premultiplied alpha rendering.
+
+ -- Todd Cope <todd@t3-i.com>  Sat, 2 Apr 2011 10:09:00 +0800
+
+the-devil (1.1) maverick; urgency=low
+
+  * First post-TINS 2010 edition. Includes many improvements over the
+    competition version.
+
+ -- Todd Cope <todd@t3-i.com>  Wed, 29 Sep 2010 19:20:00 +0000
