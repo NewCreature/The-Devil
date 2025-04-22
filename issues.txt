@@ -5,6 +5,8 @@ v1.5
 
 [ ]Set optimal window size at startup.
 
+[ ]Crash when attempting to start gameplay.
+
 
 v1.4
 ----
