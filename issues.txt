@@ -1,3 +1,9 @@
+v1.5
+----
+
+[ ]Crash when activating menu items.
+
+
 v1.4
 ----
 
