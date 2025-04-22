@@ -1,17 +1,20 @@
 #include "t3f/t3f.h"
+#include "instance.h"
 #include "main.h"
 #include "game.h"
 
 static int current_text_particle = 0;
 
-void generate_text_particle(char * text, float x, float y, int life)
+void generate_text_particle(char * text, float x, float y, int life, void * data)
 {
-	strcpy(text_particle[current_text_particle].text, text);
-	text_particle[current_text_particle].x = x;
-	text_particle[current_text_particle].y = y;
-	text_particle[current_text_particle].life = life;
-	text_particle[current_text_particle].total_life = life;
-	text_particle[current_text_particle].active = true;
+	APP_INSTANCE * instance = (APP_INSTANCE *)data;
+
+	strcpy(instance->text_particle[current_text_particle].text, text);
+	instance->text_particle[current_text_particle].x = x;
+	instance->text_particle[current_text_particle].y = y;
+	instance->text_particle[current_text_particle].life = life;
+	instance->text_particle[current_text_particle].total_life = life;
+	instance->text_particle[current_text_particle].active = true;
 	current_text_particle++;
 	if(current_text_particle >= GAME_MAX_TEXT_PARTICLES)
 	{
@@ -19,91 +22,95 @@ void generate_text_particle(char * text, float x, float y, int life)
 	}
 }
 
-void generate_particle(int type, float x, float y, float angle, float speed, int life)
+void generate_particle(int type, float x, float y, float angle, float speed, int life, void * data)
 {
+	APP_INSTANCE * instance = (APP_INSTANCE *)data;
 	int i;
 	
 	for(i = 0; i < GAME_MAX_PARTICLES; i++)
 	{
-		if(!particle[i].active)
+		if(!instance->particle[i].active)
 		{
-			particle[i].type = type;
-			particle[i].x = x;
-			particle[i].y = y;
-			particle[i].angle = angle;
-			particle[i].vx = cos(angle) * speed;
-			particle[i].vy = sin(angle) * speed;
-			particle[i].var = life;
-			particle[i].var2 = life;
-			particle[i].active = true;
+			instance->particle[i].type = type;
+			instance->particle[i].x = x;
+			instance->particle[i].y = y;
+			instance->particle[i].angle = angle;
+			instance->particle[i].vx = cos(angle) * speed;
+			instance->particle[i].vy = sin(angle) * speed;
+			instance->particle[i].var = life;
+			instance->particle[i].var2 = life;
+			instance->particle[i].active = true;
 			break;
 		}
 	}
 }
 
-void generate_death_particles(int type, float x, float y)
+void generate_death_particles(int type, float x, float y, void * data)
 {
+	APP_INSTANCE * instance = (APP_INSTANCE *)data;
 	int i;
 	
 	if(type == PARTICLE_TYPE_DARK_ORB)
 	{
 		for(i = 0; i < 64; i++)
 		{
-			generate_particle(type, x + 16 + rand() % 32, y + 16 + rand() % 32, t3f_drand(&rng_state) * ALLEGRO_PI * 2, 1.0 + t3f_drand(&rng_state) * 1.5, 20 + rand() % 20);
+			generate_particle(type, x + 16 + rand() % 32, y + 16 + rand() % 32, t3f_drand(&instance->rng_state) * ALLEGRO_PI * 2, 1.0 + t3f_drand(&instance->rng_state) * 1.5, 20 + rand() % 20, data);
 		}
 	}
 	else if(type == PARTICLE_TYPE_DARK_SHIELD)
 	{
 		for(i = 0; i < 4; i++)
 		{
-			generate_particle(type, x + rand() % 16, y + rand() % 16, t3f_drand(&rng_state) * ALLEGRO_PI * 2, 1.0 + t3f_drand(&rng_state) * 1.5, 20 + rand() % 20);
+			generate_particle(type, x + rand() % 16, y + rand() % 16, t3f_drand(&instance->rng_state) * ALLEGRO_PI * 2, 1.0 + t3f_drand(&instance->rng_state) * 1.5, 20 + rand() % 20, data);
 		}
 	}
 	else
 	{
 		for(i = 0; i < 6; i++)
 		{
-			generate_particle(type, x + 8 + rand() % 8 - 4, y + 8 + rand() % 8 - 4, t3f_drand(&rng_state) * ALLEGRO_PI * 2, 1.0 + t3f_drand(&rng_state) * 1.5, 20 + rand() % 20);
+			generate_particle(type, x + 8 + rand() % 8 - 4, y + 8 + rand() % 8 - 4, t3f_drand(&instance->rng_state) * ALLEGRO_PI * 2, 1.0 + t3f_drand(&instance->rng_state) * 1.5, 20 + rand() % 20, data);
 		}
 		for(i = 0; i < 3; i++)
 		{
-			generate_particle(type + 1, x + 8 + rand() % 8 - 4, y + 8 + rand() % 8 - 4, t3f_drand(&rng_state) * ALLEGRO_PI * 2, 1.0 + t3f_drand(&rng_state) * 1.5, 20 + rand() % 20);
+			generate_particle(type + 1, x + 8 + rand() % 8 - 4, y + 8 + rand() % 8 - 4, t3f_drand(&instance->rng_state) * ALLEGRO_PI * 2, 1.0 + t3f_drand(&instance->rng_state) * 1.5, 20 + rand() % 20, data);
 		}
 	}
 }
 
-void particle_logic(void)
+void particle_logic(void * data)
 {
+	APP_INSTANCE * instance = (APP_INSTANCE *)data;
 	int i;
 	
 	for(i = 0; i < GAME_MAX_PARTICLES; i++)
 	{
-		if(particle[i].active)
+		if(instance->particle[i].active)
 		{
-			particle[i].x += particle[i].vx;
-			particle[i].y += particle[i].vy;
-			particle[i].tick++;
-			particle[i].var--;
-			if(particle[i].var <= 0)
+			instance->particle[i].x += instance->particle[i].vx;
+			instance->particle[i].y += instance->particle[i].vy;
+			instance->particle[i].tick++;
+			instance->particle[i].var--;
+			if(instance->particle[i].var <= 0)
 			{
-				particle[i].active = 0;
+				instance->particle[i].active = 0;
 			}
 		}
 	}
 }
 
-void particle_render(void)
+void particle_render(void * data)
 {
+	APP_INSTANCE * instance = (APP_INSTANCE *)data;
 	ALLEGRO_COLOR color;
 	int i;
 	float alpha;
 	
 	for(i = 0; i < GAME_MAX_PARTICLES; i++)
 	{
-		if(particle[i].active)
+		if(instance->particle[i].active)
 		{
-			alpha = ((float)particle[i].var / (float)particle[i].var2);
-			switch(particle[i].type)
+			alpha = ((float)instance->particle[i].var / (float)instance->particle[i].var2);
+			switch(instance->particle[i].type)
 			{
 				case PARTICLE_TYPE_PLAYER_SHOT:
 				{
@@ -161,38 +168,40 @@ void particle_render(void)
 					break;
 				}
 			}
-			t3f_draw_animation(animation[ANIMATION_PLAYER_SHOT_PARTICLE], color, particle[i].tick, particle[i].x, particle[i].y, 0, 0);
+			t3f_draw_animation(instance->animation[ANIMATION_PLAYER_SHOT_PARTICLE], color, instance->particle[i].tick, instance->particle[i].x, instance->particle[i].y, 0, 0);
 		}
 	}
 }
 
-void text_particle_logic(void)
+void text_particle_logic(void * data)
 {
+	APP_INSTANCE * instance = (APP_INSTANCE *)data;
 	int i;
 	
 	for(i = 0; i < GAME_MAX_TEXT_PARTICLES; i++)
 	{
-		if(text_particle[i].active)
+		if(instance->text_particle[i].active)
 		{
-			text_particle[i].y -= 0.5;
-			text_particle[i].life--;
-			if(text_particle[i].life <= 0)
+			instance->text_particle[i].y -= 0.5;
+			instance->text_particle[i].life--;
+			if(instance->text_particle[i].life <= 0)
 			{
-				text_particle[i].active = 0;
+				instance->text_particle[i].active = 0;
 			}
 		}
 	}
 }
 
-void text_particle_render(void)
+void text_particle_render(void * data)
 {
+	APP_INSTANCE * instance = (APP_INSTANCE *)data;
 	int i;
 	
 	for(i = 0; i < GAME_MAX_TEXT_PARTICLES; i++)
 	{
-		if(text_particle[i].active)
+		if(instance->text_particle[i].active)
 		{
-			al_draw_text(font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, (float)text_particle[i].life / (float)text_particle[i].total_life), text_particle[i].x, text_particle[i].y, ALLEGRO_ALIGN_CENTRE, text_particle[i].text);
+			t3f_draw_text(instance->font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, (float)instance->text_particle[i].life / (float)instance->text_particle[i].total_life), instance->text_particle[i].x, instance->text_particle[i].y, 0, ALLEGRO_ALIGN_CENTRE, instance->text_particle[i].text);
 		}
 	}
 }

@@ -5,6 +5,8 @@
 #include "cinema.h"
 #include "title.h"
 
+static bool click = false;
+
 CINEMA * create_cinema(void)
 {
 	CINEMA * cp;
@@ -27,8 +29,8 @@ void destroy_cinema(CINEMA * cp)
 	{
 		t3f_destroy_animation(cp->animation[i]);
 	}
-	t3f_destroy_resource(cp->font);
-	t3f_destroy_resource(cp->bg_image);
+	t3f_destroy_font(cp->font);
+	t3f_destroy_bitmap(cp->bg_image);
 	free(cp);
 }
 
@@ -110,7 +112,7 @@ CINEMA * load_cinema(const char * fn, int flags)
 	cp->animations = al_fread16le(fp);
 	for(i = 0; i < cp->animations; i++)
 	{
-		cp->animation[i] = t3f_load_animation_f(fp, fn);
+		cp->animation[i] = t3f_load_animation_f(fp, fn, 0);
 	}
 	cp->frames = al_fread16le(fp);
 	for(i = 0; i < cp->frames; i++)
@@ -133,13 +135,13 @@ CINEMA * load_cinema(const char * fn, int flags)
 	}
 	al_fclose(fp);
 
-	cp->bg_image = t3f_load_resource((void **)(&cp->bg_image), T3F_RESOURCE_TYPE_BITMAP, "data/graphics/bg00.png", 0, 0, 0);
+	cp->bg_image = t3f_load_bitmap("data/graphics/bg00.png", 0, false);
 	if(!cp->bg_image)
 	{
 		return false;
 	}
 
-	cp->font = t3f_load_resource((void **)(&cp->font), T3F_RESOURCE_TYPE_FONT, "data/fonts/isle_of_the_dead.ttf", 36, 0, 0);
+	cp->font = t3f_load_font("data/fonts/isle_of_the_dead.ttf", T3F_FONT_TYPE_AUTO, 36, 0, false);
 	if(!cp->font)
 	{
 		return NULL;
@@ -195,17 +197,17 @@ void cinema_logic(CINEMA * cp)
 {
 
 	/* skip cinema */
-	if(t3f_key[ALLEGRO_KEY_ESCAPE])
+	if(t3f_key_pressed(ALLEGRO_KEY_ESCAPE))
 	{
 		cp->position = cp->frames;
-		t3f_key[ALLEGRO_KEY_ESCAPE] = 0;
+		t3f_use_key_press(ALLEGRO_KEY_ESCAPE);
 	}
 	cp->tick++;
-	if(t3f_key[ALLEGRO_KEY_SPACE] || t3f_key[ALLEGRO_KEY_ENTER] || ((title_touched() || title_joystick_button_pressed()) && !click) || cp->tick > 600)
+	if(t3f_key_pressed(ALLEGRO_KEY_SPACE) || t3f_key_pressed(ALLEGRO_KEY_ENTER) || ((title_touched() || title_joystick_button_pressed()) && !click) || cp->tick > 600)
 	{
 		cp->position++;
-		t3f_key[ALLEGRO_KEY_SPACE] = 0;
-		t3f_key[ALLEGRO_KEY_ENTER] = 0;
+		t3f_use_key_press(ALLEGRO_KEY_SPACE);
+		t3f_use_key_press(ALLEGRO_KEY_ENTER);
 		click = true;
 		cp->tick = 0;
 	}
@@ -216,7 +218,7 @@ void cinema_logic(CINEMA * cp)
 
 }
 
-static float cinema_get_text_tab(ALLEGRO_FONT * fp, const char * text)
+static float cinema_get_text_tab(T3F_FONT * fp, const char * text)
 {
 	char buffer[64] = {0};
 	int i;
@@ -229,7 +231,7 @@ static float cinema_get_text_tab(ALLEGRO_FONT * fp, const char * text)
 			break;
 		}
 	}
-	return al_get_text_width(fp, buffer);
+	return t3f_get_text_width(fp, buffer);
 }
 
 typedef struct
@@ -242,17 +244,17 @@ typedef struct
 typedef struct
 {
 
-	ALLEGRO_FONT * font;
+	T3F_FONT * font;
 	CINEMA_TEXT_LINE line[64];
 	int lines;
 	float tab;
 
 } CINEMA_TEXT_LINE_DATA;
 
-void cinema_draw_text(ALLEGRO_FONT * fp, ALLEGRO_COLOR color, float x, float y, float z, float w, float tab, int flags, const char * text);
+void cinema_draw_text(T3F_FONT * fp, ALLEGRO_COLOR color, float x, float y, float z, float w, float tab, int flags, const char * text);
 
 /* need to make this not rely on spaces, sometimes there might be long stretches with no space which need to be broken up 'mid-word' */
-void cinema_create_text_line_data(CINEMA_TEXT_LINE_DATA * lp, ALLEGRO_FONT * fp, float w, float tab, const char * text)
+void cinema_create_text_line_data(CINEMA_TEXT_LINE_DATA * lp, T3F_FONT * fp, float w, float tab, const char * text)
 {
 	char current_line[256];
 	int current_line_pos = 0;
@@ -295,7 +297,7 @@ void cinema_create_text_line_data(CINEMA_TEXT_LINE_DATA * lp, ALLEGRO_FONT * fp,
 		}
 
 		/* copy this line to our list of lines because it is long enough */
-		else if(al_get_text_width(fp, current_line) > wi)
+		else if(t3f_get_text_width(fp, current_line) > wi)
 		{
 			current_line[last_space] = '\0';
 			strcpy(lp->line[lp->lines].text, current_line);
@@ -325,11 +327,11 @@ void cinema_draw_text_lines(CINEMA_TEXT_LINE_DATA * lines, ALLEGRO_COLOR color, 
 	{
 		cinema_draw_text(lines->font, color, px, py, z, 0.0, 0.0, 0, lines->line[i].text);
 		px = x + lines->tab;
-		py += al_get_font_line_height(lines->font);
+		py += t3f_get_font_line_height(lines->font);
 	}
 }
 
-void cinema_draw_text(ALLEGRO_FONT * fp, ALLEGRO_COLOR color, float x, float y, float z, float w, float tab, int flags, const char * text)
+void cinema_draw_text(T3F_FONT * fp, ALLEGRO_COLOR color, float x, float y, float z, float w, float tab, int flags, const char * text)
 {
 	CINEMA_TEXT_LINE_DATA line_data;
 	float pos = x;
@@ -346,11 +348,11 @@ void cinema_draw_text(ALLEGRO_FONT * fp, ALLEGRO_COLOR color, float x, float y, 
 	}
 	if(flags & T3F_FONT_ALIGN_CENTER)
 	{
-		pos -=al_get_text_width(fp, text) / 2.0;
+		pos -= t3f_get_text_width(fp, text) / 2.0;
 	}
 	else if(flags & T3F_FONT_ALIGN_RIGHT)
 	{
-		pos -= al_get_text_width(fp, text);
+		pos -= t3f_get_text_width(fp, text);
 	}
 	if(w > 0.0)
 	{
@@ -359,7 +361,7 @@ void cinema_draw_text(ALLEGRO_FONT * fp, ALLEGRO_COLOR color, float x, float y, 
 	}
 	else
 	{
-		al_draw_text(fp, color, x, y, 0, text);
+		t3f_draw_text(fp, color, x, y, 0, 0, text);
 	}
 	if(!held)
 	{

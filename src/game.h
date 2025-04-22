@@ -59,10 +59,10 @@ typedef struct
 
 void define_game_entity(GAME_ENTITY * ep, int type);
 
-bool game_init(int mode);
-void game_exit(void);
+bool game_init(int mode, void * data);
+void game_exit(void * data);
 bool game_load_level(LEVEL_DATA * lp, int level);
-void game_logic(void);
-void game_render(void);
+void game_logic(void * data);
+void game_render(void * data);
 
 #endif

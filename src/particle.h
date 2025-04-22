@@ -14,12 +14,12 @@ typedef struct
 	
 } TEXT_PARTICLE;
 
-void generate_text_particle(char * text, float x, float y, int life);
-void generate_particle(int type, float x, float y, float angle, float speed, int life);
-void generate_death_particles(int type, float x, float y);
-void particle_logic(void);
-void particle_render(void);
-void text_particle_logic(void);
-void text_particle_render(void);
+void generate_text_particle(char * text, float x, float y, int life, void * data);
+void generate_particle(int type, float x, float y, float angle, float speed, int life, void * data);
+void generate_death_particles(int type, float x, float y, void * data);
+void particle_logic(void * data);
+void particle_render(void * data);
+void text_particle_logic(void * data);
+void text_particle_render(void * data);
 
 #endif

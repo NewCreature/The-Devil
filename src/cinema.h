@@ -36,8 +36,8 @@ typedef struct
 
 typedef struct
 {
-	ALLEGRO_FONT * font;
-	ALLEGRO_BITMAP * bg_image;
+	T3F_FONT * font;
+	T3F_BITMAP * bg_image;
 	T3F_ANIMATION * animation[CINEMA_MAX_ANIMATIONS];
 	int animations;
 	
