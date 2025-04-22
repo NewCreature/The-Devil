@@ -14,7 +14,7 @@ bool game_load_data(void * data)
 {
 	APP_INSTANCE * instance = (APP_INSTANCE *)data;
 
-	instance->animation[ANIMATION_PLAYER] = t3f_load_animation("data/graphics/instance->player.png", T3F_BITMAP_FLAG_PADDED, false);
+	instance->animation[ANIMATION_PLAYER] = t3f_load_animation("data/graphics/player.png", T3F_BITMAP_FLAG_PADDED, false);
 	if(!instance->animation[ANIMATION_PLAYER])
 	{
 		return false;
@@ -34,7 +34,7 @@ bool game_load_data(void * data)
 	{
 		return false;
 	}
-	instance->animation[ANIMATION_ENEMY_SHOT] = t3f_load_animation("data/graphics/instance->enemy_shot[.png", T3F_BITMAP_FLAG_PADDED, false);
+	instance->animation[ANIMATION_ENEMY_SHOT] = t3f_load_animation("data/graphics/enemy_shot.png", T3F_BITMAP_FLAG_PADDED, false);
 	if(!instance->animation[ANIMATION_ENEMY_SHOT])
 	{
 		return false;
@@ -115,7 +115,7 @@ bool game_load_data(void * data)
 		return false;
 	}
 	instance->bitmap[1] = t3f_load_bitmap("data/graphics/bg01.png", 0, false);
-	if(instance->bitmap[1])
+	if(!instance->bitmap[1])
 	{
 		return false;
 	}
@@ -272,7 +272,10 @@ bool game_init(int mode, void * data)
 	instance->game_mode = mode;
 
 	al_stop_timer(t3f_timer);
-	game_load_data(data);
+	if(!game_load_data(data))
+	{
+		return false;
+	}
 	al_start_timer(t3f_timer);
 
 	/* create spawners */

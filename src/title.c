@@ -1961,7 +1961,10 @@ void title_game_logic(void * data)
 		if(title_flicker % 512 == 0)
 		{
 			title_free_data(data);
-			game_init(title_game_mode, data);
+			if(!game_init(title_game_mode, data))
+			{
+				printf("Failed to initialize gameplay!\n");
+			}
 			break;
 		}
 	}
