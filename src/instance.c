@@ -33,11 +33,11 @@ APP_INSTANCE * td_create_instance(void)
   {
     goto fail;
   }
+  instance->game_mode_text[2] = strdup("Eternal");
   if(!instance->game_mode_text[2])
   {
     goto fail;
   }
-  instance->game_mode_text[2] = strdup("Eternal");
   instance->touch_size = 64.0;
   instance->leaderboard_place = -1;
   instance->leaderboard_mode = GAME_MODE_STORY;
