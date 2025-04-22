@@ -3,6 +3,8 @@ v1.5
 
 [ ]Crash when activating menu items.
 
+[ ]Set optimal window size at startup.
+
 
 v1.4
 ----
