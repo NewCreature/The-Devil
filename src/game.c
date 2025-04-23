@@ -977,22 +977,22 @@ void game_render(void * data)
 	t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->left + GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN + t3f_get_font_line_height(instance->font[FONT_SMALL]), 0, 0, "Multiplier: %d", instance->multiplier);
 	if(instance->game_mode == GAME_MODE_ETERNAL || instance->current_level < 10)
 	{
-		t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->right - GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, T3F_FONT_ALIGN_RIGHT, 0, "Level: %2d", instance->current_level + 1);
-		t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->right - GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN, T3F_FONT_ALIGN_RIGHT, 0, "Level: %2d", instance->current_level + 1);
+		t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->right - GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, 0, T3F_FONT_ALIGN_RIGHT, "Level: %2d", instance->current_level + 1);
+		t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->right - GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN, 0, T3F_FONT_ALIGN_RIGHT, "Level: %2d", instance->current_level + 1);
 	}
 	else
 	{
-		t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->right - GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, T3F_FONT_ALIGN_RIGHT, 0, "Level: %2d", instance->current_level);
-		t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->right - GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN, T3F_FONT_ALIGN_RIGHT, 0, "Level: %2d", instance->current_level);
+		t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->right - GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, 0, T3F_FONT_ALIGN_RIGHT, "Level: %2d", instance->current_level);
+		t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->right - GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN, 0, T3F_FONT_ALIGN_RIGHT, "Level: %2d", instance->current_level);
 	}
-	t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->right - GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + t3f_get_font_line_height(instance->font[FONT_SMALL]) + 2, T3F_FONT_ALIGN_RIGHT, 0, "Lives: %2d", instance->lives);
-	t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->right - GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN + t3f_get_font_line_height(instance->font[FONT_SMALL]), T3F_FONT_ALIGN_RIGHT, 0, "Lives: %2d", instance->lives);
-	t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 320 + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, T3F_FONT_ALIGN_CENTER, 0, "High Score: %06d", instance->high_score[instance->game_mode]);
-	t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_default_view->top + GAME_STATS_MARGIN, T3F_FONT_ALIGN_CENTER, 0, "High Score: %06d", instance->high_score[instance->game_mode]);
+	t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), t3f_default_view->right - GAME_STATS_MARGIN + 2, t3f_default_view->top + GAME_STATS_MARGIN + t3f_get_font_line_height(instance->font[FONT_SMALL]) + 2, 0, T3F_FONT_ALIGN_RIGHT, "Lives: %2d", instance->lives);
+	t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), t3f_default_view->right - GAME_STATS_MARGIN, t3f_default_view->top + GAME_STATS_MARGIN + t3f_get_font_line_height(instance->font[FONT_SMALL]), 0, T3F_FONT_ALIGN_RIGHT, "Lives: %2d", instance->lives);
+	t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 320 + 2, t3f_default_view->top + GAME_STATS_MARGIN + 2, 0, T3F_FONT_ALIGN_CENTER, "High Score: %06d", instance->high_score[instance->game_mode]);
+	t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_default_view->top + GAME_STATS_MARGIN, 0, T3F_FONT_ALIGN_CENTER, "High Score: %06d", instance->high_score[instance->game_mode]);
 	if(instance->enemy[0].type == ENEMY_TYPE_DARK_ORB && instance->enemy[0].active)
 	{
-		t3f_draw_text(instance->font[FONT_TINY], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 320 + 2, t3f_default_view->bottom - 40 + 2, T3F_FONT_ALIGN_CENTER, 0, "Dark Power Orb");
-		t3f_draw_text(instance->font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_default_view->bottom - 40, T3F_FONT_ALIGN_CENTER, 0, "Dark Power Orb");
+		t3f_draw_text(instance->font[FONT_TINY], al_map_rgba_f(0.0, 0.0, 0.0, 0.8), 320 + 2, t3f_default_view->bottom - 40 + 2, 0, T3F_FONT_ALIGN_CENTER, "Dark Power Orb");
+		t3f_draw_text(instance->font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 320, t3f_default_view->bottom - 40, 0, T3F_FONT_ALIGN_CENTER, "Dark Power Orb");
 		al_hold_bitmap_drawing(false);
 		al_draw_filled_rectangle(320 - instance->enemy[0].var2 + 2, t3f_default_view->bottom - 20 + 2, 320 + instance->enemy[0].var2 + 2, t3f_default_view->bottom - 12 + 2, al_map_rgba_f(0.0, 0.0, 0.0, 0.8));
 		al_draw_filled_rectangle(320 - instance->enemy[0].var2, t3f_default_view->bottom - 20, 320 + instance->enemy[0].var2, t3f_default_view->bottom - 12, al_map_rgba_f(0.0, 1.0, 0.0, 1.0));
