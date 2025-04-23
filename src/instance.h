@@ -57,7 +57,7 @@ typedef struct
   int die_state;
   int die_timer;
   int lives;
-  void (*enemy_spawn_logic)();
+  void (*enemy_spawn_logic)(void * data);
   bool konami_mode;
   bool fire_power;
   bool finale_mode;

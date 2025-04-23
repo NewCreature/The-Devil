@@ -742,7 +742,7 @@ void game_logic(void * data)
 	{
 		case GAME_STATE_PLAY:
 		{
-			instance->enemy_spawn_logic();
+			instance->enemy_spawn_logic(data);
 			player_logic(data);
 			enemy_logic(data);
 			projectile_logic(data);
