@@ -13,6 +13,8 @@ v1.5
 
 [ ]Make all input methods work simultaneously.
 
+[ ]Confirm font license and swap out font if needed.
+
 
 v1.4
 ----
