@@ -11,6 +11,8 @@ v1.5
 
 [ ]Fix positioning of elements in HUD.
 
+[ ]Make all input methods work simultaneously.
+
 
 v1.4
 ----
