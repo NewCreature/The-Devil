@@ -3,8 +3,6 @@ v1.5
 
 [X]Crash when activating menu items.
 
-[ ]Set optimal window size at startup.
-
 [X]Crash when attempting to start gameplay.
 
 [ ]Upgrade to the latest version of T3Net.
