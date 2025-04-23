@@ -64,17 +64,17 @@ void leaderboard_render(void * data)
 				color = al_map_rgba_f(1.0, 1.0, 1.0, 1.0);
 				offset = 0;
 			}
-			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 2, yoffset + i * size + 2, 0, ALLEGRO_ALIGN_RIGHT, "%2d.", i + 1);
-			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 2, yoffset + i * size + 2, 0, ALLEGRO_ALIGN_LEFT, " %s", instance->leaderboard->entry[i]->name);
-			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 320 + 2, yoffset + i * size + 2, 0, ALLEGRO_ALIGN_RIGHT, "%lu", (instance->leaderboard->entry[i]->score - 'f' - 'l' - 'o' - 'g' - 'v') / 2);
-			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + offset, yoffset + i * size + offset, 0, ALLEGRO_ALIGN_RIGHT, "%2d.", i + 1);
-			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + offset, yoffset + i * size + offset, 0, ALLEGRO_ALIGN_LEFT, " %s", instance->leaderboard->entry[i]->name);
-			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + 320 + offset, yoffset + i * size + offset, 0, ALLEGRO_ALIGN_RIGHT, "%lu", (instance->leaderboard->entry[i]->score - 'f' - 'l' - 'o' - 'g' - 'v') / 2);
+			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 2, yoffset + i * size + 2, 0, T3F_FONT_ALIGN_RIGHT, "%2d.", i + 1);
+			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 2, yoffset + i * size + 2, 0, 0, " %s", instance->leaderboard->entry[i]->name);
+			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 320 + 2, yoffset + i * size + 2, 0, T3F_FONT_ALIGN_RIGHT, "%lu", (instance->leaderboard->entry[i]->score - 'f' - 'l' - 'o' - 'g' - 'v') / 2);
+			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + offset, yoffset + i * size + offset, 0, T3F_FONT_ALIGN_RIGHT, "%2d.", i + 1);
+			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + offset, yoffset + i * size + offset, 0, 0, " %s", instance->leaderboard->entry[i]->name);
+			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + 320 + offset, yoffset + i * size + offset, 0, T3F_FONT_ALIGN_RIGHT, "%lu", (instance->leaderboard->entry[i]->score - 'f' - 'l' - 'o' - 'g' - 'v') / 2);
 		}
 		else
 		{
-			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 2, yoffset + i * size + 2, 0, ALLEGRO_ALIGN_RIGHT, "%2d.", i + 1);
-			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 160, yoffset + i * size, 0, ALLEGRO_ALIGN_RIGHT, "%2d.", i + 1);
+			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 2, yoffset + i * size + 2, 0, T3F_FONT_ALIGN_RIGHT, "%2d.", i + 1);
+			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), 160, yoffset + i * size, 0, T3F_FONT_ALIGN_RIGHT, "%2d.", i + 1);
 		}
 	}
 	t3f_render_gui(instance->menu[LEADERBOARD_MENU], 0);

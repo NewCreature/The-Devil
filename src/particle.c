@@ -201,7 +201,7 @@ void text_particle_render(void * data)
 	{
 		if(instance->text_particle[i].active)
 		{
-			t3f_draw_text(instance->font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, (float)instance->text_particle[i].life / (float)instance->text_particle[i].total_life), instance->text_particle[i].x, instance->text_particle[i].y, 0, ALLEGRO_ALIGN_CENTRE, instance->text_particle[i].text);
+			t3f_draw_text(instance->font[FONT_TINY], al_map_rgba_f(1.0, 1.0, 1.0, (float)instance->text_particle[i].life / (float)instance->text_particle[i].total_life), instance->text_particle[i].x, instance->text_particle[i].y, 0, T3F_FONT_ALIGN_CENTER, instance->text_particle[i].text);
 		}
 	}
 }

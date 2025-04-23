@@ -1878,8 +1878,8 @@ void title_render(void * data)
 		t3f_draw_animation(instance->animation[ANIMATION_TITLE], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), instance->state_ticks, x + 4, y + 4, 0, 0);
 		t3f_draw_animation(instance->animation[ANIMATION_TITLE_EYES], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), instance->state_ticks, x, y, 0, 0);
 		t3f_draw_animation(instance->animation[ANIMATION_TITLE], al_map_rgba_f(1.0, 1.0, 1.0, 1.0), instance->state_ticks, x, y, 0, 0);
-		draw_copyright_message(instance->font[FONT_SMALL], instance->font[FONT_TINY], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 320, t3f_default_view->bottom - t3f_get_font_line_height(instance->font[FONT_SMALL]), ALLEGRO_ALIGN_CENTRE, instance->copyright_message);
-		draw_copyright_message(instance->font[FONT_SMALL], instance->font[FONT_TINY], t3f_color_white, 320 - 2, t3f_default_view->bottom - t3f_get_font_line_height(instance->font[FONT_SMALL]) - 2, ALLEGRO_ALIGN_CENTRE, instance->copyright_message);
+		draw_copyright_message(instance->font[FONT_SMALL], instance->font[FONT_TINY], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 320, t3f_default_view->bottom - t3f_get_font_line_height(instance->font[FONT_SMALL]), T3F_FONT_ALIGN_CENTER, instance->copyright_message);
+		draw_copyright_message(instance->font[FONT_SMALL], instance->font[FONT_TINY], t3f_color_white, 320 - 2, t3f_default_view->bottom - t3f_get_font_line_height(instance->font[FONT_SMALL]) - 2, T3F_FONT_ALIGN_CENTER, instance->copyright_message);
 	}
 	else if(instance->current_menu == MENU_PRIVACY)
 	{
