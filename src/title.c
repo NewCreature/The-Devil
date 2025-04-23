@@ -211,7 +211,7 @@ int menu_proc_leaderboards(void * data, int i, void * p)
 
 	download_leaderboard(data);
 	instance->leaderboard_place = -1;
-	menu_fix_leaderboard_text(p);
+	menu_fix_leaderboard_text(data);
 	al_start_timer(t3f_timer);
 	if(instance->leaderboard)
 	{
@@ -288,7 +288,7 @@ int menu_proc_back(void * data, int i, void * p)
 		case TITLE_MENU_DISPLAY:
 		{
 			select_menu(TITLE_MENU_SETTINGS, data);
-			menu_fix_internet_text(p);
+			menu_fix_internet_text(data);
 			break;
 		}
 		case TITLE_MENU_NETWORK_ID:
@@ -297,7 +297,7 @@ int menu_proc_back(void * data, int i, void * p)
 			al_set_config_value(t3f_config, "Network", "ID", instance->network_id);
 			al_set_config_value(t3f_config, "Network", "Upload", instance->upload_scores ? "true" : "false");
 			instance->network_id_entry = false;
-			menu_fix_internet_text(p);
+			menu_fix_internet_text(data);
 			break;
 		}
 		case TITLE_MENU_CONTROL_NORMAL:
@@ -322,7 +322,7 @@ int menu_proc_back(void * data, int i, void * p)
 					break;
 				}
 			}
-			menu_fix_controller_type_text(p);
+			menu_fix_controller_type_text(data);
 			select_menu(TITLE_MENU_CONTROL, data);
 			break;
 		}
@@ -392,7 +392,7 @@ int menu_proc_controller_type_left(void * data, int i, void * p)
 		{
 			instance->controller_type = CONTROLLER_TYPE_TOUCH_L;
 		}
-		fix_touch_size(p);
+		fix_touch_size(data);
 	#endif
 	if(instance->controller_type == CONTROLLER_TYPE_ANALOG)
 	{
@@ -408,8 +408,8 @@ int menu_proc_controller_type_left(void * data, int i, void * p)
 			detect_controller(instance->controller_type, data);
 		}
 	}
-	menu_fix_controller_type_text(p);
-	menu_fix_controller_type_config(p);
+	menu_fix_controller_type_text(data);
+	menu_fix_controller_type_config(data);
 	return 1;
 }
 
@@ -429,7 +429,7 @@ int menu_proc_controller_type_right(void * data, int i, void * p)
 		{
 			instance->controller_type = CONTROLLER_TYPE_TOUCH_S;
 		}
-		fix_touch_size(p);
+		fix_touch_size(data);
 	#endif
 	if(instance->controller_type == CONTROLLER_TYPE_ANALOG)
 	{
@@ -445,8 +445,8 @@ int menu_proc_controller_type_right(void * data, int i, void * p)
 			detect_controller(instance->controller_type, data);
 		}
 	}
-	menu_fix_controller_type_text(p);
-	menu_fix_controller_type_config(p);
+	menu_fix_controller_type_text(data);
+	menu_fix_controller_type_config(data);
 	return 1;
 }
 
@@ -524,7 +524,7 @@ int menu_proc_controller_configure(void * data, int i, void * p)
 			break;
 		}
 	}
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	return 1;
 }
 
@@ -551,9 +551,9 @@ int menu_proc_set_move_up(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[1], "Select input...");
-	t3f_render(p);
+	t3f_render(data);
 	bind_input(0, data);
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	al_start_timer(t3f_timer);
 	return 1;
 }
@@ -564,9 +564,9 @@ int menu_proc_set_move_down(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[2], "Select input...");
-	t3f_render(p);
+	t3f_render(data);
 	bind_input(1, data);
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	al_start_timer(t3f_timer);
 	return 1;
 }
@@ -577,9 +577,9 @@ int menu_proc_set_move_left(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[3], "Select input...");
-	t3f_render(p);
+	t3f_render(data);
 	bind_input(2, data);
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	al_start_timer(t3f_timer);
 	return 1;
 }
@@ -590,9 +590,9 @@ int menu_proc_set_move_right(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[4], "Select input...");
-	t3f_render(p);
+	t3f_render(data);
 	bind_input(3, data);
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	al_start_timer(t3f_timer);
 	return 1;
 }
@@ -603,9 +603,9 @@ int menu_proc_set_fire_up(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[5], "Select input...");
-	t3f_render(p);
+	t3f_render(data);
 	bind_input(4, data);
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	block_buttons = true;
 	al_start_timer(t3f_timer);
 	return 1;
@@ -617,9 +617,9 @@ int menu_proc_set_fire_down(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[6], "Select input...");
-	t3f_render(p);
+	t3f_render(data);
 	bind_input(5, data);
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	block_buttons = true;
 	al_start_timer(t3f_timer);
 	return 1;
@@ -631,9 +631,9 @@ int menu_proc_set_fire_left(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[7], "Select input...");
-	t3f_render(p);
+	t3f_render(data);
 	bind_input(6, data);
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	block_buttons = true;
 	al_start_timer(t3f_timer);
 	return 1;
@@ -645,9 +645,9 @@ int menu_proc_set_fire_right(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[8], "Select input...");
-	t3f_render(p);
+	t3f_render(data);
 	bind_input(7, data);
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	block_buttons = true;
 	al_start_timer(t3f_timer);
 	return 1;
@@ -660,7 +660,7 @@ int menu_proc_set_move_vertical(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[1], "Move axis up...");
-	t3f_render(p);
+	t3f_render(data);
 	memcpy(&old_binding, &instance->controller->binding[4], sizeof(T3F_CONTROLLER_BINDING));
 	bind_input(0, data);
 	if(instance->controller->binding[0].type != T3F_CONTROLLER_BINDING_JOYSTICK_AXIS)
@@ -676,7 +676,7 @@ int menu_proc_set_move_vertical(void * data, int i, void * p)
 			instance->controller->binding[0].flags |= T3F_CONTROLLER_FLAG_AXIS_INVERT;
 		}
 	}
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	al_start_timer(t3f_timer);
 	analog_state = 0;
 	analog_type = 0;
@@ -693,7 +693,7 @@ int menu_proc_set_move_horizontal(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[2], "Move axis left...");
-	t3f_render(p);
+	t3f_render(data);
 	memcpy(&old_binding, &instance->controller->binding[4], sizeof(T3F_CONTROLLER_BINDING));
 	bind_input(2, data);
 	if(instance->controller->binding[2].type != T3F_CONTROLLER_BINDING_JOYSTICK_AXIS)
@@ -709,7 +709,7 @@ int menu_proc_set_move_horizontal(void * data, int i, void * p)
 			instance->controller->binding[2].flags |= T3F_CONTROLLER_FLAG_AXIS_INVERT;
 		}
 	}
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	al_start_timer(t3f_timer);
 	analog_state = 0;
 	analog_type = 1;
@@ -726,7 +726,7 @@ int menu_proc_set_fire_vertical(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[3], "Move axis up...");
-	t3f_render(p);
+	t3f_render(data);
 	memcpy(&old_binding, &instance->controller->binding[4], sizeof(T3F_CONTROLLER_BINDING));
 	bind_input(4, data);
 	if(instance->controller->binding[4].type != T3F_CONTROLLER_BINDING_JOYSTICK_AXIS)
@@ -742,7 +742,7 @@ int menu_proc_set_fire_vertical(void * data, int i, void * p)
 			instance->controller->binding[4].flags |= T3F_CONTROLLER_FLAG_AXIS_INVERT;
 		}
 	}
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	al_start_timer(t3f_timer);
 	analog_state = 0;
 	analog_type = 2;
@@ -759,7 +759,7 @@ int menu_proc_set_fire_horizontal(void * data, int i, void * p)
 
 	al_stop_timer(t3f_timer);
 	sprintf(instance->menu_text[4], "Move axis left...");
-	t3f_render(p);
+	t3f_render(data);
 	memcpy(&old_binding, &instance->controller->binding[4], sizeof(T3F_CONTROLLER_BINDING));
 	bind_input(6, data);
 	if(instance->controller->binding[6].type != T3F_CONTROLLER_BINDING_JOYSTICK_AXIS)
@@ -775,7 +775,7 @@ int menu_proc_set_fire_horizontal(void * data, int i, void * p)
 			instance->controller->binding[6].flags |= T3F_CONTROLLER_FLAG_AXIS_INVERT;
 		}
 	}
-	update_controller_menu_text(p);
+	update_controller_menu_text(data);
 	al_start_timer(t3f_timer);
 	analog_state = 0;
 	analog_type = 3;
@@ -797,7 +797,7 @@ int menu_proc_upload_toggle(void * data, int i, void * p)
 	{
 		instance->upload_scores = true;
 	}
-	menu_fix_internet_text(p);
+	menu_fix_internet_text(data);
 	return 1;
 }
 
@@ -842,8 +842,8 @@ int menu_proc_leaderboard_mode_left(void * data, int i, void * p)
 	{
 		instance->game_mode = 2;
 	}
-	download_leaderboard(p);
-	menu_fix_leaderboard_text(p);
+	download_leaderboard(data);
+	menu_fix_leaderboard_text(data);
 	if(!instance->leaderboard)
 	{
 		instance->state = STATE_TITLE;
@@ -861,8 +861,8 @@ int menu_proc_leaderboard_mode_right(void * data, int i, void * p)
 	{
 		instance->game_mode = 0;
 	}
-	download_leaderboard(p);
-	menu_fix_leaderboard_text(p);
+	download_leaderboard(data);
+	menu_fix_leaderboard_text(data);
 	if(!instance->leaderboard)
 	{
 		instance->state = STATE_TITLE;
@@ -890,7 +890,7 @@ int menu_proc_pause_resume(void * data, int i, void * p)
 
 int menu_proc_pause_quit(void * data, int i, void * p)
 {
-	game_exit(p);
+	game_exit(data);
 	return 1;
 }
 
@@ -900,7 +900,7 @@ int menu_proc_first_yes(void * data, int i, void * p)
 
 	instance->upload_scores = true;
 	al_set_config_value(t3f_config, "Network", "Upload", instance->upload_scores ? "true" : "false");
-	menu_fix_internet_text(p);
+	menu_fix_internet_text(data);
 	select_menu(TITLE_MENU_INTERNET, data);
 	return 1;
 }
@@ -911,7 +911,7 @@ int menu_proc_first_no(void * data, int i, void * p)
 
 	instance->upload_scores = false;
 	al_set_config_value(t3f_config, "Network", "Upload", instance->upload_scores ? "true" : "false");
-	menu_fix_internet_text(p);
+	menu_fix_internet_text(data);
 	select_menu(TITLE_MENU_MAIN, data);
 	return 1;
 }
@@ -1022,10 +1022,10 @@ int menu_proc_display_left(void * data, int i, void * p)
 			break;
 		}
 	}
-	initialize_video_mode(p);
+	initialize_video_mode(data);
 	sprintf(buf, "%d", instance->display_type);
 	al_set_config_value(t3f_config, "Display", "Type", buf);
-	menu_fix_display_text(p);
+	menu_fix_display_text(data);
 	return 1;
 }
 
@@ -1046,10 +1046,10 @@ int menu_proc_display_right(void * data, int i, void * p)
 			break;
 		}
 	}
-	initialize_video_mode(p);
+	initialize_video_mode(data);
 	sprintf(buf, "%d", instance->display_type);
 	al_set_config_value(t3f_config, "Display", "Type", buf);
-	menu_fix_display_text(p);
+	menu_fix_display_text(data);
 	return 1;
 }
 
@@ -1058,7 +1058,7 @@ int menu_proc_display_toggle(void * data, int i, void * p)
 	APP_INSTANCE * instance = (APP_INSTANCE *)data;
 
 	instance->force_aspect = !instance->force_aspect;
-	menu_fix_display_text(p);
+	menu_fix_display_text(data);
 	if(!instance->force_aspect && (t3f_flags & T3F_FORCE_ASPECT))
 	{
 		t3f_flags &= ~T3F_FORCE_ASPECT;
