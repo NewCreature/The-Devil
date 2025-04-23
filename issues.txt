@@ -5,7 +5,11 @@ v1.5
 
 [ ]Set optimal window size at startup.
 
-[ ]Crash when attempting to start gameplay.
+[X]Crash when attempting to start gameplay.
+
+[ ]Upgrade to the latest version of T3Net.
+
+[ ]Fix positioning of elements in HUD.
 
 
 v1.4
