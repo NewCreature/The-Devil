@@ -7,7 +7,7 @@ v1.5
 
 [ ]Upgrade to the latest version of T3Net.
 
-[ ]Fix positioning of elements in HUD.
+[X]Fix positioning of elements in HUD.
 
 [ ]Make all input methods work simultaneously.
 
