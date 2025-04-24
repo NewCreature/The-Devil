@@ -13,7 +13,7 @@ v1.5
 
 [ ]Confirm font license and swap out font if needed.
 
-[ ]Make intro sequence skippable.
+[ ]Fix input leaks.
 
 
 v1.4
