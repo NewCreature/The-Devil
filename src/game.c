@@ -399,25 +399,6 @@ void game_exit(void * data)
 	{
 		t3f_destroy_collision_object(instance->powerup[i].object);
 	}
-	sprintf(text, "%d", instance->high_score[instance->game_mode]);
-	switch(instance->game_mode)
-	{
-		case GAME_MODE_STORY:
-		{
-			al_set_config_value(t3f_config, "Save Data", "High Score (S)", text);
-			break;
-		}
-		case GAME_MODE_STORY_EASY:
-		{
-			al_set_config_value(t3f_config, "Save Data", "High Score (SE)", text);
-			break;
-		}
-		case GAME_MODE_ETERNAL:
-		{
-			al_set_config_value(t3f_config, "Save Data", "High Score (E)", text);
-			break;
-		}
-	}
 	al_stop_timer(t3f_timer);
 	game_free_data(data);
 	title_load_data(data);

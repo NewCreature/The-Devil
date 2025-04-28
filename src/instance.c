@@ -17,9 +17,6 @@ APP_INSTANCE * td_create_instance(void)
   instance->controller_type = -1; // indicate we should autodetect controller
   instance->first_run = true;
   instance->current_menu = MENU_TITLE;
-  instance->high_score[0] = 10000;
-  instance->high_score[1] = 10000;
-  instance->high_score[2] = 10000;
   instance->multiplier = 1;
   instance->game_state = GAME_STATE_PLAY;
   instance->game_mode = GAME_MODE_STORY;

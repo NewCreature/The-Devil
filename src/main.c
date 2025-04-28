@@ -470,6 +470,7 @@ bool initialize(int argc, char * argv[], void * data)
 	APP_INSTANCE * instance = (APP_INSTANCE *)data;
 	const char * val;
 	char * controller_section[3] = {"Normal Controls", "Mouse Controls", "Analog Controls"};
+	int i;
 
 	process_arguments(argc, argv);
 	if(!t3f_initialize("The Devil", 640, 480, 60.0, logic, render, T3F_DEFAULT | T3F_USE_FULLSCREEN, data))
@@ -551,20 +552,13 @@ bool initialize(int argc, char * argv[], void * data)
 			}
 		#endif
 	}
-	val = al_get_config_value(t3f_config, "Save Data", "High Score (S)");
-	if(val)
+	for(i = 0; i < 3; i++)
 	{
-		instance->high_score[GAME_MODE_STORY] = atoi(val);
-	}
-	val = al_get_config_value(t3f_config, "Save Data", "High Score (SE)");
-	if(val)
-	{
-		instance->high_score[GAME_MODE_STORY_EASY] = atoi(val);
-	}
-	val = al_get_config_value(t3f_config, "Save Data", "High Score (E)");
-	if(val)
-	{
-		instance->high_score[GAME_MODE_ETERNAL] = atoi(val);
+		instance->high_score[i] = t3f_retrieve_leaderboard_score("Leaderboard", instance->game_mode_text[i], "0");
+		if(instance->high_score[i] < 0)
+		{
+			instance->high_score[i] = 0;
+		}
 	}
 	val = al_get_config_value(t3f_config, "Network", "Upload");
 	if(val)
