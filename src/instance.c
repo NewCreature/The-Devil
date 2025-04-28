@@ -42,7 +42,7 @@ APP_INSTANCE * td_create_instance(void)
   instance->leaderboard_place = -1;
   instance->leaderboard_mode = GAME_MODE_STORY;
   strcpy(instance->network_id, "Anonymous");
-  instance->upload_scores = true;
+  instance->upload_scores = false;
   instance->force_aspect = true;
 
   return instance;

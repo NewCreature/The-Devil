@@ -2,6 +2,7 @@
 #define _TD_INSTANCE_H
 
 #include "t3f/t3f.h"
+#include "t3f/extra/leaderboard.h"
 #include "main.h"
 
 typedef struct
@@ -72,7 +73,7 @@ typedef struct
   /* network data */
   int network_id_pos;
   bool network_id_entry;
-  T3NET_LEADERBOARD * leaderboard;
+  T3F_LEADERBOARD * leaderboard;
   int leaderboard_place;
   int leaderboard_mode;
 

@@ -798,6 +798,8 @@ int menu_proc_upload_toggle(void * data, int i, void * p)
 		instance->upload_scores = true;
 	}
 	menu_fix_internet_text(data);
+	al_set_config_value(t3f_config, "Network", "Upload", instance->upload_scores ? "true" : "false");
+	t3f_enable_leaderboard_uploads(instance->upload_scores);
 	return 1;
 }
 
@@ -900,6 +902,7 @@ int menu_proc_first_yes(void * data, int i, void * p)
 
 	instance->upload_scores = true;
 	al_set_config_value(t3f_config, "Network", "Upload", instance->upload_scores ? "true" : "false");
+	t3f_enable_leaderboard_uploads(instance->upload_scores);
 	menu_fix_internet_text(data);
 	select_menu(TITLE_MENU_INTERNET, data);
 	return 1;
@@ -911,6 +914,7 @@ int menu_proc_first_no(void * data, int i, void * p)
 
 	instance->upload_scores = false;
 	al_set_config_value(t3f_config, "Network", "Upload", instance->upload_scores ? "true" : "false");
+	t3f_enable_leaderboard_uploads(instance->upload_scores);
 	menu_fix_internet_text(data);
 	select_menu(TITLE_MENU_MAIN, data);
 	return 1;

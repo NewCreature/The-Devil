@@ -421,16 +421,16 @@ void game_exit(void * data)
 	al_stop_timer(t3f_timer);
 	game_free_data(data);
 	title_load_data(data);
+	t3f_store_leaderboard_score("Leaderboard", instance->game_mode_text[instance->game_mode], "0", 0, instance->score, NULL);
 	if(instance->upload_scores && instance->score > 0 && !instance->konami_mode && !instance->finale_mode && !instance->fire_power)
 	{
-		t3net_upload_score("http://www.t3-i.com/t3net2/leaderboards/insert.php", "devil", "1.1", instance->game_mode_text[instance->game_mode], "0", instance->network_id, instance->score * 2 + 'v' + 'g' + 'o' + 'l' + 'f', NULL);
 		download_leaderboard(data);
 		if(instance->leaderboard)
 		{
 			instance->leaderboard_place = -1;
-			for(i = 0; i < instance->leaderboard->entries; i++)
+			for(i = 0; i < instance->leaderboard->data->entries; i++)
 			{
-				if((unsigned int)instance->score * 2 + 'v' + 'g' + 'o' + 'l' + 'f' == instance->leaderboard->entry[i]->score && !strcmp(instance->network_id, instance->leaderboard->entry[i]->name))
+				if(instance->score == instance->leaderboard->data->entry[i]->score && !strcmp(instance->network_id, instance->leaderboard->data->entry[i]->name))
 				{
 					instance->leaderboard_place = i;
 					break;

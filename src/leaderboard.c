@@ -10,9 +10,9 @@ void download_leaderboard(void * data)
 	al_stop_timer(t3f_timer);
 	if(instance->leaderboard)
 	{
-		t3net_destroy_leaderboard(instance->leaderboard);
+		t3f_destroy_leaderboard(instance->leaderboard);
 	}
-	instance->leaderboard = t3net_get_leaderboard("http://www.t3-i.com/t3net2/leaderboards/query.php", "devil", "1.1", instance->game_mode_text[instance->game_mode], "0", 10, 0);
+	instance->leaderboard = t3f_get_leaderboard("Leaderboard", instance->game_mode_text[instance->game_mode], "0", 10, 0, false);
 	menu_fix_leaderboard_text(data);
 	al_start_timer(t3f_timer);
 }
@@ -45,7 +45,7 @@ void leaderboard_render(void * data)
 	title_bg_render(instance->bitmap[0]);
 	for(i = 0; i < 10; i++)
 	{
-		if(i < instance->leaderboard->entries)
+		if(i < instance->leaderboard->data->entries)
 		{
 			if(instance->game_mode == instance->leaderboard_mode && i == instance->leaderboard_place)
 			{
@@ -65,11 +65,11 @@ void leaderboard_render(void * data)
 				offset = 0;
 			}
 			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 2, yoffset + i * size + 2, 0, T3F_FONT_ALIGN_RIGHT, "%2d.", i + 1);
-			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 2, yoffset + i * size + 2, 0, 0, " %s", instance->leaderboard->entry[i]->name);
-			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 320 + 2, yoffset + i * size + 2, 0, T3F_FONT_ALIGN_RIGHT, "%lu", (instance->leaderboard->entry[i]->score - 'f' - 'l' - 'o' - 'g' - 'v') / 2);
+			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 2, yoffset + i * size + 2, 0, 0, " %s", instance->leaderboard->data->entry[i]->name);
+			t3f_draw_textf(instance->font[FONT_SMALL], al_map_rgba_f(0.0, 0.0, 0.0, 0.5), 160 + 320 + 2, yoffset + i * size + 2, 0, T3F_FONT_ALIGN_RIGHT, "%lu", instance->leaderboard->data->entry[i]->score);
 			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + offset, yoffset + i * size + offset, 0, T3F_FONT_ALIGN_RIGHT, "%2d.", i + 1);
-			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + offset, yoffset + i * size + offset, 0, 0, " %s", instance->leaderboard->entry[i]->name);
-			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + 320 + offset, yoffset + i * size + offset, 0, T3F_FONT_ALIGN_RIGHT, "%lu", (instance->leaderboard->entry[i]->score - 'f' - 'l' - 'o' - 'g' - 'v') / 2);
+			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + offset, yoffset + i * size + offset, 0, 0, " %s", instance->leaderboard->data->entry[i]->name);
+			t3f_draw_textf(instance->font[FONT_SMALL], color, 160 + 320 + offset, yoffset + i * size + offset, 0, T3F_FONT_ALIGN_RIGHT, "%lu", instance->leaderboard->data->entry[i]->score);
 		}
 		else
 		{

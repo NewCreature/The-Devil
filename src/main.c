@@ -1,5 +1,5 @@
 #include "t3f/t3f.h"
-#include "t3net/leaderboard.h"
+#include "t3f/extra/leaderboard.h"
 #include "instance.h"
 #include "cinema.h"
 #include "main.h"
@@ -100,9 +100,9 @@ void logic(void * data)
 					if(instance->leaderboard)
 					{
 						instance->leaderboard_place = -1;
-						for(i = 0; i < instance->leaderboard->entries; i++)
+						for(i = 0; i < instance->leaderboard->data->entries; i++)
 						{
-							if(instance->score * 2 + 'v' + 'g' + 'o' + 'l' + 'f' == instance->leaderboard->entry[i]->score && !strcmp(instance->network_id, instance->leaderboard->entry[i]->name))
+							if(instance->score == instance->leaderboard->data->entry[i]->score && !strcmp(instance->network_id, instance->leaderboard->data->entry[i]->name))
 							{
 								instance->leaderboard_place = i;
 								break;
@@ -476,6 +476,8 @@ bool initialize(int argc, char * argv[], void * data)
 	{
 		return false;
 	}
+	t3f_initialize_leaderboards("Leaderboard", "the_devil", "1.5", "https://www.tcubedsoftware.com/scripts/leaderboards/get_user_key.php", "https://www.tcubedsoftware.com/scripts/leaderboards/set_user_name.php", "https://www.tcubedsoftware.com/scripts/leaderboards/update.php", "https://www.tcubedsoftware.com/scripts/leaderboards/query.php");
+	t3f_define_leaderboard_obfuscation(7, 29);
 	t3f_set_event_handler(event_handler);
 	#ifdef T3F_NO_UTF8
 		t3f_windows_text_to_utf8(T3F_APP_COPYRIGHT, instance->copyright_message, 256);
@@ -567,11 +569,12 @@ bool initialize(int argc, char * argv[], void * data)
 	val = al_get_config_value(t3f_config, "Network", "Upload");
 	if(val)
 	{
-		if(strcmp(val, "true"))
+		if(!strcasecmp(val, "true"))
 		{
-			instance->upload_scores = false;
+			instance->upload_scores = true;
 		}
 	}
+	t3f_enable_leaderboard_uploads(instance->upload_scores);
 	val = al_get_config_value(t3f_config, "Network", "ID");
 	if(val)
 	{
