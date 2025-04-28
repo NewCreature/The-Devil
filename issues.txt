@@ -5,7 +5,7 @@ v1.5
 
 [X]Crash when attempting to start gameplay.
 
-[ ]Upgrade to the latest version of T3Net.
+[X]Upgrade to the latest version of T3Net.
 
 [X]Fix positioning of elements in HUD.
 
